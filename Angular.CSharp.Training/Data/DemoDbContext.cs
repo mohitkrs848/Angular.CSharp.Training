@@ -11,7 +11,7 @@ namespace Angular.CSharp.Training.Data
     {
         public DemoDbContext() : base("Server=(localdb)\\MyDemoDB;Database=AngularCSharpDB;Trusted_Connection=True;")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<DemoDbContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DemoDbContext>());
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }

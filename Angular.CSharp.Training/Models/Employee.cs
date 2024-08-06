@@ -15,9 +15,17 @@ namespace Angular.CSharp.Training.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        [MaxLength(20)]
+        public string FirstName { get; set; }
+
+        [MaxLength(20)]
+        public string LastName { get; set; }
 
         [Required]
+        [Range(18, 60)]
         public int Age { get; set; }
+
+        [Required]
+        public string Email { get; set; }
     }
 }

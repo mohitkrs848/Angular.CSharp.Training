@@ -28,7 +28,7 @@ namespace Angular.CSharp.Training.Controllers
             }
 
             employeeAgent.CreateEmployee(employee);
-            return CreatedAtRoute("DefaultApi", new { id = employee.Id }, employee);
+            return Ok(employee);
         }
 
         [HttpGet]

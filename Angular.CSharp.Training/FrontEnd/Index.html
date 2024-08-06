@@ -10,30 +10,43 @@
 </head>
 <body ng-controller="EmployeeController" class="container mt-5">
     <h1 class="mb-4">Employee Management</h1>
-    <form ng-submit="addEmployee()" class="mb-4">
+    <form ng-submit="saveEmployee()" class="mb-4">
         <div class="form-group">
-            <input type="text" ng-model="newEmployee.Name" class="form-control" placeholder="Name" required>
+            <input type="text" ng-model="employee.FirstName" class="form-control" placeholder="First Name" required>
         </div>
         <div class="form-group">
-            <input type="number" ng-model="newEmployee.Age" class="form-control" placeholder="Age" required>
+            <input type="text" ng-model="employee.LastName" class="form-control" placeholder="Last Name" required>
         </div>
-        <button type="submit" class="btn btn-primary">Add Employee</button>
+        <div class="form-group">
+            <input type="number" ng-model="employee.Age" class="form-control" placeholder="Age" required>
+        </div>
+        <div class="form-group">
+            <input type="email" ng-model="employee.Email" class="form-control" placeholder="Email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ editing ? 'Update Employee' : 'Add Employee' }}</button>
+        <button type="button" class="btn btn-secondary" ng-click="cancelEdit()" ng-show="editing">Cancel</button>
     </form>
+
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Age</th>
+                <th>Email</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="employee in employees">
                 <td>{{employee.Id}}</td>
-                <td>{{employee.Name}}</td>
+                <td>{{employee.FirstName}}</td>
+                <td>{{employee.LastName}}</td>
                 <td>{{employee.Age}}</td>
+                <td>{{employee.Email}}</td>
                 <td>
+                    <button ng-click="editEmployee(employee)" class="btn btn-info btn-sm">Edit</button>
                     <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>

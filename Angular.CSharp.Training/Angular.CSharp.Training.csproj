@@ -119,6 +119,7 @@
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
     <Content Include="FrontEnd\Scripts\Services\employeeService.js" />
     <Content Include="Global.asax" />
+    <Content Include="ReadMe.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
