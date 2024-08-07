@@ -4,7 +4,9 @@
 
 4. Add login functionality, With SPA, Header should be static and Logout functionality
 5. User Preferences - Authorisation (based on this view and permission will be provided)
-6. Popups should be there
+
+6. Popups should be there - using alerts it's done, will modify more
+
 7. Page Summary (About Us, Contact Us, Privacy Policy, Terms & Conditions) - static page
 8. Templates for each section
 9. Validation in Model/View and Controller

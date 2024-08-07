@@ -118,6 +118,7 @@
     <Content Include="FrontEnd\Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
     <Content Include="FrontEnd\Scripts\Services\employeeService.js" />
+    <Content Include="FrontEnd\Scripts\Services\popupService.js" />
     <Content Include="Global.asax" />
     <Content Include="ReadMe.txt" />
     <Content Include="Web.config" />
