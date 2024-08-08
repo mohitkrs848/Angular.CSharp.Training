@@ -1,5 +1,5 @@
 app.service('EmployeeService', ['$http', function ($http) {
-    var baseUrl = 'https://localhost:44381/api/employee'; // Ensure this matches your API URL
+    var baseUrl = 'https://localhost:44381/api/employee';
 
     this.getAllEmployees = function () {
         return $http.get(baseUrl);

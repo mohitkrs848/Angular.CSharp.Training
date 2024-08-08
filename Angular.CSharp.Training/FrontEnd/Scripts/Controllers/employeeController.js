@@ -13,7 +13,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
 
     $scope.saveEmployee = function () {
         if ($scope.editing) {
-            // Update employee
             EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
                 $scope.loadEmployees();
                 $scope.cancelEdit();
@@ -22,7 +21,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
                 alert('Error updating employee: ' + error.data);
             });
         } else {
-            // Add new employee
             EmployeeService.createEmployee($scope.employee).then(function (response) {
                 $scope.employees.push(response.data);
                 $scope.employee = {};

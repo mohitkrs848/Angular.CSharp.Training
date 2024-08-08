@@ -1,6 +1,6 @@
 ﻿var app = angular.module("employeeApp", ["ngRoute"]);
 
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
             templateUrl: "templates/home.html"
@@ -11,13 +11,11 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         .when("/contact", {
             templateUrl: "templates/contact.html"
         })
-        .when("/employee", {
+        .when("/employees", {
             templateUrl: "templates/employee.html",
             controller: "EmployeeController"
         })
         .otherwise({
             redirectTo: "/"
         });
-
-    $locationProvider.html5Mode(false).hashPrefix('');
-}]);
+});

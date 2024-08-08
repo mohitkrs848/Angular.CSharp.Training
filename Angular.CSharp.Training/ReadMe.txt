@@ -6,9 +6,9 @@
 5. User Preferences - Authorisation (based on this view and permission will be provided)
 
 6. Popups should be there - using alerts it's done, will modify more
+7. Page Summary (About Us, Contact Us, Privacy Policy, Terms & Conditions) - static page - Done
+8. Templates for each section - Done
 
-7. Page Summary (About Us, Contact Us, Privacy Policy, Terms & Conditions) - static page
-8. Templates for each section
 9. Validation in Model/View and Controller
 10. Filters (based on user access level)
 11. Dashboard using graphs, charts

@@ -10,25 +10,38 @@
     <script src="Scripts/Controllers/employeeController.js"></script>
 </head>
 <body>
+    <!-- Static Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Employee Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/employees">Employees</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
     <div class="container mt-5">
-        <header class="mb-4">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#/">Home</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="#/about">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#/contact">Contact Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#/employee">Employee Management</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-
         <div ng-view></div>
-
-        <footer class="mt-5">
-            <p>Privacy Policy | Address | Designed By</p>
-        </footer>
     </div>
+
+    <!-- Static Footer -->
+    <footer class="bg-dark text-white text-center mt-5 p-3">
+        <p>Privacy Policy | Address | Designed By</p>
+    </footer>
 </body>
 </html>
