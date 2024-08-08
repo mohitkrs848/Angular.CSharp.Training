@@ -123,11 +123,15 @@
   <ItemGroup>
     <Content Include="FrontEnd\Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\mainController.js" />
+    <Content Include="FrontEnd\Scripts\Services\authService.js" />
     <Content Include="FrontEnd\Scripts\Services\employeeService.js" />
+    <Content Include="FrontEnd\Scripts\Services\authResolver.js" />
     <Content Include="FrontEnd\templates\about.html" />
     <Content Include="FrontEnd\templates\contact.html" />
     <Content Include="FrontEnd\templates\employee.html" />
     <Content Include="FrontEnd\templates\home.html" />
+    <Content Include="FrontEnd\templates\login.html" />
     <Content Include="FrontEnd\templates\search.html" />
     <Content Include="Global.asax" />
     <Content Include="ReadMe.txt" />

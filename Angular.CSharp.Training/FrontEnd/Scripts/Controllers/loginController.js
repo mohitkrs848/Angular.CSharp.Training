@@ -1,13 +1,16 @@
-﻿var app = angular.module('loginApp', []);
+﻿app.controller('LoginController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+    $scope.credentials = {
+        username: 'admin',
+        password: 'password'
+    };
 
-app.controller('LoginController', function ($scope, $http, $window) {
-    $scope.credentials = {};
+    $scope.errorMessage = '';
 
     $scope.login = function () {
-        $http.post('/api/login', $scope.credentials).then(function (response) {
-            $window.location.href = 'home.html'; // Redirect to the home page after login
-        }, function (error) {
-            alert('Invalid credentials');
-        });
+        if (AuthService.login($scope.credentials.username, $scope.credentials.password)) {
+            $location.path("/dashboard");
+        } else {
+            $scope.errorMessage = "Invalid username or password";
+        }
     };
-});
+}]);
