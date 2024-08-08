@@ -128,6 +128,7 @@
     <Content Include="FrontEnd\templates\contact.html" />
     <Content Include="FrontEnd\templates\employee.html" />
     <Content Include="FrontEnd\templates\home.html" />
+    <Content Include="FrontEnd\templates\search.html" />
     <Content Include="Global.asax" />
     <Content Include="ReadMe.txt" />
     <Content Include="Web.config" />
@@ -137,6 +138,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
     <Compile Include="Data\DemoDbContext.cs" />
     <Compile Include="Data\Repository\DepartmentRepository.cs" />
@@ -144,11 +146,14 @@
     <Compile Include="Data\Repository\IDepartmentRepository.cs" />
     <Compile Include="Data\Repository\IEmployeeRepository.cs" />
     <Content Include="FrontEnd\Scripts\app.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\searchController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\loginController.js" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

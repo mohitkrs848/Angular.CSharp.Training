@@ -21,5 +21,6 @@ namespace Angular.CSharp.Training.Agents
         public void UpdateEmployee(Employee employee) => _employeeRepository.UpdateEmployee(employee);
         public Employee GetEmployeeById(int id) => _employeeRepository.GetEmployeeById(id);
         public IEnumerable<Employee> GetAllEmployees() => _employeeRepository.GetAllEmployees();
+        public IEnumerable<Employee> GetEmployeesByFilter(string email, int employeeId) => _employeeRepository.GetEmployeesByFilter(email, employeeId);
     }
 }

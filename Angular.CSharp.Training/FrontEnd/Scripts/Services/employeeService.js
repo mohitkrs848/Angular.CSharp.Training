@@ -20,4 +20,18 @@ app.service('EmployeeService', ['$http', function ($http) {
     this.deleteEmployee = function (id) {
         return $http.delete(baseUrl + '/' + id);
     };
+
+    this.searchEmployees = function (email, employeeId) {
+        var url = baseUrl + '/search';
+        var params = [];
+
+        if (email) params.push('email=' + encodeURIComponent(email));
+        if (employeeId) params.push('employeeId=' + employeeId);
+
+        if (params.length > 0) {
+            url += '?' + params.join('&');
+        }
+
+        return $http.get(url);
+    };
 }]);

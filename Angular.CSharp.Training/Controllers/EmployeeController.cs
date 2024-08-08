@@ -79,5 +79,24 @@ namespace Angular.CSharp.Training.Controllers
             employeeAgent.DeleteEmployee(id);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("search")]
+        public IHttpActionResult SearchEmployees([FromUri] string email = null, [FromUri] int? employeeId = null)
+        {
+            var employees = employeeAgent.GetAllEmployees();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                employees = employees.Where(e => e.Email.Equals(email, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                employees = employees.Where(e => e.Id == employeeId.Value).ToList();
+            }
+
+            return Ok(employees);
+        }
     }
 }

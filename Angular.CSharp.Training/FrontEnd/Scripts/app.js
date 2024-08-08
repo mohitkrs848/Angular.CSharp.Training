@@ -15,6 +15,10 @@ app.config(function ($routeProvider) {
             templateUrl: "templates/employee.html",
             controller: "EmployeeController"
         })
+        .when("/search", {
+            templateUrl: "templates/search.html",
+            controller: "SearchController"
+        })
         .otherwise({
             redirectTo: "/"
         });

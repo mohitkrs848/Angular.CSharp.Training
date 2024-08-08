@@ -14,5 +14,6 @@ namespace Angular.CSharp.Training.Data.Repository
         void UpdateEmployee(Employee employee);
         Employee GetEmployeeById(int id);
         IEnumerable<Employee> GetAllEmployees();
+        IEnumerable<Employee> GetEmployeesByFilter(string email, int? employeeId);
     }
 }
