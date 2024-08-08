@@ -11,11 +11,16 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         });
     };
 
+    $scope.prepareAddEmployee = function () {
+        $scope.editing = false;
+        $scope.employee = {};
+    };
+
     $scope.saveEmployee = function () {
         if ($scope.editing) {
             EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
                 $scope.loadEmployees();
-                $scope.cancelEdit();
+                $('#employeeModal').modal('hide');
                 alert('Employee updated successfully');
             }, function (error) {
                 alert('Error updating employee: ' + error.data);
@@ -23,7 +28,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         } else {
             EmployeeService.createEmployee($scope.employee).then(function (response) {
                 $scope.employees.push(response.data);
-                $scope.employee = {};
+                $('#employeeModal').modal('hide');
                 alert('Employee created successfully');
             }, function (error) {
                 alert('Error adding employee: ' + error.data);
