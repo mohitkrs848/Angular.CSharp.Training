@@ -2,7 +2,9 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
     $scope.employees = [];
     $scope.employee = {};
     $scope.editing = false;
+    $scope.searchCriteria = {};
 
+    // Load all employees initially
     $scope.loadEmployees = function () {
         EmployeeService.getAllEmployees().then(function (response) {
             $scope.employees = response.data;
@@ -11,16 +13,42 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         });
     };
 
-    $scope.prepareAddEmployee = function () {
-        $scope.editing = false;
-        $scope.employee = {};
+    // Search employees based on criteria
+    $scope.searchEmployees = function () {
+        EmployeeService.searchEmployees($scope.searchCriteria.email, $scope.searchCriteria.id, $scope.searchCriteria.name)
+            .then(function (response) {
+                $scope.employees = response.data;
+                $('#searchModal').modal('hide');
+            }, function (error) {
+                alert('Error searching employees: ' + error.data);
+            });
     };
 
+    // Clear search criteria and reload all employees
+    $scope.clearSearch = function () {
+        $scope.searchCriteria = {};
+        $scope.loadEmployees();
+    };
+
+    // Open the Add/Edit Employee modal
+    $scope.openAddEditModal = function (employee) {
+        $scope.editing = !!employee;
+        $scope.employee = employee ? angular.copy(employee) : {};
+        $('#addEditModal').modal('show');
+    };
+
+    // Open the Search Employee modal
+    $scope.openSearchModal = function () {
+        $scope.searchCriteria = {};
+        $('#searchModal').modal('show');
+    };
+
+    // Save employee (create or update)
     $scope.saveEmployee = function () {
         if ($scope.editing) {
             EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
                 $scope.loadEmployees();
-                $('#employeeModal').modal('hide');
+                $('#addEditModal').modal('hide');
                 alert('Employee updated successfully');
             }, function (error) {
                 alert('Error updating employee: ' + error.data);
@@ -28,7 +56,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         } else {
             EmployeeService.createEmployee($scope.employee).then(function (response) {
                 $scope.employees.push(response.data);
-                $('#employeeModal').modal('hide');
+                $('#addEditModal').modal('hide');
                 alert('Employee created successfully');
             }, function (error) {
                 alert('Error adding employee: ' + error.data);
@@ -36,16 +64,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         }
     };
 
-    $scope.editEmployee = function (employee) {
-        $scope.editing = true;
-        $scope.employee = angular.copy(employee);
-    };
-
-    $scope.cancelEdit = function () {
-        $scope.editing = false;
-        $scope.employee = {};
-    };
-
+    // Delete employee
     $scope.deleteEmployee = function (id) {
         EmployeeService.deleteEmployee(id).then(function () {
             $scope.loadEmployees();
@@ -55,5 +74,11 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         });
     };
 
+    $scope.clearSearch = function () {
+        $scope.searchCriteria = {};
+        $scope.loadEmployees();
+    }
+
+    // Initial load
     $scope.loadEmployees();
 }]);

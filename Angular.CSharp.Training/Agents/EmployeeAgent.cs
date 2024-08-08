@@ -22,5 +22,27 @@ namespace Angular.CSharp.Training.Agents
         public Employee GetEmployeeById(int id) => _employeeRepository.GetEmployeeById(id);
         public IEnumerable<Employee> GetAllEmployees() => _employeeRepository.GetAllEmployees();
         public IEnumerable<Employee> GetEmployeesByFilter(string email, int employeeId) => _employeeRepository.GetEmployeesByFilter(email, employeeId);
+
+        public IEnumerable<Employee> SearchEmployees(string email, int? id, string name)
+        {
+            var employees = _employeeRepository.GetAllEmployees();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                employees = employees.Where(e => e.Email.Contains(email)).ToList();
+            }
+
+            if (id.HasValue)
+            {
+                employees = employees.Where(e => e.Id == id.Value).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                employees = employees.Where(e => e.FirstName.Contains(name) || e.LastName.Contains(name)).ToList();
+            }
+
+            return employees;
+        }
     }
 }

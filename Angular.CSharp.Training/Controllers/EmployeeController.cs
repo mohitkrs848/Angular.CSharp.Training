@@ -82,20 +82,9 @@ namespace Angular.CSharp.Training.Controllers
 
         [HttpGet]
         [Route("search")]
-        public IHttpActionResult SearchEmployees([FromUri] string email = null, [FromUri] int? employeeId = null)
+        public IHttpActionResult SearchEmployees(string email = null, int? id = null, string name = null)
         {
-            var employees = employeeAgent.GetAllEmployees();
-
-            if (!string.IsNullOrEmpty(email))
-            {
-                employees = employees.Where(e => e.Email.Equals(email, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            if (employeeId.HasValue)
-            {
-                employees = employees.Where(e => e.Id == employeeId.Value).ToList();
-            }
-
+            var employees = employeeAgent.SearchEmployees(email, id, name);
             return Ok(employees);
         }
     }

@@ -21,12 +21,14 @@ app.service('EmployeeService', ['$http', function ($http) {
         return $http.delete(baseUrl + '/' + id);
     };
 
-    this.searchEmployees = function (email, employeeId) {
+    // Method to search employees based on criteria
+    this.searchEmployees = function (email, id, name) {
         var url = baseUrl + '/search';
         var params = [];
 
         if (email) params.push('email=' + encodeURIComponent(email));
-        if (employeeId) params.push('employeeId=' + employeeId);
+        if (id) params.push('id=' + id);
+        if (name) params.push('name=' + encodeURIComponent(name));
 
         if (params.length > 0) {
             url += '?' + params.join('&');

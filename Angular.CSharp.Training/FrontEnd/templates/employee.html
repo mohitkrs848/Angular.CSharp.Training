@@ -1,8 +1,10 @@
 ﻿<div ng-controller="EmployeeController" class="container mt-5">
     <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
 
-    <!-- Add/Edit Employee Button -->
-    <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#employeeModal" ng-click="prepareAddEmployee()">Add Employee</button>
+    <!-- Buttons to open modals -->
+    <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Employee</button>
+    <button class="btn btn-secondary mb-4" ng-click="openSearchModal()">Search Employee</button>
+    <button class="btn btn-info mb-4" ng-click="clearSearch()">Show All Employees</button>
 
     <!-- Employee Table -->
     <table class="table table-bordered">
@@ -24,25 +26,25 @@
                 <td>{{employee.Age}}</td>
                 <td>{{employee.Email}}</td>
                 <td>
-                    <button ng-click="editEmployee(employee)" class="btn btn-info btn-sm" data-toggle="modal" data-target="#employeeModal">Edit</button>
+                    <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm">Edit</button>
                     <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Employee Modal -->
-    <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Add/Edit Employee Modal -->
+    <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="employeeModalLabel">{{ editing ? 'Edit Employee' : 'Add Employee' }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form name="employeeForm">
+                <form ng-submit="saveEmployee()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Employee' : 'Add Employee' }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <input type="text" ng-model="employee.FirstName" class="form-control" placeholder="First Name" required>
@@ -59,10 +61,45 @@
                                 <input type="email" ng-model="employee.Email" class="form-control" placeholder="Email" required>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" ng-click="saveEmployee()">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{ editing ? 'Update Employee' : 'Add Employee' }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Employee Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form ng-submit="searchEmployees()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <input type="text" ng-model="searchCriteria.email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="number" ng-model="searchCriteria.id" class="form-control" placeholder="Employee ID">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="text" ng-model="searchCriteria.name" class="form-control" placeholder="First or Last Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Search Employee</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
