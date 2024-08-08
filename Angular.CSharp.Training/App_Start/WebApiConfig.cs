@@ -10,6 +10,7 @@ namespace Angular.CSharp.Training.App_Start
     {
         public static void Register(HttpConfiguration config)
         {
+            //config.EnableCors(new EnableCorsAttribute("http://localhost:4200", "*", "*"));
             // Web API routes
             config.MapHttpAttributeRoutes();
 
