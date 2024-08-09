@@ -14,3 +14,19 @@
 11. Dashboard using graphs, charts
 12. AddEmployee button will should have popup then it will add data
 13. Edit Employee should also have a popup
+
+14. Create custom error messages for each validation (age, email, name)
+15. Getting all messages to the console
+
+
+
+
+
+
+Employee : EmpId (primary key), EmpName, EmpEmail, EmpAge, EmpDesignation, EmpSalary, EmpLocation, EmpStatus, EmpManagerID (Foreign Key - can be null), EmpDepartmentID (Foreign Key)
+
+Project : ProjectID (PK), ProjectName, ProjectManagerID (FK), ProjectStatus
+
+Department : DeptID (PK), DeptName, 
+
+Manager : ManagerID (PK), ManagerName

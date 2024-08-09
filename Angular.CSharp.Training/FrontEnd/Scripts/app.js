@@ -32,13 +32,13 @@ app.config(function ($routeProvider) {
                 auth: 'AuthResolver'
             }
         })
-        .when("/search", {
-            templateUrl: "templates/search.html",
-            controller: "SearchController",
-            resolve: {
-                auth: 'AuthResolver'
-            }
-        })
+        //.when("/search", {
+        //    templateUrl: "templates/search.html",
+        //    controller: "SearchController",
+        //    resolve: {
+        //        auth: 'AuthResolver'
+        //    }
+        //})
         .otherwise({
             redirectTo: "/"
         });
