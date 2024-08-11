@@ -35,7 +35,7 @@ namespace Angular.CSharp.Training.Models
         public string EmpDesignation { get; set; }
 
         [Required]
-        [Range(10000, 100000)]
+        [Range(10000, 10000000)]
         public decimal EmpSalary { get; set; }
 
         public string EmpLocation { get; set; }

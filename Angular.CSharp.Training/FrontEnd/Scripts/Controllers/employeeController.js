@@ -43,8 +43,25 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         $('#searchModal').modal('show');
     };
 
+    $scope.validateEmployee = function () {
+        if ($scope.employee.EmpAge < 18 || $scope.employee.EmpAge > 60) {
+            alert('Employee age must be between 18 and 60.');
+            return false;
+        }
+        if ($scope.employee.EmpSalary < 10000 || $scope.employee.EmpSalary > 10000000) {
+            alert('Employee salary must be between 10000 and 10000000.');
+            return false;
+        }
+        return true;
+    };
+
     // Save employee (create or update)
     $scope.saveEmployee = function () {
+        // Validate the age before proceeding
+        if (!$scope.validateEmployee()) {
+            return;
+        }
+
         console.log('Saving employee:', $scope.employee); // Log the employee data
         if ($scope.editing) {
             EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
@@ -74,16 +91,11 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
             alert('Employee deleted successfully');
             console.log('Employee deleted successfully');
         }, function (error) {
-            console.error('Error updating employee:', error);
+            console.error('Error deleting employee:', error);
             alert('Error deleting employee: ' + error.data);
             console.log('Error deleting employee: ' + error.data);
         });
     };
-
-    $scope.clearSearch = function () {
-        $scope.searchCriteria = {};
-        $scope.loadEmployees();
-    }
 
     // Initial load
     $scope.loadEmployees();
