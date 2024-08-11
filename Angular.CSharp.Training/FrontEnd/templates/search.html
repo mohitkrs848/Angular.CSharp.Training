@@ -1,5 +1,5 @@
 ﻿<!-- templates/search.html -->
-<div class="container mt-5">
+<!--<div class="container mt-5">
     <h1 class="mb-4">Search Employees</h1>
 
     <form ng-submit="searchEmployees()" class="mb-4">
@@ -17,16 +17,28 @@
                 <th>Last Name</th>
                 <th>Age</th>
                 <th>Email</th>
+                <th>Designation</th>
+                <th>ManagerID</th>
+                <th>DepartmentID</th>
+                <th>Status</th>
+                <th>Salary</th>
+                <th>Location</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="employee in employees">
-                <td>{{employee.Id}}</td>
-                <td>{{employee.FirstName}}</td>
-                <td>{{employee.LastName}}</td>
-                <td>{{employee.Age}}</td>
-                <td>{{employee.Email}}</td>
+                <td>{{employee.EmpId}}</td>
+                <td>{{employee.EmpFirstName}}</td>
+                <td>{{employee.EmpLastName}}</td>
+                <td>{{employee.EmpAge}}</td>
+                <td>{{employee.EmpEmail}}</td>
+                <td>{{employee.EmpDesignation}}</td>
+                <td>{{employee.EmpManagerID}}</td>
+                <td>{{employee.EmpDepartmentID}}</td>
+                <td>{{employee.EmpStatus}}</td>
+                <td>{{employee.EmpSalary}}</td>
+                <td>{{employee.EmpLocation}}</td>
                 <td>
                     <button ng-click="editEmployee(employee)" class="btn btn-info btn-sm">Edit</button>
                     <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
@@ -35,4 +47,4 @@
         </tbody>
     </table>
     <p ng-if="employees.length === 0">No employees found.</p>
-</div>
+</div>-->

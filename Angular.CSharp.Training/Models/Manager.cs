@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Angular.CSharp.Training.Models
 {
-    public class Department
+    public class Manager
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,8 +15,9 @@ namespace Angular.CSharp.Training.Models
 
         [Required]
         [StringLength(20)]
-        public string DeptName { get; set; }
+        public string ManagerName { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Angular.CSharp.Training.Data.Repository
             if (!string.IsNullOrEmpty(email))
             {
                 // Filter by email if provided
-                employees = employees.Where(e => e.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                employees = employees.Where(e => e.EmpEmail.Equals(email, StringComparison.OrdinalIgnoreCase));
             }
             else if (employeeId.HasValue)
             {

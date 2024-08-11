@@ -15,17 +15,40 @@ namespace Angular.CSharp.Training.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
-        public string FirstName { get; set; }
+        [StringLength(20)]
+        public string EmpFirstName { get; set; }
 
-        [MaxLength(20)]
-        public string LastName { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string EmpLastName { get; set; }
 
         [Required]
         [Range(18, 60)]
-        public int Age { get; set; }
+        public int EmpAge { get; set; }
 
         [Required]
-        public string Email { get; set; }
+        [StringLength(50)]
+        public string EmpEmail { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string EmpDesignation { get; set; }
+
+        [Required]
+        [Range(10000, 100000)]
+        public decimal EmpSalary { get; set; }
+
+        public string EmpLocation { get; set; }
+
+        [Required]
+        public string EmpStatus { get; set; }
+
+        public int? EmpManagerID { get; set; } // Nullable FK
+
+        [Required]
+        public int EmpDepartmentID { get; set; } // FK
+
+        public virtual Manager Manager { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

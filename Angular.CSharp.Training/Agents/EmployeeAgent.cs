@@ -29,7 +29,7 @@ namespace Angular.CSharp.Training.Agents
 
             if (!string.IsNullOrEmpty(email))
             {
-                employees = employees.Where(e => e.Email.Contains(email)).ToList();
+                employees = employees.Where(e => e.EmpEmail.Contains(email)).ToList();
             }
 
             if (id.HasValue)
@@ -39,7 +39,7 @@ namespace Angular.CSharp.Training.Agents
 
             if (!string.IsNullOrEmpty(name))
             {
-                employees = employees.Where(e => e.FirstName.Contains(name) || e.LastName.Contains(name)).ToList();
+                employees = employees.Where(e => e.EmpFirstName.Contains(name) || e.EmpLastName.Contains(name)).ToList();
             }
 
             return employees;

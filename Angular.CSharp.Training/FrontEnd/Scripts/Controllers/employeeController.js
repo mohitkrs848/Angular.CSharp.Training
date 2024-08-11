@@ -45,12 +45,14 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
 
     // Save employee (create or update)
     $scope.saveEmployee = function () {
+        console.log('Saving employee:', $scope.employee); // Log the employee data
         if ($scope.editing) {
             EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
                 $scope.loadEmployees();
                 $('#addEditModal').modal('hide');
                 alert('Employee updated successfully');
             }, function (error) {
+                console.error('Error updating employee:', error); // Log the error
                 alert('Error updating employee: ' + error.data);
             });
         } else {
@@ -59,6 +61,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
                 $('#addEditModal').modal('hide');
                 alert('Employee created successfully');
             }, function (error) {
+                console.error('Error adding employee:', error); // Log the error
                 alert('Error adding employee: ' + error.data);
             });
         }
@@ -69,8 +72,11 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
         EmployeeService.deleteEmployee(id).then(function () {
             $scope.loadEmployees();
             alert('Employee deleted successfully');
+            console.log('Employee deleted successfully');
         }, function (error) {
+            console.error('Error updating employee:', error);
             alert('Error deleting employee: ' + error.data);
+            console.log('Error deleting employee: ' + error.data);
         });
     };
 

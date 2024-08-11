@@ -18,6 +18,7 @@
 14. Create custom error messages for each validation (age, email, name)
 15. Getting all messages to the console
 
+Code-First vs Database-First approach to develop
 
 
 
