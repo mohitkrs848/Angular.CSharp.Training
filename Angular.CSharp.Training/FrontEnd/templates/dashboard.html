@@ -1,12 +1,20 @@
 ﻿<!-- dashboard.html -->
 <div ng-controller="DashboardController">
-    <div class="form-group">
-        <select ng-model="employee.EmpDeptName" class="form-control">
-            <option value="">All Departments</option>
-            <option value="HR">HR</option>
-            <option value="Sales">Sales</option>
-            <option value="Engineering">Engineering</option>
-        </select>
+    <h1 class="mb-4" style="background-color:beige">Filter Data</h1>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <select ng-model="filters.department" class="form-control" placeholder="Department">
+                <option value="">Select Department</option>
+                <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <select ng-model="filters.designation" class="form-control" placeholder="Designation">
+                <option value="">Select Designation</option>
+                <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
+            </select>
+        </div>
     </div>
     <table class="table table-bordered">
         <thead>

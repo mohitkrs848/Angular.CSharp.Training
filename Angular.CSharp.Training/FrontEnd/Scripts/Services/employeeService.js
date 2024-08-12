@@ -21,9 +21,20 @@ app.service('EmployeeService', ['$http', function ($http) {
         return $http.delete(baseUrl + '/' + id);
     };
 
-    this.getEmployees = function (departmentName) {
-        // Use a conditional to ensure the query string is only added if departmentName is not empty or undefined
-        return $http.get(baseUrl + (departmentName ? `?department=${encodeURIComponent(departmentName)}` : ''));
+    this.getEmployees = function (filters) {
+        var query = '?';
+        if (filters.department) {
+            query += 'department=' + encodeURIComponent(filters.department);
+        }
+        if (filters.designation) {
+            if (query !== '?') query += '&';
+            query += 'designation=' + encodeURIComponent(filters.designation);
+        }
+
+        // Remove trailing '&' or '?' if no filters are applied
+        if (query === '?') query = '';
+
+        return $http.get(baseUrl + query);
     };
 
     // Search employees based on criteria

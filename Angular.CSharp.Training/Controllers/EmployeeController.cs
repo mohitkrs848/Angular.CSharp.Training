@@ -88,26 +88,24 @@ namespace Angular.CSharp.Training.Controllers
             var employees = employeeAgent.SearchEmployees(email, id, name);
             return Ok(employees);
         }
-
+        
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetEmployees([FromUri] string department = "")
+        public IHttpActionResult GetEmployees(string department = null, string designation = null)
         {
             try
             {
-                IEnumerable<Employee> employees;
+                var employees = employeeAgent.GetAllEmployees();
 
-                if (string.IsNullOrEmpty(department))
+                if (!string.IsNullOrEmpty(department))
                 {
-                    employees = employeeAgent.GetAllEmployees();
-                }
-                else
-                {
-                    employees = employeeAgent.GetEmployeesByDepartment(department);
+                    employees = employees.Where(e => e.EmpDeptName == department).ToList();
                 }
 
-                // Log the result for debugging
-                Debug.WriteLine($"Employees fetched: {employees.Count()}");
+                if (!string.IsNullOrEmpty(designation))
+                {
+                    employees = employees.Where(e => e.EmpDesignation == designation).ToList();
+                }
 
                 return Ok(employees);
             }
