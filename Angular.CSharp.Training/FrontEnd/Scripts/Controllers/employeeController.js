@@ -99,4 +99,30 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
 
     // Initial load
     $scope.loadEmployees();
+
+    // Export employees to Excel
+    $scope.exportToExcel = function () {
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.json_to_sheet($scope.employees);
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Employees');
+
+        // Create a binary string from the workbook
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        // Function to convert binary string to array buffer
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        // Create a Blob from the buffer and trigger the download
+        var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'employees.xlsx';
+        link.click();
+    };
 }]);
