@@ -3,30 +3,30 @@
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "templates/login.html",
+            templateUrl: "FrontEnd/templates/login.html",
             controller: "LoginController"
         })
         .when("/dashboard", {
-            templateUrl: "templates/employee.html",
+            templateUrl: "FrontEnd/templates/employee.html",
             controller: "EmployeeController",
             resolve: {
                 auth: 'AuthResolver'
             }
         })
         .when("/about", {
-            templateUrl: "templates/about.html",
+            templateUrl: "FrontEnd/templates/about.html",
             resolve: {
                 auth: 'AuthResolver'
             }
         })
         .when("/contact", {
-            templateUrl: "templates/contact.html",
+            templateUrl: "FrontEnd/templates/contact.html",
             resolve: {
                 auth: 'AuthResolver'
             }
         })
         .when("/employees", {
-            templateUrl: "templates/employee.html",
+            templateUrl: "FrontEnd/templates/employee.html",
             controller: "EmployeeController",
             resolve: {
                 auth: 'AuthResolver'
