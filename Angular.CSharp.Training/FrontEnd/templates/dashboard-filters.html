@@ -1,5 +1,5 @@
-﻿<!-- dashboard.html -->
-<div ng-controller="DashboardController">
+<!-- dashboard.html -->
+<div ng-controller="FiltersController">
     <h1 class="mb-4" style="background-color:beige">Filter Data</h1>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -29,6 +29,7 @@
                 <th>Employee ID</th>
                 <th>FirstName</th>
                 <th>LastName</th>
+                <th>Email</th>
                 <th>Designation</th>
                 <th>Department</th>
             </tr>
@@ -38,6 +39,7 @@
                 <td>{{ employee.Id }}</td>
                 <td>{{ employee.EmpFirstName }}</td>
                 <td>{{ employee.EmpLastName }}</td>
+                <td>{{ employee.EmpEmail }}</td>
                 <td>{{ employee.EmpDesignation }}</td>
                 <td>{{ employee.EmpDeptName }}</td>
             </tr>

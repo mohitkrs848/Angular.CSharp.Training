@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="FrontEnd/Scripts/app.js"></script>
     <script src="FrontEnd/Scripts/Services/authService.js"></script>
@@ -17,7 +18,8 @@
     <script src="FrontEnd/Scripts/Controllers/employeeController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/searchController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/mainController.js"></script>
-    <script src="FrontEnd/Scripts/Controllers/dashboardController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/filtersController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/chartsController.js"></script>
 </head>
 <body ng-controller="MainController" class="d-flex flex-column min-vh-100">
     <!-- Static Header -->
@@ -32,7 +34,10 @@
                     <a class="nav-link" href="#!/employees">Employees</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
-                    <a class="nav-link" href="#!/dashboard">Dashboard</a>
+                    <a class="nav-link" href="#!/dashboard/filters">Dashboard Filters</a>
+                </li>
+                <li class="nav-item" ng-if="isAuthenticated()">
+                    <a class="nav-link" href="#!/dashboard/charts">Dashboard Charts</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/about">About Us</a>

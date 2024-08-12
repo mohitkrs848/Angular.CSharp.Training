@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
+app.controller('FiltersController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
     $scope.employees = [];
     $scope.departments = ['HR', 'Sales', 'Engineering'];
     $scope.designations = ['Associate', 'Software Engineer', 'Senior Engineer', 'Lead Engineer', 'Manager'];
