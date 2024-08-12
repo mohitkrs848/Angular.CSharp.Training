@@ -14,8 +14,8 @@ app.config(function ($routeProvider) {
             }
         })
         .when("/dashboard", {
-            templateUrl: "FrontEnd/templates/employee.html",
-            controller: "EmployeeController",
+            templateUrl: "FrontEnd/templates/dashboard.html",
+            controller: "DashboardController",
             resolve: {
                 auth: 'AuthResolver'
             }

@@ -21,7 +21,12 @@ app.service('EmployeeService', ['$http', function ($http) {
         return $http.delete(baseUrl + '/' + id);
     };
 
-    // Method to search employees based on criteria
+    this.getEmployees = function (departmentName) {
+        // Use a conditional to ensure the query string is only added if departmentName is not empty or undefined
+        return $http.get(baseUrl + (departmentName ? `?department=${encodeURIComponent(departmentName)}` : ''));
+    };
+
+    // Search employees based on criteria
     this.searchEmployees = function (email, id, name) {
         var url = baseUrl + '/search';
         var params = [];

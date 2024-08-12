@@ -46,6 +46,8 @@ namespace Angular.CSharp.Training.Agents
             return employees;
         }
 
+        public IEnumerable<Employee> GetEmployeesByDepartment(string department) => _employeeRepository.GetEmployeesByDepartment(department);
+
         //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
         //{
         //    // Define allowed department names

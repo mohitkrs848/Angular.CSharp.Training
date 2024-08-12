@@ -38,6 +38,12 @@ namespace Angular.CSharp.Training.Data.Repository
 
         public void UpdateEmployee(Employee employee) => Update(employee);
 
+        public IEnumerable<Employee> GetEmployeesByDepartment(string department)
+        {
+            return context.Employees
+                           .Where(e => e.EmpDeptName == department)
+                           .ToList();
+        }
         //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
         //{
         //    return context.Employees

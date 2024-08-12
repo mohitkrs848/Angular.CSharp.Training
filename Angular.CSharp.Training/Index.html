@@ -17,6 +17,7 @@
     <script src="FrontEnd/Scripts/Controllers/employeeController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/searchController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/mainController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/dashboardController.js"></script>
 </head>
 <body ng-controller="MainController" class="d-flex flex-column min-vh-100">
     <!-- Static Header -->
@@ -30,9 +31,6 @@
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/employees">Employees</a>
                 </li>
-                <!--<li class="nav-item" ng-if="isAuthenticated()">
-                    <a class="nav-link" href="#!/department">Employees</a>
-                </li>-->
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/dashboard">Dashboard</a>
                 </li>

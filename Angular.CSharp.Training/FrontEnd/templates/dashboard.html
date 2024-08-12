@@ -1,0 +1,31 @@
+﻿<!-- dashboard.html -->
+<div ng-controller="DashboardController">
+    <div class="form-group">
+        <select ng-model="employee.EmpDeptName" class="form-control">
+            <option value="">All Departments</option>
+            <option value="HR">HR</option>
+            <option value="Sales">Sales</option>
+            <option value="Engineering">Engineering</option>
+        </select>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Designation</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="employee in employees">
+                <td>{{ employee.Id }}</td>
+                <td>{{ employee.EmpFirstName }}</td>
+                <td>{{ employee.EmpLastName }}</td>
+                <td>{{ employee.EmpDesignation }}</td>
+                <td>{{ employee.EmpDeptName }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

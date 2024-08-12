@@ -2,6 +2,7 @@
 using Angular.CSharp.Training.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -43,12 +44,12 @@ namespace Angular.CSharp.Training.Controllers
             return Ok(employee);
         }
 
-        [HttpGet]
-        [Route("")]
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            return employeeAgent.GetAllEmployees();
-        }
+        //[HttpGet]
+        //[Route("")]
+        //public IEnumerable<Employee> GetAllEmployees()
+        //{
+        //    return employeeAgent.GetAllEmployees();
+        //}
 
         [HttpPut]
         [Route("{id}")]
@@ -87,6 +88,35 @@ namespace Angular.CSharp.Training.Controllers
             var employees = employeeAgent.SearchEmployees(email, id, name);
             return Ok(employees);
         }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetEmployees([FromUri] string department = "")
+        {
+            try
+            {
+                IEnumerable<Employee> employees;
+
+                if (string.IsNullOrEmpty(department))
+                {
+                    employees = employeeAgent.GetAllEmployees();
+                }
+                else
+                {
+                    employees = employeeAgent.GetEmployeesByDepartment(department);
+                }
+
+                // Log the result for debugging
+                Debug.WriteLine($"Employees fetched: {employees.Count()}");
+
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
 
         //[HttpGet]
         //[Route("department/{departmentName}")]
