@@ -8,9 +8,12 @@ app.controller('DashboardController', ['$scope', 'EmployeeService', function ($s
         designation: ''
     };
 
+    $scope.employeeCount = 0; // Initialize employeeCount
+
     $scope.loadEmployees = function () {
         EmployeeService.getEmployees($scope.filters).then(function (response) {
             $scope.employees = response.data;
+            $scope.employeeCount = $scope.employees.length; // Update employeeCount
         }, function (error) {
             console.error('Error loading employees:', error);
         });
@@ -23,28 +26,3 @@ app.controller('DashboardController', ['$scope', 'EmployeeService', function ($s
     // Initialize loading of employees
     $scope.loadEmployees();
 }]);
-
-//app.controller('DashboardController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
-//    $scope.employees = [];
-//    $scope.filters = {
-//        department: '',
-//        designation: ''
-//    };
-
-//    // Function to load employees
-//    $scope.loadEmployees = function (department) {
-//        EmployeeService.getEmployees(department).then(function (response) {
-//            $scope.employees = response.data;
-//        }, function (error) {
-//            console.error('Error loading employees:', error);
-//        });
-//    };
-
-//    // Initial load
-//    $scope.loadEmployees('');
-
-//    // Watch for changes in the selected department
-//    $scope.$watch('employee.EmpDeptName', function (newValue) {
-//        $scope.loadEmployees(newValue);
-//    });
-//}]);
