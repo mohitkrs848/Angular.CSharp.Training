@@ -11,11 +11,12 @@ namespace Angular.CSharp.Training.Agents
     public class EmployeeAgent
     {
         private readonly IEmployeeRepository _employeeRepository;
-   
-        public EmployeeAgent(IEmployeeRepository employeeRepository) 
+
+        public EmployeeAgent(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
         }
+
         public void CreateEmployee(Employee employee) => _employeeRepository.CreateEmoployee(employee);
         public void DeleteEmployee(int id) => _employeeRepository.DeleteEmployee(id);
         public void UpdateEmployee(Employee employee) => _employeeRepository.UpdateEmployee(employee);
@@ -44,5 +45,19 @@ namespace Angular.CSharp.Training.Agents
 
             return employees;
         }
+
+        //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
+        //{
+        //    // Define allowed department names
+        //    var allowedDepartments = new List<string> { "HR", "Sales", "Engineering" };
+
+        //    if (!allowedDepartments.Contains(departmentName))
+        //    {
+        //        throw new ArgumentException("Invalid department name");
+        //    }
+
+        //    return _employeeRepository.GetEmployeesByDepartment(departmentName);
+        //}
     }
+
 }

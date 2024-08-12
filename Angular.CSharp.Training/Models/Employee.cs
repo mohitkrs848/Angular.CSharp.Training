@@ -38,6 +38,7 @@ namespace Angular.CSharp.Training.Models
         [Range(10000, 10000000)]
         public decimal EmpSalary { get; set; }
 
+        [Required]
         public string EmpLocation { get; set; }
 
         [Required]
@@ -46,9 +47,9 @@ namespace Angular.CSharp.Training.Models
         public int? EmpManagerID { get; set; } // Nullable FK
 
         [Required]
-        public int EmpDepartmentID { get; set; } // FK
+        public string EmpDeptName { get; set; } // FK
 
-        public virtual Manager Manager { get; set; }
-        public virtual Department Department { get; set; }
+        //public virtual Manager Manager { get; set; }
+        //public virtual Department Department { get; set; }
     }
 }

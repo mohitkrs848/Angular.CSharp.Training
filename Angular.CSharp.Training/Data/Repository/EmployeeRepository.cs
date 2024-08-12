@@ -26,12 +26,10 @@ namespace Angular.CSharp.Training.Data.Repository
 
             if (!string.IsNullOrEmpty(email))
             {
-                // Filter by email if provided
                 employees = employees.Where(e => e.EmpEmail.Equals(email, StringComparison.OrdinalIgnoreCase));
             }
             else if (employeeId.HasValue)
             {
-                // Filter by employee ID if provided
                 employees = employees.Where(e => e.Id == employeeId.Value);
             }
 
@@ -39,5 +37,12 @@ namespace Angular.CSharp.Training.Data.Repository
         }
 
         public void UpdateEmployee(Employee employee) => Update(employee);
+
+        //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
+        //{
+        //    return context.Employees
+        //                  .Where(e => e.Department.DeptName == departmentName)
+        //                  .ToList();
+        //}
     }
 }

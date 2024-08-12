@@ -6,6 +6,13 @@ app.config(function ($routeProvider) {
             templateUrl: "FrontEnd/templates/login.html",
             controller: "LoginController"
         })
+        .when("/employees", {
+            templateUrl: "FrontEnd/templates/employee.html",
+            controller: "EmployeeController",
+            resolve: {
+                auth: 'AuthResolver'
+            }
+        })
         .when("/dashboard", {
             templateUrl: "FrontEnd/templates/employee.html",
             controller: "EmployeeController",
@@ -25,20 +32,6 @@ app.config(function ($routeProvider) {
                 auth: 'AuthResolver'
             }
         })
-        .when("/employees", {
-            templateUrl: "FrontEnd/templates/employee.html",
-            controller: "EmployeeController",
-            resolve: {
-                auth: 'AuthResolver'
-            }
-        })
-        //.when("/search", {
-        //    templateUrl: "templates/search.html",
-        //    controller: "SearchController",
-        //    resolve: {
-        //        auth: 'AuthResolver'
-        //    }
-        //})
         .otherwise({
             redirectTo: "/"
         });

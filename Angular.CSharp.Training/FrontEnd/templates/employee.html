@@ -19,7 +19,7 @@
                 <th>Email</th>
                 <th>Designation</th>
                 <th>ManagerID</th>
-                <th>DepartmentID</th>
+                <th>DepartmentName</th>
                 <th>Status</th>
                 <th>Salary</th>
                 <th>Location</th>
@@ -35,7 +35,7 @@
                 <td>{{employee.EmpEmail}}</td>
                 <td>{{employee.EmpDesignation}}</td>
                 <td>{{employee.EmpManagerID}}</td>
-                <td>{{employee.EmpDepartmentID}}</td>
+                <td>{{employee.EmpDeptName}}</td>
                 <td>{{employee.EmpStatus}}</td>
                 <td>{{employee.EmpSalary}}</td>
                 <td>{{employee.EmpLocation}}</td>
@@ -77,15 +77,28 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpDesignation" class="form-control" placeholder="Designation" required>
+                                <select ng-model="employee.EmpDesignation" class="form-control" required>
+                                    <option value="" selected>Select Designation</option>
+                                    <option value="Associate">Associate</option>
+                                    <option value="SE">Software Engineer</option>
+                                    <option value="SSE">Senior Engineer</option>
+                                    <option value="LE">Lead Engineer</option>
+                                    <option value="Manager">Manager</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required>
+                                <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required
+                                       ng-disabled="employee.EmpDesignation === 'Manager'">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input type="number" ng-model="employee.EmpDepartmentID" class="form-control" placeholder="Department ID" required>
+                                <select ng-model="employee.EmpDeptName" class="form-control" required>
+                                    <option value="" selected>Select Department</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Engineering">Engineering</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <input type="text" ng-model="employee.EmpStatus" class="form-control" placeholder="Status" required>

@@ -23,6 +23,6 @@ namespace Angular.CSharp.Training.Models
         [Required]
         public string ProjectStatus { get; set; }
 
-        public virtual Manager Manager { get; set; }
+        //public virtual Manager Manager { get; set; }
     }
 }

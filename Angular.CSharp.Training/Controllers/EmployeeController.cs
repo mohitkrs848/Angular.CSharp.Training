@@ -59,7 +59,7 @@ namespace Angular.CSharp.Training.Controllers
                 return BadRequest(ModelState);
             }
 
-            if(id != employee.Id)
+            if (id != employee.Id)
             {
                 return BadRequest();
             }
@@ -87,5 +87,20 @@ namespace Angular.CSharp.Training.Controllers
             var employees = employeeAgent.SearchEmployees(email, id, name);
             return Ok(employees);
         }
+
+        //[HttpGet]
+        //[Route("department/{departmentName}")]
+        //public IHttpActionResult GetEmployeesByDepartment(string departmentName)
+        //{
+        //    try
+        //    {
+        //        var employees = employeeAgent.GetEmployeesByDepartment(departmentName);
+        //        return Ok(employees);
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }
