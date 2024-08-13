@@ -1,7 +1,9 @@
 ﻿using Angular.CSharp.Training.Agents;
+using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -14,8 +16,12 @@ namespace Angular.CSharp.Training.Controllers
     {
         private EmployeeAgent employeeAgent;
 
+        protected readonly DemoDbContext context;
+        //protected readonly DbSet<T> dbSet;
+
         public EmployeeController(EmployeeAgent employeeAgent)
         {
+            context = new DemoDbContext();
             this.employeeAgent = employeeAgent;
         }
 
@@ -27,6 +33,8 @@ namespace Angular.CSharp.Training.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            employee.Id = employeeAgent.GenerateEmployeeId();
 
             employeeAgent.CreateEmployee(employee);
             return Ok(employee);
@@ -115,20 +123,21 @@ namespace Angular.CSharp.Training.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("checkemail")]
+        public IHttpActionResult CheckEmail(string email, int? id = null)
+        {
+            try
+            {
+                var normalizedEmail = email.ToLowerInvariant(); // Normalize email
+                var emailExists = context.Employees.Any(e => e.EmpEmail.ToLower() == normalizedEmail && (!id.HasValue || e.Id != id.Value));
 
-        //[HttpGet]
-        //[Route("department/{departmentName}")]
-        //public IHttpActionResult GetEmployeesByDepartment(string departmentName)
-        //{
-        //    try
-        //    {
-        //        var employees = employeeAgent.GetEmployeesByDepartment(departmentName);
-        //        return Ok(employees);
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+                return Ok(new { isUnique = !emailExists });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

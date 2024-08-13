@@ -44,6 +44,27 @@ namespace Angular.CSharp.Training.Data.Repository
                            .Where(e => e.EmpDeptName == department)
                            .ToList();
         }
+
+        public int GenerateEmployeeId()
+        {
+            // Assuming EmployeeId is stored as a string in the database
+            var lastEmployee = context.Employees
+                .OrderByDescending(e => e.Id)
+                .FirstOrDefault();
+
+            int newId;
+
+            if (lastEmployee == null)
+            {
+                newId = 100000;
+            }
+            else
+            {
+                newId = lastEmployee.Id + 1;
+            }
+
+            return newId;
+        }
         //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
         //{
         //    return context.Employees

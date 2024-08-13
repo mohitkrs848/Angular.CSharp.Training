@@ -16,6 +16,7 @@ namespace Angular.CSharp.Training.Data.Repository
         IEnumerable<Employee> GetAllEmployees();
         IEnumerable<Employee> GetEmployeesByFilter(string email, int? employeeId);
         IEnumerable<Employee> GetEmployeesByDepartment(string department);
+        int GenerateEmployeeId();
         //IEnumerable<Employee> GetEmployeesByDepartment(string departmentName);
     }
 }

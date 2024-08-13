@@ -52,4 +52,11 @@ app.service('EmployeeService', ['$http', function ($http) {
 
         return $http.get(url);
     };
+
+    this.isEmailUnique = function (email, id) {
+        return $http.get(baseUrl + '/checkemail', {
+            params: { email: email, id: id }
+        });
+    };
+
 }]);

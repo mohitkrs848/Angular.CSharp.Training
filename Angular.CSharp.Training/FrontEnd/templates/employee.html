@@ -94,14 +94,18 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <select ng-model="employee.EmpDeptName" class="form-control" required>
-                                    <option value="" selected>Select Department</option>
+                                    <option value="" selected>Department</option>
                                     <option value="HR">HR</option>
                                     <option value="Sales">Sales</option>
                                     <option value="Engineering">Engineering</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpStatus" class="form-control" placeholder="Status" required>
+                                <select ng-model="employee.EmpStatus" class="form-control" required>
+                                    <option value="" selected>Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="InActive">InActive</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">

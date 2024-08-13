@@ -21,7 +21,6 @@ namespace Angular.CSharp.Training.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Employee>().HasKey(e => e.Id);
 
             //// Employee -> Department relationship
             //modelBuilder.Entity<Employee>()
@@ -40,6 +39,40 @@ namespace Angular.CSharp.Training.Data
             //    .HasRequired(p => p.Manager)
             //    .WithMany(m => m.Projects)
             //    .HasForeignKey(p => p.ProjectManagerID);
+        }
+
+        public override int SaveChanges()
+        {
+            var newEmployees = ChangeTracker.Entries<Employee>()
+                       .Where(e => e.State == EntityState.Added)
+                       .ToList();
+
+            foreach (var entry in newEmployees)
+            {
+                entry.Entity.Id = GenerateEmployeeId();
+            }
+
+            return base.SaveChanges();
+        }
+
+        private int GenerateEmployeeId()
+        {
+            var lastEmployee = Employees
+                .OrderByDescending(e => e.Id)
+                .FirstOrDefault();
+
+            int newId;
+
+            if (lastEmployee == null)
+            {
+                newId = 100000;
+            }
+            else
+            {
+                newId = lastEmployee.Id + 1;
+            }
+
+            return newId;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Angular.CSharp.Training.Models
     public class Employee
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]
@@ -28,6 +28,7 @@ namespace Angular.CSharp.Training.Models
 
         [Required]
         [StringLength(50)]
+        [Index(IsUnique = true)]
         public string EmpEmail { get; set; }
 
         [Required]
