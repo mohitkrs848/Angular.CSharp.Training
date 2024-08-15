@@ -18,11 +18,9 @@ namespace Angular.CSharp.Training.Models
         public string ProjectName { get; set; }
 
         [Required]
-        public int ProjectManagerID { get; set; } // FK
-
-        [Required]
         public string ProjectStatus { get; set; }
 
-        //public virtual Manager Manager { get; set; }
+        [Required]
+        public string ProjectLocation { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
+app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectService', function ($scope, EmployeeService, ProjectService) {
     $scope.employees = [];
     $scope.employee = {};
     $scope.editing = false;
@@ -10,6 +10,15 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($sc
             $scope.employees = response.data;
         }, function (error) {
             alert('Error loading employees: ' + error.data);
+        });
+    };
+
+    // Fetch all projects for the dropdown
+    $scope.getAllProjects = function () {
+        ProjectService.getAllProjects().then(function (response) {
+            $scope.projects = response.data;
+        }, function (error) {
+            console.error('Error fetching projects:', error);
         });
     };
 
@@ -110,7 +119,8 @@ $scope.deleteEmployee = function (id) {
 };
 
 // Initial load
-$scope.loadEmployees();
+    $scope.loadEmployees();
+    $scope.getAllProjects(); 
 
 // Export employees to Excel
 $scope.exportToExcel = function () {

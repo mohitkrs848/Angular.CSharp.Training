@@ -123,8 +123,11 @@
   <ItemGroup>
     <Content Include="FrontEnd\Scripts\Controllers\chartsController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\filtersController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\projectController.js" />
+    <Content Include="FrontEnd\Scripts\Services\projectService.js" />
     <Content Include="FrontEnd\templates\dashboard-charts.html" />
     <Content Include="FrontEnd\templates\department.html" />
+    <Content Include="FrontEnd\templates\projects.html" />
     <Content Include="Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\mainController.js" />
@@ -146,6 +149,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
     <Compile Include="Data\DemoDbContext.cs" />
     <Compile Include="Data\Repository\EmployeeRepository.cs" />

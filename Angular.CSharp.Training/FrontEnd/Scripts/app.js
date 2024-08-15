@@ -13,6 +13,13 @@ app.config(function ($routeProvider) {
                 auth: 'AuthResolver'
             }
         })
+        .when("/projects", {
+            templateUrl: "FrontEnd/templates/projects.html",
+            controller: "ProjectController",
+            resolve: {
+                auth: 'AuthResolver'
+            }
+        })
         .when("/dashboard/filters", {
             templateUrl: "FrontEnd/templates/dashboard-filters.html",
             controller: "FiltersController",

@@ -13,6 +13,7 @@
     <script src="FrontEnd/Scripts/app.js"></script>
     <script src="FrontEnd/Scripts/Services/authService.js"></script>
     <script src="FrontEnd/Scripts/Services/employeeService.js"></script>
+    <script src="FrontEnd/Scripts/Services/projectService.js"></script>
     <script src="FrontEnd/Scripts/Services/authResolver.js"></script>
     <script src="FrontEnd/Scripts/Controllers/loginController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/employeeController.js"></script>
@@ -20,6 +21,7 @@
     <script src="FrontEnd/Scripts/Controllers/mainController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/filtersController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/chartsController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/projectController.js"></script>
 </head>
 <body ng-controller="MainController" class="d-flex flex-column min-vh-100">
     <!-- Static Header -->
@@ -32,6 +34,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/employees">Employees</a>
+                </li>
+                <li class="nav-item" ng-if="isAuthenticated()">
+                    <a class="nav-link" href="#!/projects">Projects</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/dashboard/filters">Dashboard Filters</a>

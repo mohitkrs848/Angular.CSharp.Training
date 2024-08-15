@@ -1,0 +1,67 @@
+﻿<div ng-controller="ProjectController" class="container mt-5">
+    <h1 class="mb-4" style="background-color:beige">Project Management</h1>
+
+    <!-- Buttons to open modals -->
+    <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Project</button>
+
+    <!-- Project Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr style="background-color:beige">
+                <th>ID</th>
+                <th>Project Name</th>
+                <th>Project Status</th>
+                <th>Project Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="project in projects">
+                <td>{{project.Id}}</td>
+                <td>{{project.ProjectName}}</td>
+                <td>{{project.ProjectStatus}}</td>
+                <td>{{project.ProjectLocation}}</td>
+                <td>
+                    <button ng-click="openAddEditModal(project)" class="btn btn-info btn-sm">Edit</button>
+                    <button ng-click="deleteProject(project.Id)" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add/Edit Project Modal -->
+    <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form ng-submit="saveProject()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Project' : 'Add Project' }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" ng-model="project.ProjectName" class="form-control" placeholder="Project Name" required>
+                        </div>
+                        <div class="form-group">
+                            <select ng-model="project.ProjectStatus" class="form-control" required>
+                                <option value="" selected>Select Status</option>
+                                <option value="YetToStart">Yet to Start</option>
+                                <option value="InProgress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ng-model="project.ProjectLocation" class="form-control" placeholder="Project Location" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{ editing ? 'Update Project' : 'Add Project' }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

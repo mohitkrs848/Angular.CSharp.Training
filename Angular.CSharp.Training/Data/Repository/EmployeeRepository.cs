@@ -47,7 +47,6 @@ namespace Angular.CSharp.Training.Data.Repository
 
         public int GenerateEmployeeId()
         {
-            // Assuming EmployeeId is stored as a string in the database
             var lastEmployee = context.Employees
                 .OrderByDescending(e => e.Id)
                 .FirstOrDefault();
@@ -65,11 +64,5 @@ namespace Angular.CSharp.Training.Data.Repository
 
             return newId;
         }
-        //public IEnumerable<Employee> GetEmployeesByDepartment(string departmentName)
-        //{
-        //    return context.Employees
-        //                  .Where(e => e.Department.DeptName == departmentName)
-        //                  .ToList();
-        //}
     }
 }

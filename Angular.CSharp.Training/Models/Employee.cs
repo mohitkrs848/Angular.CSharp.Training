@@ -50,6 +50,12 @@ namespace Angular.CSharp.Training.Models
         [Required]
         public string EmpDeptName { get; set; } // FK
 
+        [ForeignKey("Project")]
+        public int? ProjectId { get; set; }
+
+        public Project Project { get; set; }
+
+
         //public virtual Manager Manager { get; set; }
         //public virtual Department Department { get; set; }
     }
