@@ -1,157 +1,259 @@
-﻿<div ng-controller="EmployeeController" class="container mt-5">
-    <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .active-status {
+            background-color: lightgreen;
+        }
 
-    <!-- Buttons to open modals -->
-    <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Employee</button>
-    <button class="btn btn-secondary mb-4" ng-click="openSearchModal()">Search Employee</button>
-    <button class="btn btn-info mb-4" ng-click="clearSearch()">Show All Employees</button>
-    <!-- Export to Excel Button -->
-    <button class="btn btn-success mb-4" ng-click="exportToExcel()">Export to Excel</button>
+        .inactive-status {
+            background-color: lightcoral;
+        }
 
-    <!-- Employee Table -->
-    <table class="table table-bordered">
-        <thead>
-            <tr style="background-color:beige">
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Age</th>
-                <th>Email</th>
-                <th>Designation</th>
-                <th>ManagerID</th>
-                <th>DepartmentName</th>
-                <th>Status</th>
-                <th>Salary</th>
-                <th>Location</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="employee in employees">
-                <td>{{employee.Id}}</td>
-                <td>{{employee.EmpFirstName}}</td>
-                <td>{{employee.EmpLastName}}</td>
-                <td>{{employee.EmpAge}}</td>
-                <td>{{employee.EmpEmail}}</td>
-                <td>{{employee.EmpDesignation}}</td>
-                <td>{{employee.EmpManagerID}}</td>
-                <td>{{employee.EmpDeptName}}</td>
-                <td>{{employee.EmpStatus}}</td>
-                <td>{{employee.EmpSalary}}</td>
-                <td>{{employee.EmpLocation}}</td>
-                <td>
-                    <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm">Edit</button>
-                    <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        .dormant-status {
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="EmployeeController" class="container mt-5">
+        <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
 
-    <!-- Add/Edit Employee Modal -->
-    <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form ng-submit="saveEmployee()">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Employee' : 'Add Employee' }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpFirstName" class="form-control" placeholder="First Name" required>
+        <!-- Buttons to open modals -->
+        <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Employee</button>
+        <button class="btn btn-secondary mb-4" ng-click="openSearchModal()">Search Employee</button>
+        <button class="btn btn-info mb-4" ng-click="clearSearch()">Show All Employees</button>
+        <!-- Export to Excel Button -->
+        <button class="btn btn-success mb-4" ng-click="exportToExcel()">Export to Excel</button>
+
+        <!-- Employee Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background-color:beige">
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>ManagerID</th>
+                    <th>DepartmentName</th>
+                    <th>Status</th>
+                    <th>Salary</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees"
+                    ng-class="{
+                        'active-status': employee.EmpStatus === 'Active' || employee.EmpStatus === 'active',
+                        'inactive-status': employee.EmpStatus === 'Inactive' || employee.EmpStatus === 'inactive' || employee.EmpStatus === 'InActive' || employee.EmpStatus === 'inActive',
+                        'dormant-status': employee.EmpStatus === 'Dormant' || employee.EmpStatus === 'dormant'
+                    }">
+                    <td>{{employee.Id}}</td>
+                    <td>{{employee.EmpFirstName}}</td>
+                    <td>{{employee.EmpLastName}}</td>
+                    <td>{{employee.EmpAge}}</td>
+                    <td>{{employee.EmpEmail}}</td>
+                    <td>{{employee.EmpDesignation}}</td>
+                    <td>{{employee.EmpManagerID}}</td>
+                    <td>{{employee.EmpDeptName}}</td>
+                    <td>{{employee.EmpStatus}}</td>
+                    <td>{{employee.EmpSalary}}</td>
+                    <td>{{employee.EmpLocation}}</td>
+                    <td>
+                        <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm">Edit</button>
+                        <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add/Edit Employee Modal -->
+        <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form ng-submit="saveEmployee()">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Employee' : 'Add Employee' }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="First Name">First Name</label>
+                                    <input type="text" maxlength="20" ng-model="employee.EmpFirstName" class="form-control" placeholder="First Name" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Last Name">Last Name</label>
+                                    <input type="text" maxlength="20" ng-model="employee.EmpLastName" class="form-control" placeholder="Last Name" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpLastName" class="form-control" placeholder="Last Name" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="Age">Age</label>
+                                    <input type="number" max="60" min="18" ng-model="employee.EmpAge" class="form-control" placeholder="Age" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Email">Email</label>
+                                    <input type="email" ng-model="employee.EmpEmail" class="form-control" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="EmpDesignation">Designation</label>
+                                    <select ng-model="employee.EmpDesignation" class="form-control" required>
+                                        <option value="" selected>Select Designation</option>
+                                        <option value="Associate">Associate</option>
+                                        <option value="SE">Software Engineer</option>
+                                        <option value="SSE">Senior Engineer</option>
+                                        <option value="LE">Lead Engineer</option>
+                                        <option value="Manager">Manager</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Manager">Manager</label>
+                                    <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required
+                                           ng-disabled="employee.EmpDesignation === 'Manager'">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="EmpDeptName">Department</label>
+                                    <select ng-model="employee.EmpDeptName" class="form-control" required>
+                                        <option value="" selected>Select Department</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Engineering">Engineering</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="EmpStatus">Status</label>
+                                    <input type="text" ng-model="employee.EmpStatus" class="form-control" placeholder="Status" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="EmpSalary">Salary</label>
+                                    <input type="number" max="120000" min="20000" ng-model="employee.EmpSalary" class="form-control" placeholder="Salary" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="EmpLocation">Location</label>
+                                    <input type="text" ng-model="employee.EmpLocation" class="form-control" placeholder="Location" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="number" ng-model="employee.EmpAge" class="form-control" placeholder="Age" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="email" ng-model="employee.EmpEmail" class="form-control" placeholder="Email" required>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">{{ editing ? 'Update Employee' : 'Add Employee' }}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Employee Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form ng-submit="searchEmployees()">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="Email">Email</label>
+                                    <input type="text" ng-model="searchCriteria.email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ID">Employee ID</label>
+                                    <input type="number" ng-model="searchCriteria.id" class="form-control" placeholder="Employee ID">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="Name">Name</label>
+                                    <input type="text" ng-model="searchCriteria.name" class="form-control" placeholder="First or Last Name">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <select ng-model="employee.EmpDesignation" class="form-control" required>
-                                    <option value="" selected>Select Designation</option>
-                                    <option value="Associate">Associate</option>
-                                    <option value="SE">Software Engineer</option>
-                                    <option value="SSE">Senior Engineer</option>
-                                    <option value="LE">Lead Engineer</option>
-                                    <option value="Manager">Manager</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required
-                                       ng-disabled="employee.EmpDesignation === 'Manager'">
-                            </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Search Employee</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <select ng-model="employee.EmpDeptName" class="form-control" required>
-                                    <option value="" selected>Select Department</option>
-                                    <option value="HR">HR</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Engineering">Engineering</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpStatus" class="form-control" placeholder="Status" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="number" ng-model="employee.EmpSalary" class="form-control" placeholder="Salary" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" ng-model="employee.EmpLocation" class="form-control" placeholder="Location" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{ editing ? 'Update Employee' : 'Add Employee' }}</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Search Employee Modal -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form ng-submit="searchEmployees()">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <input type="text" ng-model="searchCriteria.email" class="form-control" placeholder="Email">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="number" ng-model="searchCriteria.id" class="form-control" placeholder="Employee ID">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="text" ng-model="searchCriteria.name" class="form-control" placeholder="First or Last Name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Search Employee</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        angular.module('employeeApp', [])
+            .controller('EmployeeController', function ($scope) {
+                // Example data
+                $scope.employees = [
+                    { Id: 1, EmpFirstName: 'John', EmpLastName: 'Doe', EmpAge: 28, EmpEmail: 'john.doe@example.com', EmpDesignation: 'SE', EmpManagerID: 2, EmpDeptName: 'Engineering', EmpStatus: 'Active', EmpSalary: 60000, EmpLocation: 'New York' },
+                    { Id: 2, EmpFirstName: 'Jane', EmpLastName: 'Smith', EmpAge: 35, EmpEmail: 'jane.smith@example.com', EmpDesignation: 'Manager', EmpManagerID: null, EmpDeptName: 'Sales', EmpStatus: 'Inactive', EmpSalary: 80000, EmpLocation: 'Los Angeles' },
+                    { Id: 3, EmpFirstName: 'Sam', EmpLastName: 'Wilson', EmpAge: 30, EmpEmail: 'sam.wilson@example.com', EmpDesignation: 'Associate', EmpManagerID: 1, EmpDeptName: 'HR', EmpStatus: 'Dormant', EmpSalary: 55000, EmpLocation: 'Chicago' }
+                ];
+
+                $scope.openAddEditModal = function (employee) {
+                    $scope.editing = !!employee;
+                    $scope.employee = employee ? angular.copy(employee) : {};
+                    $('#addEditModal').modal('show');
+                };
+
+                $scope.saveEmployee = function () {
+                    if ($scope.editing) {
+                        // Update existing employee
+                        let index = $scope.employees.findIndex(e => e.Id === $scope.employee.Id);
+                        if (index !== -1) {
+                            $scope.employees[index] = angular.copy($scope.employee);
+                        }
+                    } else {
+                        // Add new employee
+                        $scope.employee.Id = $scope.employees.length + 1; // simple ID assignment
+                        $scope.employees.push(angular.copy($scope.employee));
+                    }
+                    $('#addEditModal').modal('hide');
+                };
+
+                $scope.deleteEmployee = function (id) {
+                    $scope.employees = $scope.employees.filter(e => e.Id !== id);
+                };
+
+                $scope.openSearchModal = function () {
+                    $scope.searchCriteria = {};
+                    $('#searchModal').modal('show');
+                };
+
+                $scope.searchEmployees = function () {
+                    // Implement search functionality
+                    $('#searchModal').modal('hide');
+                };
+
+                $scope.clearSearch = function () {
+                    // Implement clear search functionality
+                };
+
+                $scope.exportToExcel = function () {
+                    // Implement export to Excel functionality
+                };
+            });
+    </script>
+</body>
+</html>

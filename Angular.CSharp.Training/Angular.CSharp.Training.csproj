@@ -125,6 +125,7 @@
     <Content Include="FrontEnd\Scripts\Controllers\filtersController.js" />
     <Content Include="FrontEnd\templates\dashboard-charts.html" />
     <Content Include="FrontEnd\templates\department.html" />
+    <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\mainController.js" />
