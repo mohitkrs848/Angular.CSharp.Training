@@ -129,6 +129,7 @@
     <Content Include="FrontEnd\templates\department.html" />
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
+    <Content Include="icons8-app-50.png" />
     <Content Include="Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\mainController.js" />

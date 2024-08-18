@@ -3,6 +3,8 @@
 <head>
     <title>Employee Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Favicon Link -->
+    <link rel="icon" type="image/x-icon" href="icons8-app-50.png">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -22,6 +24,20 @@
     <script src="FrontEnd/Scripts/Controllers/filtersController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/chartsController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/projectController.js"></script>
+
+    <style>
+        .active-status {
+            background-color: lightgreen;
+        }
+
+        .inactive-status {
+            background-color: lightcoral;
+        }
+
+        .dormant-status {
+            background-color: lightgrey;
+        }
+    </style>
 </head>
 <body ng-controller="MainController" class="d-flex flex-column min-vh-100">
     <!-- Static Header -->
@@ -60,7 +76,6 @@
         <div ng-view></div>
     </div>
 
-    <!-- Static Footer -->
     <!-- Static Footer -->
     <footer class="bg-dark text-white text-center p-1 mt-auto">
         <div class="container">

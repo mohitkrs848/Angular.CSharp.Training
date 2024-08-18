@@ -31,3 +31,10 @@ Project : ProjectID (PK), ProjectName, ProjectManagerID (FK), ProjectStatus
 Department : DeptID (PK), DeptName, 
 
 Manager : ManagerID (PK), ManagerName
+
+
+1. RoleId in table (1 -admin, 2 - manager, 3 - guest)
+2. Professional colours in MAin page. (light colours)
+3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon)))
+4. Authentication (Login, Logout, Session)
+5. User Preferences (based on role)
