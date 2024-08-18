@@ -9,6 +9,7 @@
     $scope.login = function () {
         if (AuthService.login($scope.credentials.username, $scope.credentials.password)) {
             $location.path("/employees");
+            console.log ("user is Logged in");
         } else {
             $scope.errorMessage = "Invalid username or password";
         }

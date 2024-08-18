@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .active-status {
-            background-color: lightgreen;
+            background-color: palegoldenrod;
         }
 
         .inactive-status {
-            background-color: lightcoral;
+            background-color: burlywood;
         }
 
         .dormant-status {
@@ -24,31 +24,32 @@
         <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
 
         <!-- Buttons to open modals -->
-        <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Employee</button>
-        <button class="btn btn-secondary mb-4" ng-click="openSearchModal()">Search Employee</button>
-        <button class="btn btn-info mb-4" ng-click="clearSearch()">Show All Employees</button>
+        <button class="btn btn-primary mb-4" ng-click="openAddEditModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(0, 123, 255, 0.7), rgba(0, 170, 255, 0.9));">Add Employee</button>
+        <button class="btn btn-secondary mb-4" ng-click="openSearchModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(108, 117, 125, 0.7), rgba(136, 136, 136, 0.9));">Search Employee</button>
+        <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(23, 162, 184, 0.7), rgba(51, 193, 222, 0.9));">Show All Employees</button>
         <!-- Export to Excel Button -->
-        <button class="btn btn-success mb-4" ng-click="exportToExcel()">Export to Excel</button>
+        <button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>
 
         <!-- Employee Table -->
         <table class="table table-bordered">
             <thead>
-                <tr style="background-color:beige">
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Age</th>
-                    <th>Email</th>
-                    <th>Designation</th>
-                    <th>ManagerID</th>
-                    <th>DepartmentName</th>
-                    <th>Status</th>
-                    <th>Salary</th>
-                    <th>Location</th>
-                    <th>ProjectID</th>
-                    <th>Actions</th>
+                <tr style="background: linear-gradient(45deg, #007bff, #00aaff); color: white; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                    <th style="padding: 12px 15px;">ID</th>
+                    <th style="padding: 12px 15px;">First Name</th>
+                    <th style="padding: 12px 15px;">Last Name</th>
+                    <th style="padding: 12px 15px;">Age</th>
+                    <th style="padding: 12px 15px;">Email</th>
+                    <th style="padding: 12px 15px;">Designation</th>
+                    <th style="padding: 12px 15px;">ManagerID</th>
+                    <th style="padding: 12px 15px;">DepartmentName</th>
+                    <th style="padding: 12px 15px;">Status</th>
+                    <th style="padding: 12px 15px;">Salary</th>
+                    <th style="padding: 12px 15px;">Location</th>
+                    <th style="padding: 12px 15px;">ProjectID</th>
+                    <th style="padding: 12px 15px;">Actions</th>
                 </tr>
             </thead>
+
             <tbody>
                 <tr ng-repeat="employee in employees"
                     ng-class="{
@@ -173,36 +174,38 @@
             </div>
         </div>
 
-    <!-- Search Employee Modal -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form ng-submit="searchEmployees()">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <input type="text" ng-model="searchCriteria.email" class="form-control" placeholder="Email">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="number" ng-model="searchCriteria.id" class="form-control" placeholder="Employee ID">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="text" ng-model="searchCriteria.name" class="form-control" placeholder="First or Last Name">
+        <!-- Search Employee Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form ng-submit="searchEmployees()">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <input type="text" ng-model="searchCriteria.email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <input type="number" ng-model="searchCriteria.id" class="form-control" placeholder="Employee ID">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <input type="text" ng-model="searchCriteria.name" class="form-control" placeholder="First or Last Name">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Search Employee</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Search Employee</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    </body>
+    </html>
