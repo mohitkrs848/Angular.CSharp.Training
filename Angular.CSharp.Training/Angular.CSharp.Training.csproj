@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -129,6 +132,7 @@
     <Content Include="FrontEnd\templates\department.html" />
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
+    <Content Include="FrontEnd\templates\register.html" />
     <Content Include="icons8-app-50.png" />
     <Content Include="Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
@@ -152,6 +156,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
     <Compile Include="Data\DemoDbContext.cs" />
     <Compile Include="Data\Repository\EmployeeRepository.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

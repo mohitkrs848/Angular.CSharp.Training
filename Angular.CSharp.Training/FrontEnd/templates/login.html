@@ -1,4 +1,16 @@
-﻿<div ng-controller="LoginController" class="container mt-5">
+﻿<div>
+    <h2>Login</h2>
+    <form ng-submit="login()">
+        <label>Email:</label>
+        <input type="email" ng-model="user.Email" required />
+        <label>Password:</label>
+        <input type="password" ng-model="user.Password" required />
+        <button type="submit">Login</button>
+    </form>
+    <a href="#!/register">Register</a>
+</div>
+
+<!--<div ng-controller="LoginController" class="container mt-5">
     <h2 class="mb-4">Login</h2>
     <form ng-submit="login()">
         <div class="form-group">
@@ -12,4 +24,4 @@
         <button type="submit" class="btn btn-primary">Login</button>
         <p class="text-danger mt-2" ng-if="errorMessage">{{ errorMessage }}</p>
     </form>
-</div>
+</div>-->
