@@ -47,8 +47,12 @@
                 <td>{{employee.EmpLocation}}</td>
                 <td>{{employee.ProjectId}}</td>
                 <td>
-                    <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm">Edit</button>
-                    <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
+                    <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm" style="padding: 2px; font-size: 16px;">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button ng-click="deleteEmployee(employee.Id)" class="btn btn-danger btn-sm" style="padding: 2px; font-size: 16px;">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
@@ -133,7 +137,9 @@
                                 <label for="EmpLocation">Location</label>
                                 <input type="text" ng-model="employee.EmpLocation" class="form-control" placeholder="Location" required>
                             </div>
-                            <div class="form-row">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
                                 <label for="ProjectID">Project</label>
                                 <select ng-model="employee.ProjectId" class="form-control" required>
                                     <option value="" selected>Select Project</option>
