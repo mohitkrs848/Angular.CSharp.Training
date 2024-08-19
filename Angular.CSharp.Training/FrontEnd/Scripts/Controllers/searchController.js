@@ -1,5 +1,4 @@
-﻿// Scripts/Controllers/searchController.js
-app.controller('SearchController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
+﻿app.controller('SearchController', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
     $scope.employees = [];
     $scope.search = {};
 

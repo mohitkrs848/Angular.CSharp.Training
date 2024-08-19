@@ -51,13 +51,6 @@ namespace Angular.CSharp.Training.Controllers
             return Ok(employee);
         }
 
-        //[HttpGet]
-        //[Route("")]
-        //public IEnumerable<Employee> GetAllEmployees()
-        //{
-        //    return employeeAgent.GetAllEmployees();
-        //}
-
         [HttpPut]
         [Route("{id}")]
         public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee employee)

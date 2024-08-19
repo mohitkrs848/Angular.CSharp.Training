@@ -54,9 +54,5 @@ namespace Angular.CSharp.Training.Models
         public int? ProjectId { get; set; }
 
         public Project Project { get; set; }
-
-
-        //public virtual Manager Manager { get; set; }
-        //public virtual Department Department { get; set; }
     }
 }
