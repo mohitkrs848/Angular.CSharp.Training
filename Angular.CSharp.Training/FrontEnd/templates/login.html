@@ -1,11 +1,15 @@
 ﻿<div ng-controller="LoginController" class="container mt-5">
-    <h2>Login</h2>
+    <h2 class="mb-4">Login</h2>
     <form ng-submit="login()">
-        <label>Email:</label>
-        <input type="email" ng-model="user.Email" required />
-        <label>Password:</label>
-        <input type="password" ng-model="user.Password" required />
-        <button type="submit">Login</button>
+        <div class="form-group">
+            <label>Enter your Email</label>
+            <input type="email" ng-model="user.Email" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label>Enter your Password</label>
+            <input type="password" ng-model="user.Password" class="form-control" required />
+        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
+        <a href="#!/register">Register</a>
     </form>
-    <a href="#!/register">Register</a>
 </div>
