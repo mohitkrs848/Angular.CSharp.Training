@@ -28,11 +28,11 @@
 
     <style>
         .active-status {
-            background-color: lightgreen;
+            background-color: palegoldenrod;
         }
 
         .inactive-status {
-            background-color: lightcoral;
+            background-color: burlywood;
         }
 
         .dormant-status {
@@ -67,8 +67,12 @@
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/contact">Contact Us</a>
                 </li>
-            </ul>
-            <button class="btn btn-danger ml-auto" ng-click="logout()" ng-if="isAuthenticated()">Logout</button>
+                </ul>
+            <button class="btn btn-danger ml-auto" ng-click="logout()" ng-if="isAuthenticated()"
+                    style="border-radius: 15px; background: linear-gradient(45deg, rgba(220, 53, 69, 0.7), rgba(255, 99, 71, 0.7));">
+                Logout
+            </button>
+
         </div>
     </nav>
 
