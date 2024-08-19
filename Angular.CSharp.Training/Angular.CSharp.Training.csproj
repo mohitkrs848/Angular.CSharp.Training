@@ -153,7 +153,6 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
@@ -161,7 +160,6 @@
     <Compile Include="Data\Repository\EmployeeRepository.cs" />
     <Compile Include="Data\Repository\IEmployeeRepository.cs" />
     <Content Include="FrontEnd\Scripts\app.js" />
-    <Content Include="FrontEnd\Scripts\Controllers\searchController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\loginController.js" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

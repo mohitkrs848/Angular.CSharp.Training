@@ -2,11 +2,7 @@
 using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace Angular.CSharp.Training.Controllers
