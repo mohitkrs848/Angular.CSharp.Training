@@ -105,46 +105,63 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         });
     };
 
-// Delete employee
-$scope.deleteEmployee = function (id) {
-    EmployeeService.deleteEmployee(id).then(function () {
-        $scope.loadEmployees();
-        alert('Employee deleted successfully');
-        console.log('Employee deleted successfully');
-    }, function (error) {
-        console.error('Error deleting employee:', error);
-        alert('Error deleting employee: ' + error.data);
-        console.log('Error deleting employee: ' + error.data);
-    });
-};
+    // Delete employee
+    $scope.deleteEmployee = function (id) {
+        EmployeeService.deleteEmployee(id).then(function () {
+            $scope.loadEmployees();
+            alert('Employee deleted successfully');
+            console.log('Employee deleted successfully');
+        }, function (error) {
+            console.error('Error deleting employee:', error);
+            alert('Error deleting employee: ' + error.data);
+            console.log('Error deleting employee: ' + error.data);
+        });
+    };
 
-// Initial load
+    // Initial load
     $scope.loadEmployees();
-    $scope.getAllProjects(); 
+    $scope.getAllProjects();
 
-// Export employees to Excel
-$scope.exportToExcel = function () {
-    var wb = XLSX.utils.book_new();
-    var ws = XLSX.utils.json_to_sheet($scope.employees);
+    // Export employees to Excel
+    $scope.selectedColumns = {}; // Store selected columns
 
-    XLSX.utils.book_append_sheet(wb, ws, 'Employees');
+    $scope.exportToExcel = function () {
+        $('#columnSelectModal').modal('show'); // Open the modal to select columns
+    };
 
-    // Create a binary string from the workbook
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    $scope.confirmExport = function () {
+        var selectedKeys = Object.keys($scope.selectedColumns).filter(key => $scope.selectedColumns[key]);
 
-    // Function to convert binary string to array buffer
-    function s2ab(s) {
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-        return buf;
-    }
+        // Filter the employees based on selected columns
+        var filteredEmployees = $scope.employees.map(function (employee) {
+            var filteredEmployee = {};
+            selectedKeys.forEach(function (key) {
+                filteredEmployee[key] = employee[key];
+            });
+            return filteredEmployee;
+        });
 
-    // Create a Blob from the buffer and trigger the download
-    var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-    var link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'employees.xlsx';
-    link.click();
-};
+        // Create a new workbook and add the filtered data
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.json_to_sheet(filteredEmployees);
+        XLSX.utils.book_append_sheet(wb, ws, 'Employees');
+
+        // Generate the Excel file and trigger the download
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'employees_filtered.xlsx';
+        link.click();
+
+        $('#columnSelectModal').modal('hide'); // Close the modal after export
+    };
 }]);
