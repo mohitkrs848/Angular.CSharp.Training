@@ -17,7 +17,6 @@ namespace Angular.CSharp.Training.Controllers
         private EmployeeAgent employeeAgent;
 
         protected readonly DemoDbContext context;
-        //protected readonly DbSet<T> dbSet;
 
         public EmployeeController(EmployeeAgent employeeAgent)
         {
