@@ -38,3 +38,4 @@ Manager : ManagerID (PK), ManagerName
 3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon)))
 4. Authentication (Login, Logout, Session)
 5. User Preferences (based on role)
+6. Filter on excel table
