@@ -49,3 +49,9 @@ Manager : ManagerID (PK), ManagerName
 Role in User table
 Take input in Register page for role or any other page which only one admin user can access and then he can make other users as admin from the user table.
 First admin user we can create in the Database itself.
+
+
+issues: 
+1. Dynamic filtering based on Department and designation
+2. MAnagerID not becoming null if we change the designation
+3. ProjectID is coming in the table despite of filling the ProjectName
