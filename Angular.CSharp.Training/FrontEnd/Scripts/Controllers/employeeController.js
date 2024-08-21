@@ -8,11 +8,26 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.currentPage = 1;
     $scope.itemsPerPage = 10;
     $scope.totalItems = 0;
-    // Initialize sorting parameters
     $scope.sortColumn = 'Id';
     $scope.reverseSort = false;
 
-    // Function to sort by a specific column
+    // Initialize available columns for export
+    $scope.availableColumns = [
+        { name: 'ID', field: 'Id', selected: true },
+        { name: 'First Name', field: 'EmpFirstName', selected: true },
+        { name: 'Last Name', field: 'EmpLastName', selected: true },
+        { name: 'Age', field: 'EmpAge', selected: true },
+        { name: 'Email', field: 'EmpEmail', selected: true },
+        { name: 'Designation', field: 'EmpDesignation', selected: true },
+        { name: 'ManagerID', field: 'EmpManagerID', selected: true },
+        { name: 'Department Name', field: 'EmpDeptName', selected: true },
+        { name: 'Status', field: 'EmpStatus', selected: true },
+        { name: 'Salary', field: 'EmpSalary', selected: true },
+        { name: 'Location', field: 'EmpLocation', selected: true },
+        { name: 'ProjectID', field: 'ProjectId', selected: true }
+    ];
+
+    // Sorting function
     $scope.sortBy = function (column) {
         if ($scope.sortColumn === column) {
             $scope.reverseSort = !$scope.reverseSort;
@@ -20,7 +35,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             $scope.sortColumn = column;
             $scope.reverseSort = false;
         }
-        console.log('Sorting by:', $scope.sortColumn, 'Reverse:', $scope.reverseSort);
     };
 
     // Load employees
@@ -28,7 +42,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         EmployeeService.getAllEmployees().then(function (response) {
             $scope.employees = response.data;
             $scope.totalItems = $scope.employees.length;
-            $scope.pageChanged(); // Update filtered employees
+            $scope.pageChanged();
         }, function (error) {
             alert('Error loading employees: ' + error.data);
         });
@@ -49,7 +63,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             .then(function (response) {
                 $scope.employees = response.data;
                 $scope.totalItems = $scope.employees.length;
-                $scope.pageChanged(); // Update filtered employees
+                $scope.pageChanged();
                 $('#searchModal').modal('hide');
             }, function (error) {
                 alert('Error searching employees: ' + error.data);
@@ -87,7 +101,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
                 reject();
             }
 
-            // Check email uniqueness
             EmployeeService.isEmailUnique($scope.employee.EmpEmail, $scope.editing ? $scope.employee.Id : null).then(function (response) {
                 if (!response.data.isUnique) {
                     alert('The email is already taken.');
@@ -111,18 +124,16 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
                     $('#addEditModal').modal('hide');
                     alert('Employee updated successfully');
                 }, function (error) {
-                    console.error('Error updating employee:', error);
                     alert('Error updating employee: ' + error.data);
                 });
             } else {
                 EmployeeService.createEmployee($scope.employee).then(function (response) {
                     $scope.employees.push(response.data);
                     $scope.totalItems = $scope.employees.length;
-                    $scope.pageChanged(); // Update filtered employees
+                    $scope.pageChanged();
                     $('#addEditModal').modal('hide');
                     alert('Employee created successfully');
                 }, function (error) {
-                    console.error('Error adding employee:', error);
                     alert('Error adding employee: ' + error.data);
                 });
             }
@@ -137,7 +148,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             $scope.loadEmployees();
             alert('Employee deleted successfully');
         }, function (error) {
-            console.error('Error deleting employee:', error);
             alert('Error deleting employee: ' + error.data);
         });
     };
@@ -149,7 +159,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         $scope.filteredEmployees = $scope.employees.slice(begin, end);
     };
 
-    // Go to previous page
+    // Pagination controls
     $scope.prevPage = function () {
         if ($scope.currentPage > 1) {
             $scope.currentPage--;
@@ -157,7 +167,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         }
     };
 
-    // Go to next page
     $scope.nextPage = function () {
         if ($scope.currentPage < Math.ceil($scope.totalItems / $scope.itemsPerPage)) {
             $scope.currentPage++;
@@ -169,13 +178,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         return Math.ceil($scope.totalItems / $scope.itemsPerPage);
     };
 
-    // Initial load
-    $scope.loadEmployees();
-    $scope.getAllProjects();
-
-    // Export to Excel
-    $scope.selectedColumns = {}; // Store selected columns
-
+    // Export functionality
     $scope.exportToExcel = function () {
         $('#columnSelectModal').modal('show');
     };
@@ -183,7 +186,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.confirmExport = function () {
         var selectedKeys = Object.keys($scope.selectedColumns).filter(key => $scope.selectedColumns[key]);
 
-        // Filter employees based on selected columns
         var filteredEmployees = $scope.employees.map(function (employee) {
             var filteredEmployee = {};
             selectedKeys.forEach(function (key) {
@@ -192,12 +194,10 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             return filteredEmployee;
         });
 
-        // Create workbook and add data
         var wb = XLSX.utils.book_new();
         var ws = XLSX.utils.json_to_sheet(filteredEmployees);
         XLSX.utils.book_append_sheet(wb, ws, 'Employees');
 
-        // Generate Excel file
         var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
         function s2ab(s) {
@@ -215,4 +215,81 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
 
         $('#columnSelectModal').modal('hide');
     };
+
+    // Open the export modal
+    $scope.openExportModal = function () {
+        $('#exportModal').modal('show');
+    };
+
+    $scope.exportData = function () {
+        let selectedColumns = $scope.availableColumns.filter(column => column.selected);
+        let format = $scope.exportFormat;
+
+        if (format === 'csv') {
+            exportToCSV(selectedColumns);
+        } else if (format === 'pdf') {
+            exportToPDF(selectedColumns);
+        } else if (format === 'excel') {
+            exportToExcel(selectedColumns);
+        }
+
+        $('#exportModal').modal('hide');
+    };
+
+    function exportToCSV(columns) {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        let headers = columns.map(col => col.name).join(",") + "\n";
+        csvContent += headers;
+
+        $scope.employees.forEach(function (employee) {
+            let row = columns.map(col => employee[col.field]).join(",") + "\n";
+            csvContent += row;
+        });
+
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "employees.csv");
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    function exportToPDF(columns) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        let headers = columns.map(col => col.name);
+        let rows = [];
+
+        $scope.employees.forEach(function (employee) {
+            let row = columns.map(col => employee[col.field]);
+            rows.push(row);
+        });
+
+        doc.autoTable({
+            head: [headers],
+            body: rows
+        });
+
+        doc.save('employees.pdf');
+    }
+
+    function exportToExcel(columns) {
+        let filteredEmployees = $scope.employees.map(employee => {
+            let filtered = {};
+            columns.forEach(col => {
+                filtered[col.name] = employee[col.field];
+            });
+            return filtered;
+        });
+
+        let ws = XLSX.utils.json_to_sheet(filteredEmployees);
+        let wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Employees");
+        XLSX.writeFile(wb, "employees.xlsx");
+    }
+
+    // Initialize data
+    $scope.loadEmployees();
+    $scope.getAllProjects();
 }]);

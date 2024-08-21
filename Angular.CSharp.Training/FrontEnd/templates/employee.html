@@ -6,7 +6,8 @@
     <button class="btn btn-secondary mb-4" ng-click="openSearchModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(108, 117, 125, 0.7), rgba(136, 136, 136, 0.9));">Search Employee</button>
     <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(23, 162, 184, 0.7), rgba(51, 193, 222, 0.9));">Show All Employees</button>
     <!-- Export to Excel Button -->
-    <button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>
+    <!--<button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>-->
+    <button class="btn btn-primary mb-4" ng-click="openExportModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export</button>
 
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">
@@ -224,6 +225,41 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="confirmExport()">Export to Excel</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">Export Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exportFormat">Select Format</label>
+                            <select class="form-control" id="exportFormat" ng-model="exportFormat">
+                                <option value="csv">CSV</option>
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Columns to Export</label>
+                            <div ng-repeat="column in availableColumns">
+                                <input type="checkbox" ng-model="column.selected"> {{column.name}}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="exportData()">Export</button>
                 </div>
             </div>
         </div>
