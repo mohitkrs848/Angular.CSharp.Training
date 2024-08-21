@@ -34,8 +34,18 @@ Manager : ManagerID (PK), ManagerName
 
 
 1. RoleId in table (1 -admin, 2 - manager, 3 - guest)
-2. Professional colours in MAin page. (light colours)
+2. Professional colours in Main page. (light colours)
 3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon)))
 4. Authentication (Login, Logout, Session)
 5. User Preferences (based on role)
 6. Filter on excel table
+7. pagination
+8. Sorting
+9. Add more charts, graphs using queries
+10. Send email/ attachment
+11. Export to excel/csv/pdf
+
+
+Role in User table
+Take input in Register page for role or any other page which only one admin user can access and then he can make other users as admin from the user table.
+First admin user we can create in the Database itself.

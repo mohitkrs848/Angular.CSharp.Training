@@ -59,6 +59,11 @@
         </tbody>
     </table>
 
+    <!-- Pagination Controls -->
+    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="5"
+                    class="pagination-sm" boundary-links="true" items-per-page="itemsPerPage">
+    </uib-pagination>
+
     <!-- Add/Edit Employee Modal -->
     <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
         <div class="modal-dialog">

@@ -156,6 +156,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Content Include="Data\DBqueries.txt" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
     <Compile Include="Data\DemoDbContext.cs" />
     <Compile Include="Data\Repository\EmployeeRepository.cs" />
