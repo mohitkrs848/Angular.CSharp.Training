@@ -29,7 +29,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="employee in employees"
+            <tr ng-repeat="employee in filteredEmployees"
                 ng-class="{
                         'active-status': employee.EmpStatus === 'Active' || employee.EmpStatus === 'active',
                         'inactive-status': employee.EmpStatus === 'Inactive' || employee.EmpStatus === 'inactive' || employee.EmpStatus === 'InActive' || employee.EmpStatus === 'inActive',
@@ -57,12 +57,18 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="13">
+                    <div class="pagination-controls">
+                        <button class="btn btn-primary" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
+                        <span>Page {{currentPage}} of {{totalPages()}}</span>
+                        <button class="btn btn-primary" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-
-    <!-- Pagination Controls -->
-    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="5"
-                    class="pagination-sm" boundary-links="true" items-per-page="itemsPerPage">
-    </uib-pagination>
 
     <!-- Add/Edit Employee Modal -->
     <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
