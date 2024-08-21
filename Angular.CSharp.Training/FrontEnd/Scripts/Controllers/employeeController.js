@@ -178,42 +178,11 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         return Math.ceil($scope.totalItems / $scope.itemsPerPage);
     };
 
-    // Export functionality
-    $scope.exportToExcel = function () {
-        $('#columnSelectModal').modal('show');
-    };
 
-    $scope.confirmExport = function () {
-        var selectedKeys = Object.keys($scope.selectedColumns).filter(key => $scope.selectedColumns[key]);
-
-        var filteredEmployees = $scope.employees.map(function (employee) {
-            var filteredEmployee = {};
-            selectedKeys.forEach(function (key) {
-                filteredEmployee[key] = employee[key];
-            });
-            return filteredEmployee;
+    $scope.selectAllColumns = function (selectAll) {
+        $scope.availableColumns.forEach(function (column) {
+            column.selected = selectAll;
         });
-
-        var wb = XLSX.utils.book_new();
-        var ws = XLSX.utils.json_to_sheet(filteredEmployees);
-        XLSX.utils.book_append_sheet(wb, ws, 'Employees');
-
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
-        }
-
-        var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'employees_filtered.xlsx';
-        link.click();
-
-        $('#columnSelectModal').modal('hide');
     };
 
     // Open the export modal
@@ -224,6 +193,12 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.exportData = function () {
         let selectedColumns = $scope.availableColumns.filter(column => column.selected);
         let format = $scope.exportFormat;
+
+        // Only proceed if columns are selected
+        if (selectedColumns.length === 0) {
+            alert('Please select at least one column to export.');
+            return;
+        }
 
         if (format === 'csv') {
             exportToCSV(selectedColumns);
