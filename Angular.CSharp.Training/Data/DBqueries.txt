@@ -56,3 +56,47 @@ BEGIN
 
     SET @i = @i + 1;
 END;
+
+
+
+
+////////////////
+/****** Script for SelectTopNRows command from SSMS  ******/
+INSERT INTO [AngularCSharpDB].[dbo].[Employees]
+(Id, EmpFirstName, EmpLastName, EmpAge, EmpEmail, EmpDesignation, EmpSalary, EmpLocation, EmpStatus, EmpDeptName, EmpManagerID, ProjectId)
+VALUES 
+    (100000, 'FirstManager', 'LastManager', 45, 'manager@example.com', 'Manager', 90000, 'City1', 'Active', 'Engineering', NULL, (SELECT TOP 1 Id FROM [AngularCSharpDB].[dbo].Projects ORDER BY NEWID()));
+
+DECLARE @i INT = 2;
+
+WHILE @i <= 100
+BEGIN
+    DECLARE @RandomProjectId INT = (SELECT TOP 1 Id FROM [AngularCSharpDB].[dbo].Projects ORDER BY NEWID());
+    DECLARE @EmpDesignation NVARCHAR(50) = CASE WHEN @i % 5 = 1 THEN 'Associate'
+                                                WHEN @i % 5 = 2 THEN 'Software Engineer'
+                                                WHEN @i % 5 = 3 THEN 'Senior Engineer'
+                                                WHEN @i % 5 = 4 THEN 'Lead Engineer'
+                                                ELSE 'Manager' END;
+    DECLARE @EmpDeptName NVARCHAR(50) = CASE WHEN @i % 3 = 1 THEN 'HR'
+                                             WHEN @i % 3 = 2 THEN 'Sales'
+                                             ELSE 'Engineering' END;
+    DECLARE @EmpStatus NVARCHAR(50) = CASE WHEN @i % 3 = 1 THEN 'Active'
+                                           WHEN @i % 3 = 2 THEN 'Inactive'
+                                           ELSE 'Dormant' END;
+
+    DECLARE @EmpManagerID INT = NULL;
+    IF @EmpDesignation != 'Manager'
+    BEGIN
+        -- Select a random Manager as the EmpManagerID
+        DECLARE @RandomManagerId INT = (SELECT TOP 1 Id FROM [AngularCSharpDB].[dbo].[Employees] WHERE EmpDesignation = 'Manager' ORDER BY NEWID());
+        SET @EmpManagerID = @RandomManagerId;
+    END
+
+    INSERT INTO [AngularCSharpDB].[dbo].[Employees] (Id, EmpFirstName, EmpLastName, EmpAge, EmpEmail, EmpDesignation, EmpSalary, EmpLocation, EmpStatus, EmpDeptName, EmpManagerID, ProjectId)
+    VALUES 
+        (100000 + @i, 'FirstName' + CAST(@i AS NVARCHAR(10)), 'LastName' + CAST(@i AS NVARCHAR(10)), 
+        18 + (@i % 43), 'employee' + CAST(@i AS NVARCHAR(10)) + '@example.com', @EmpDesignation, 
+        20000 + (@i % 80000), 'City' + CAST(@i AS NVARCHAR(10)), @EmpStatus, @EmpDeptName, @EmpManagerID, @RandomProjectId);
+
+    SET @i = @i + 1;
+END;
