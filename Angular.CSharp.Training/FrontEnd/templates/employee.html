@@ -12,24 +12,25 @@
     <table class="table table-bordered" style="width: 100%;">
         <thead>
             <tr style="background-color: beige; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-                <th style="padding: 12px 15px;">ID</th>
-                <th style="padding: 12px 15px;">First Name</th>
-                <th style="padding: 12px 15px;">Last Name</th>
-                <th style="padding: 12px 15px;">Age</th>
-                <th style="padding: 12px 15px;">Email</th>
-                <th style="padding: 12px 15px;">Designation</th>
-                <th style="padding: 12px 15px;">ManagerID</th>
-                <th style="padding: 12px 15px;">DepartmentName</th>
-                <th style="padding: 12px 15px;">Status</th>
-                <th style="padding: 12px 15px;">Salary</th>
-                <th style="padding: 12px 15px;">Location</th>
-                <th style="padding: 12px 15px;">ProjectID</th>
+                <!-- Add ng-click directives to headers for sorting -->
+                <th style="padding: 12px 15px;" ng-click="sortBy('Id')">ID</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpFirstName')">First Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpLastName')">Last Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpAge')">Age</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpEmail')">Email</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpDesignation')">Designation</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpManagerID')">ManagerID</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpDeptName')">Department Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpStatus')">Status</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpSalary')">Salary</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpLocation')">Location</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('ProjectId')">ProjectID</th>
                 <th style="padding: 12px 15px;">Actions</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="employee in filteredEmployees"
+            <tr ng-repeat="employee in filteredEmployees | orderBy:sortColumn:reverseSort"
                 ng-class="{
                         'active-status': employee.EmpStatus === 'Active' || employee.EmpStatus === 'active',
                         'inactive-status': employee.EmpStatus === 'Inactive' || employee.EmpStatus === 'inactive' || employee.EmpStatus === 'InActive' || employee.EmpStatus === 'inActive',

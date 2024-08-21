@@ -8,6 +8,20 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.currentPage = 1;
     $scope.itemsPerPage = 10;
     $scope.totalItems = 0;
+    // Initialize sorting parameters
+    $scope.sortColumn = 'Id';
+    $scope.reverseSort = false;
+
+    // Function to sort by a specific column
+    $scope.sortBy = function (column) {
+        if ($scope.sortColumn === column) {
+            $scope.reverseSort = !$scope.reverseSort;
+        } else {
+            $scope.sortColumn = column;
+            $scope.reverseSort = false;
+        }
+        console.log('Sorting by:', $scope.sortColumn, 'Reverse:', $scope.reverseSort);
+    };
 
     // Load employees
     $scope.loadEmployees = function () {
