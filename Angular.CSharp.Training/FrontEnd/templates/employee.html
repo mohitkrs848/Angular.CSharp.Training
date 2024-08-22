@@ -63,9 +63,9 @@
             <tr>
                 <td colspan="13">
                     <div class="pagination-controls">
-                        <button class="btn btn-primary" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
+                        <button class="btn btn-primary" style="border-radius: 15px" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
                         <span>Page {{currentPage}} of {{totalPages()}}</span>
-                        <button class="btn btn-primary" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
+                        <button class="btn btn-primary" style="border-radius: 15px" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
                     </div>
                 </td>
             </tr>
@@ -230,7 +230,7 @@
                                 <input type="checkbox" ng-model="selectAll" ng-change="selectAllColumns(selectAll)"> Select All
                             </div>
                             <div ng-repeat="column in availableColumns">
-                                <input type="checkbox" ng-model="column.selected"> {{column.name}}
+                                <input type="checkbox" ng-model="column.selected" ng-change="updateSelectAll()"> {{column.name}}
                             </div>
                         </div>
                     </form>
@@ -242,6 +242,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Toast Container -->
     <div aria-live="polite" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 1050;">

@@ -10,21 +10,22 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.totalItems = 0;
     $scope.sortColumn = 'Id';
     $scope.reverseSort = false;
+    $scope.selectAll = false;
 
     // Initialize available columns for export
     $scope.availableColumns = [
-        { name: 'ID', field: 'Id', selected: true },
-        { name: 'First Name', field: 'EmpFirstName', selected: true },
-        { name: 'Last Name', field: 'EmpLastName', selected: true },
-        { name: 'Age', field: 'EmpAge', selected: true },
-        { name: 'Email', field: 'EmpEmail', selected: true },
-        { name: 'Designation', field: 'EmpDesignation', selected: true },
-        { name: 'ManagerID', field: 'EmpManagerID', selected: true },
-        { name: 'Department Name', field: 'EmpDeptName', selected: true },
-        { name: 'Status', field: 'EmpStatus', selected: true },
-        { name: 'Salary', field: 'EmpSalary', selected: true },
-        { name: 'Location', field: 'EmpLocation', selected: true },
-        { name: 'ProjectID', field: 'ProjectId', selected: true }
+        { name: 'ID', field: 'Id', selected: false },
+        { name: 'First Name', field: 'EmpFirstName', selected: false },
+        { name: 'Last Name', field: 'EmpLastName', selected: false },
+        { name: 'Age', field: 'EmpAge', selected: false },
+        { name: 'Email', field: 'EmpEmail', selected: false },
+        { name: 'Designation', field: 'EmpDesignation', selected: false },
+        { name: 'ManagerID', field: 'EmpManagerID', selected: false },
+        { name: 'Department Name', field: 'EmpDeptName', selected: false },
+        { name: 'Status', field: 'EmpStatus', selected: false },
+        { name: 'Salary', field: 'EmpSalary', selected: false },
+        { name: 'Location', field: 'EmpLocation', selected: false },
+        { name: 'ProjectID', field: 'ProjectId', selected: false }
     ];
 
     $scope.toasts = [];
@@ -206,11 +207,21 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     };
 
     $scope.selectAllColumns = function (selectAll) {
-        $scope.availableColumns.forEach(function (column) {
+        angular.forEach($scope.availableColumns, function (column) {
             column.selected = selectAll;
         });
     };
 
+    $scope.updateSelectAll = function () {
+        $scope.selectAll = $scope.availableColumns.every(function (column) {
+            return column.selected;
+        });
+    };
+    $scope.$watch('availableColumns', function (newValue, oldValue) {
+        if (newValue !== oldValue) {
+            $scope.updateSelectAll();
+        }
+    }, true);
     // Open the export modal
     $scope.openExportModal = function () {
         $('#exportModal').modal('show');

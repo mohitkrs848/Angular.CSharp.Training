@@ -5,11 +5,11 @@
             <form ng-submit="login()">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" ng-model="user.Email" class="form-control" required />
+                    <input type="email" id="email" ng-model="user.Email" class="form-control" placeholder="Enter your Email" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" ng-model="user.Password" class="form-control" required />
+                    <input type="password" id="password" ng-model="user.Password" class="form-control" placeholder="Enter your Password" required />
                 </div>
                 <button class="btn btn-primary w-100 mt-3" type="submit">Login</button>
                 <div class="text-center mt-3">
@@ -19,21 +19,3 @@
         </div>
     </div>
 </div>
-
-
-
-<!--<div ng-controller="LoginController" class="container mt-5">
-    <h2 class="mb-4">Login</h2>
-    <form ng-submit="login()">
-        <div class="form-group">
-            <label>Enter your Email</label>
-            <input type="email" ng-model="user.Email" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label>Enter your Password</label>
-            <input type="password" ng-model="user.Password" class="form-control" required />
-        </div>
-        <button class="btn btn-primary" type="submit">Login</button>
-        <a href="#!/register">Register</a>
-    </form>
-</div>-->
