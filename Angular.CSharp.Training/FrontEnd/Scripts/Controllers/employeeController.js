@@ -27,6 +27,33 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         { name: 'ProjectID', field: 'ProjectId', selected: true }
     ];
 
+    $scope.toasts = [];
+
+    // Function to show a toast notification
+    $scope.showToast = function (title, message, duration) {
+        $scope.toasts.push({
+            title: title,
+            message: message,
+            time: new Date().toLocaleTimeString(),
+            show: true
+        });
+
+        // Automatically hide the toast after the specified duration
+        setTimeout(function () {
+            $scope.dismissToast($scope.toasts[0]);
+        }, duration);
+    };
+
+    // Function to dismiss a toast notification
+    $scope.dismissToast = function (toast) {
+        toast.show = false;
+        // Remove the toast from the array after fade out
+        setTimeout(function () {
+            $scope.toasts = $scope.toasts.filter(t => t !== toast);
+            $scope.$apply(); // Apply scope changes
+        }, 300); // Adjust according to your fade-out duration
+    };
+
     // Sorting function
     $scope.sortBy = function (column) {
         if ($scope.sortColumn === column) {
@@ -44,7 +71,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             $scope.totalItems = $scope.employees.length;
             $scope.pageChanged();
         }, function (error) {
-            alert('Error loading employees: ' + error.data);
+            $scope.showToast('Error', 'Error loading employees: ' + error.data, 5000);
         });
     };
 
@@ -53,7 +80,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         ProjectService.getAllProjects().then(function (response) {
             $scope.projects = response.data;
         }, function (error) {
-            console.error('Error fetching projects:', error);
+            $scope.showToast('Error', 'Error fetching projects: ' + error.data, 5000);
         });
     };
 
@@ -66,7 +93,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
                 $scope.pageChanged();
                 $('#searchModal').modal('hide');
             }, function (error) {
-                alert('Error searching employees: ' + error.data);
+                $scope.showToast('Error', 'Error searching employees: ' + error.data, 5000);
             });
     };
 
@@ -93,23 +120,23 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.validateEmployee = function () {
         return new Promise(function (resolve, reject) {
             if ($scope.employee.EmpAge < 18 || $scope.employee.EmpAge > 60) {
-                alert('Employee age must be between 18 and 60.');
+                $scope.showToast('Validation Error', 'Employee age must be between 18 and 60.', 5000);
                 reject();
             }
             if ($scope.employee.EmpSalary < 10000 || $scope.employee.EmpSalary > 10000000) {
-                alert('Employee salary must be between 10000 and 10000000.');
+                $scope.showToast('Validation Error', 'Employee salary must be between 10000 and 10000000.', 5000);
                 reject();
             }
 
             EmployeeService.isEmailUnique($scope.employee.EmpEmail, $scope.editing ? $scope.employee.Id : null).then(function (response) {
                 if (!response.data.isUnique) {
-                    alert('The email is already taken.');
+                    $scope.showToast('Validation Error', 'The email is already taken.', 5000);
                     reject();
                 } else {
                     resolve();
                 }
             }, function (error) {
-                alert('Error checking email uniqueness: ' + error.data);
+                $scope.showToast('Error', 'Error checking email uniqueness: ' + error.data, 5000);
                 reject();
             });
         });
@@ -122,9 +149,9 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
                 EmployeeService.updateEmployee($scope.employee.Id, $scope.employee).then(function () {
                     $scope.loadEmployees();
                     $('#addEditModal').modal('hide');
-                    alert('Employee updated successfully');
+                    $scope.showToast('Success', 'Employee updated successfully', 5000);
                 }, function (error) {
-                    alert('Error updating employee: ' + error.data);
+                    $scope.showToast('Error', 'Error updating employee: ' + error.data, 5000);
                 });
             } else {
                 EmployeeService.createEmployee($scope.employee).then(function (response) {
@@ -132,9 +159,9 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
                     $scope.totalItems = $scope.employees.length;
                     $scope.pageChanged();
                     $('#addEditModal').modal('hide');
-                    alert('Employee created successfully');
+                    $scope.showToast('Success', 'Employee created successfully', 5000);
                 }, function (error) {
-                    alert('Error adding employee: ' + error.data);
+                    $scope.showToast('Error', 'Error adding employee: ' + error.data, 5000);
                 });
             }
         }).catch(function () {
@@ -146,9 +173,9 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     $scope.deleteEmployee = function (id) {
         EmployeeService.deleteEmployee(id).then(function () {
             $scope.loadEmployees();
-            alert('Employee deleted successfully');
+            $scope.showToast('Success', 'Employee deleted successfully', 5000);
         }, function (error) {
-            alert('Error deleting employee: ' + error.data);
+            $scope.showToast('Error', 'Error deleting employee: ' + error.data, 5000);
         });
     };
 
@@ -178,7 +205,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         return Math.ceil($scope.totalItems / $scope.itemsPerPage);
     };
 
-
     $scope.selectAllColumns = function (selectAll) {
         $scope.availableColumns.forEach(function (column) {
             column.selected = selectAll;
@@ -196,7 +222,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
 
         // Only proceed if columns are selected
         if (selectedColumns.length === 0) {
-            alert('Please select at least one column to export.');
+            $scope.showToast('Validation Error', 'Please select at least one column to export.', 5000);
             return;
         }
 

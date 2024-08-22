@@ -40,10 +40,10 @@ Manager : ManagerID (PK), ManagerName
 5. User Preferences (based on role)
 6. Filter on excel table
 7. pagination - done
-8. Sorting - in progress( one or more column)
+8. Sorting - done
 9. Add more charts, graphs using queries, trends - In progress
 10. Send email/ attachment - In progress (as a second option side of reporting with charts as attachments)
-11. Export to excel/csv/pdf - In progress
+11. Export to excel/csv/pdf - done
 12. Once user got idle user got logout automatically, password expiry/reset/compliance
 
 
