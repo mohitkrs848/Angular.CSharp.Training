@@ -6,30 +6,32 @@
     <button class="btn btn-secondary mb-4" ng-click="openSearchModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(108, 117, 125, 0.7), rgba(136, 136, 136, 0.9));">Search Employee</button>
     <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(23, 162, 184, 0.7), rgba(51, 193, 222, 0.9));">Show All Employees</button>
     <!-- Export to Excel Button -->
-    <button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>
+    <!--<button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>-->
+    <button class="btn btn-primary mb-4" ng-click="openExportModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export</button>
 
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">
         <thead>
             <tr style="background-color: beige; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-                <th style="padding: 12px 15px;">ID</th>
-                <th style="padding: 12px 15px;">First Name</th>
-                <th style="padding: 12px 15px;">Last Name</th>
-                <th style="padding: 12px 15px;">Age</th>
-                <th style="padding: 12px 15px;">Email</th>
-                <th style="padding: 12px 15px;">Designation</th>
-                <th style="padding: 12px 15px;">ManagerID</th>
-                <th style="padding: 12px 15px;">DepartmentName</th>
-                <th style="padding: 12px 15px;">Status</th>
-                <th style="padding: 12px 15px;">Salary</th>
-                <th style="padding: 12px 15px;">Location</th>
-                <th style="padding: 12px 15px;">ProjectID</th>
+                <!-- Add ng-click directives to headers for sorting -->
+                <th style="padding: 12px 15px;" ng-click="sortBy('Id')">ID</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpFirstName')">First Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpLastName')">Last Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpAge')">Age</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpEmail')">Email</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpDesignation')">Designation</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpManagerID')">ManagerID</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpDeptName')">Department Name</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpStatus')">Status</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpSalary')">Salary</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('EmpLocation')">Location</th>
+                <th style="padding: 12px 15px;" ng-click="sortBy('ProjectId')">ProjectID</th>
                 <th style="padding: 12px 15px;">Actions</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="employee in employees"
+            <tr ng-repeat="employee in filteredEmployees | orderBy:sortColumn:reverseSort"
                 ng-class="{
                         'active-status': employee.EmpStatus === 'Active' || employee.EmpStatus === 'active',
                         'inactive-status': employee.EmpStatus === 'Inactive' || employee.EmpStatus === 'inactive' || employee.EmpStatus === 'InActive' || employee.EmpStatus === 'inActive',
@@ -57,12 +59,18 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="13">
+                    <div class="pagination-controls">
+                        <button class="btn btn-primary" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
+                        <span>Page {{currentPage}} of {{totalPages()}}</span>
+                        <button class="btn btn-primary" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-
-    <!-- Pagination Controls -->
-    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="5"
-                    class="pagination-sm" boundary-links="true" items-per-page="itemsPerPage">
-    </uib-pagination>
 
     <!-- Add/Edit Employee Modal -->
     <div class="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalLabel" aria-hidden="true">
@@ -196,27 +204,40 @@
         </div>
     </div>
 
-    <!-- Column Selection Modal -->
-    <div class="modal fade" id="columnSelectModal" tabindex="-1" aria-labelledby="columnSelectModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Export Modal -->
+    <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="columnSelectModalLabel">Select Columns to Export</h5>
+                    <h5 class="modal-title" id="exportModalLabel">Export Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div ng-repeat="(key, value) in employees[0]" class="form-group">
-                            <input type="checkbox" ng-model="selectedColumns[key]" id="{{key}}">
-                            <label for="{{key}}">{{key}}</label>
+                        <div class="form-group">
+                            <label for="exportFormat">Select Format</label>
+                            <select class="form-control" id="exportFormat" ng-model="exportFormat">
+                                <option value="csv">CSV</option>
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Columns to Export</label>
+                            <div>
+                                <input type="checkbox" ng-model="selectAll" ng-change="selectAllColumns(selectAll)"> Select All
+                            </div>
+                            <div ng-repeat="column in availableColumns">
+                                <input type="checkbox" ng-model="column.selected"> {{column.name}}
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="confirmExport()">Export to Excel</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="exportData()">Export</button>
                 </div>
             </div>
         </div>

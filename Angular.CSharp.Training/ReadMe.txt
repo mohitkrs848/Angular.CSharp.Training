@@ -34,16 +34,17 @@ Manager : ManagerID (PK), ManagerName
 
 
 1. RoleId in table (1 -admin, 2 - manager, 3 - guest)
-2. Professional colours in Main page. (light colours)
-3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon)))
-4. Authentication (Login, Logout, Session)
+2. Professional colours in Main page. (light colours) - done
+3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon))) - done
+4. Authentication (Login, Logout, Session) - done
 5. User Preferences (based on role)
 6. Filter on excel table
-7. pagination
-8. Sorting
-9. Add more charts, graphs using queries
-10. Send email/ attachment
-11. Export to excel/csv/pdf
+7. pagination - done
+8. Sorting - in progress( one or more column)
+9. Add more charts, graphs using queries, trends - In progress
+10. Send email/ attachment - In progress (as a second option side of reporting with charts as attachments)
+11. Export to excel/csv/pdf - In progress
+12. Once user got idle user got logout automatically, password expiry/reset/compliance
 
 
 Role in User table
