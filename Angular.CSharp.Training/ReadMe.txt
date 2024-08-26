@@ -41,10 +41,16 @@ Manager : ManagerID (PK), ManagerName
 6. Filter on excel table
 7. pagination - done
 8. Sorting - done
-9. Add more charts, graphs using queries, trends - In progress
+9. Add more charts, graphs using queries, trends (Dashboard dybnamic) - In progress
 10. Send email/ attachment - In progress (as a second option side of reporting with charts as attachments)
 11. Export to excel/csv/pdf - done
 12. Once user got idle user got logout automatically, password expiry/reset/compliance
+13. Login through 3rd party integration (Normal/ social identity provider)
+14. roles should be 4-5
+15. Redis cache implemented
+16. Integration with non relational databases (MongoDB)
+17. Azure/AWS storage account integration (PowerBI dashboard)
+18. Other modules (Finance, Tax, Management)
 
 
 Role in User table
