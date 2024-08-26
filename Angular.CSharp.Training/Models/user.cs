@@ -21,6 +21,7 @@ namespace Angular.CSharp.Training.Models
         [StringLength(100)]
         public string PasswordHash { get; set; } // Store hashed passwords
 
+        [Required]
         public string Role { get; set; } // Optional: User roles (e.g., Admin, User)
     }
 }

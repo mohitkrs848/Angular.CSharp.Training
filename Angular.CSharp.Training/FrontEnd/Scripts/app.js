@@ -21,7 +21,11 @@ app.config(function ($routeProvider) {
             templateUrl: "FrontEnd/templates/projects.html",
             controller: "ProjectController",
             resolve: {
-                auth: function (AuthResolver) { return AuthResolver.resolve(); }
+                auth: function (AuthService, $location) {
+                    if (!AuthService.isAuthenticated() || AuthService.getUserRole() !== 'Admin') {
+                        $location.path('/');
+                    }
+                }
             }
         })
         .when("/dashboard/filters", {

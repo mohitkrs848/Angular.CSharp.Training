@@ -1,15 +1,18 @@
 app.service('AuthService', ['$http', function ($http) {
-    var isAuthenticated = false;
+    var isAuthenticated = !!localStorage.getItem('authToken');
     var baseUrl = 'https://localhost:44381/api/auth';
-    var authToken = null; // Add this to store the token if needed
+    var authToken = localStorage.getItem('authToken') || null;
+    var userRole = localStorage.getItem('userRole') || null;
 
     this.login = function (loginModel) {
         return $http.post(baseUrl + '/login', loginModel).then(function (response) {
-            if (response.data.Token) {
+            if (response.data.Token && response.data.Role) {
                 isAuthenticated = true;
-                authToken = response.data.Token; // Store the token if needed
-                // Optionally store token or user data in localStorage/sessionStorage
+                authToken = response.data.Token;
+                userRole = response.data.Role;
+
                 localStorage.setItem('authToken', authToken);
+                localStorage.setItem('userRole', userRole);
                 return true;
             } else {
                 return false;
@@ -21,10 +24,16 @@ app.service('AuthService', ['$http', function ($http) {
         return isAuthenticated || !!localStorage.getItem('authToken');
     };
 
+    this.getUserRole = function () {
+        return userRole || localStorage.getItem('userRole');
+    };
+
     this.logout = function () {
         isAuthenticated = false;
         authToken = null;
-        localStorage.removeItem('authToken'); // Remove token from storage
+        userRole = null;
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userRole');
     };
 
     this.register = function (registerModel) {

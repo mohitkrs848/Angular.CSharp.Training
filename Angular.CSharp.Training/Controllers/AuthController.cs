@@ -36,7 +36,8 @@ namespace Angular.CSharp.Training.Controllers
                 var newUser = new User
                 {
                     Email = model.Email,
-                    PasswordHash = hashedPassword
+                    PasswordHash = hashedPassword,
+                    Role = model.Role // Set the role
                 };
 
                 context.Users.Add(newUser);
@@ -62,10 +63,10 @@ namespace Angular.CSharp.Training.Controllers
                     return Unauthorized();
                 }
 
-                // Generate a dummy token
+                // Generate a token and return it along with the user's role
                 var token = GenerateToken(user);
 
-                return Ok(new { Token = token });
+                return Ok(new { Token = token, Role = user.Role });
             }
             catch (Exception ex)
             {
@@ -100,6 +101,9 @@ namespace Angular.CSharp.Training.Controllers
         [Required]
         [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
+
+        [Required]
+        public string Role { get; set; } // New Role property
     }
 
     public class UserLoginModel
