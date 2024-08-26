@@ -150,7 +150,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agents\AuthorizeRoleAttribute.cs" />
     <Compile Include="Agents\EmployeeAgent.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

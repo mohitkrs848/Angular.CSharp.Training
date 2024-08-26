@@ -1,4 +1,4 @@
-app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectService', function ($scope, EmployeeService, ProjectService) {
+app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectService', 'AuthService', function ($scope, EmployeeService, ProjectService, AuthService) {
     // Initialize scope variables
     $scope.employees = [];
     $scope.filteredEmployees = [];
@@ -48,7 +48,7 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     // Function to dismiss a toast notification
     $scope.dismissToast = function (toast) {
         toast.show = false;
-        // Remove the toast from the array after fade out
+
         setTimeout(function () {
             $scope.toasts = $scope.toasts.filter(t => t !== toast);
             $scope.$apply(); // Apply scope changes
@@ -172,12 +172,16 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
 
     // Delete employee
     $scope.deleteEmployee = function (id) {
-        EmployeeService.deleteEmployee(id).then(function () {
-            $scope.loadEmployees();
-            $scope.showToast('Success', 'Employee deleted successfully', 5000);
-        }, function (error) {
-            $scope.showToast('Error', 'Error deleting employee: ' + error.data, 5000);
-        });
+        if (AuthService.getUserRole() === 'Admin') {
+            EmployeeService.deleteEmployee(id).then(function () {
+                $scope.loadEmployees();
+                $scope.showToast('Success', 'Employee deleted successfully', 5000);
+            }, function (error) {
+                $scope.showToast('Error', 'Error deleting employee: ' + error.data, 5000);
+            });
+        } else {
+            $scope.showToast('Permission Denied', 'You do not have permission to delete employees.', 5000);
+        }
     };
 
     // Handle page change
