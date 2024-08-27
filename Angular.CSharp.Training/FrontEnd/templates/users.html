@@ -1,0 +1,57 @@
+﻿<div ng-controller="UserController">
+    <h1>User Management</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{ user.Id }}</td>
+                <td>{{ user.Email }}</td>
+                <td>{{ user.Role }}</td>
+                <td>
+                    <button ng-click="openAddEditModal(user)" class="btn btn-primary">Edit</button>
+                    <button ng-click="deleteUser(user.Id)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add/Edit User Modal -->
+    <div class="modal fade" id="addEditModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{editing ? 'Edit User' : 'Add User'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="userForm">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" ng-model="user.Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select ng-model="user.Role" class="form-control" id="role" required>
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveUser()" ng-disabled="userForm.$invalid">{{editing ? 'Update' : 'Add'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

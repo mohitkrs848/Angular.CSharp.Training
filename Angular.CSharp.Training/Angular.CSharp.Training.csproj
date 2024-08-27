@@ -127,12 +127,15 @@
     <Content Include="FrontEnd\Scripts\Controllers\chartsController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\filtersController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\projectController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\userController.js" />
     <Content Include="FrontEnd\Scripts\Services\projectService.js" />
+    <Content Include="FrontEnd\Scripts\Services\userService.js" />
     <Content Include="FrontEnd\src\login.jpg" />
     <Content Include="FrontEnd\templates\dashboard-charts.html" />
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
     <Content Include="FrontEnd\templates\register.html" />
+    <Content Include="FrontEnd\templates\users.html" />
     <Content Include="icons8-app-50.png" />
     <Content Include="Index.html" />
     <Content Include="FrontEnd\Scripts\Controllers\employeeController.js" />
@@ -157,6 +160,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Content Include="Data\DBqueries.txt" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
     <Compile Include="Data\DemoDbContext.cs" />
     <Compile Include="Data\Repository\EmployeeRepository.cs" />

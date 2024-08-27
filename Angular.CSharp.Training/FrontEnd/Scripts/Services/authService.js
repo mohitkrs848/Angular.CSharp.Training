@@ -4,6 +4,10 @@ app.service('AuthService', ['$http', function ($http) {
     var authToken = localStorage.getItem('authToken') || null;
     var userRole = localStorage.getItem('userRole') || null;
 
+    this.getAuthToken = function () {
+        return authToken;
+    };
+
     this.login = function (loginModel) {
         return $http.post(baseUrl + '/login', loginModel).then(function (response) {
             if (response.data.Token && response.data.Role) {

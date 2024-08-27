@@ -37,7 +37,7 @@ namespace Angular.CSharp.Training.Controllers
                 {
                     Email = model.Email,
                     PasswordHash = hashedPassword,
-                    Role = model.Role // Set the role
+                    Role = "User" // Set the role
                 };
 
                 context.Users.Add(newUser);
@@ -102,7 +102,6 @@ namespace Angular.CSharp.Training.Controllers
         [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
 
-        [Required]
         public string Role { get; set; } // New Role property
     }
 
