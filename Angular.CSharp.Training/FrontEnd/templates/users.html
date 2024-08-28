@@ -1,5 +1,6 @@
 ﻿<div ng-controller="UserController" class="container-fluid mt-5" style="width: 100%;">
     <h1 class="mb-4" style="background-color:beige; width: 100%;">User Management</h1>
+    <button class="btn btn-success mb-3" ng-click="openAddEditModal()">Add User</button>
     <table class="table table-bordered table-striped" style="width: 100%;">
         <thead>
             <tr style="background-color:beige">
@@ -48,6 +49,11 @@
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
                             </select>
+                        </div>
+                        <!-- New Password Field -->
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" ng-model="user.PasswordHash" ng-required="!editing">
                         </div>
                     </form>
                 </div>

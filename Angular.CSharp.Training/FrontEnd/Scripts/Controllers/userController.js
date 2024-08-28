@@ -44,11 +44,13 @@ app.controller('UserController', ['$scope', '$http', function ($scope, $http) {
 
     // Delete the user
     $scope.deleteUser = function (id) {
-        $http.delete('https://localhost:44381/api/user/' + id).then(function (response) {
-            $scope.getAllUsers();
-        }, function (error) {
-            console.error('Error deleting user:', error);
-        });
+        if (confirm('Are you sure you want to delete this user?')) {
+            $http.delete('https://localhost:44381/api/user/' + id).then(function (response) {
+                $scope.getAllUsers();
+            }, function (error) {
+                console.error('Error deleting user:', error);
+            });
+        }
     };
 
     // Initial fetch of users

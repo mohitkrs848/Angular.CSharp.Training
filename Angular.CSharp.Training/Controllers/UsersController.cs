@@ -37,8 +37,17 @@ namespace Angular.CSharp.Training.Controllers
         [Route("")]
         public IHttpActionResult AddUser([FromBody] User user)
         {
+            if (_context.Users.Any(u => u.Email == user.Email))
+            {
+                return BadRequest("Email already exists.");
+            }
+
+            // Hash the provided password
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+
             _context.Users.Add(user);
             _context.SaveChanges();
+
             return Ok(user);
         }
 

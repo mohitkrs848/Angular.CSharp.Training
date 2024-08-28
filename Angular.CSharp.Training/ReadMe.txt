@@ -37,8 +37,8 @@ Manager : ManagerID (PK), ManagerName
 2. Professional colours in Main page. (light colours) - done
 3. Sizes and other things for button (Add (+ icon) and Edit (pencil icon))) - done
 4. Authentication (Login, Logout, Session) - done
-5. User Preferences (based on role)
-6. Filter on excel table
+5. User Preferences (based on role) - Done
+6. Filter on excel table - Done / more to customize it
 7. pagination - done
 8. Sorting - done
 9. Add more charts, graphs using queries, trends (Dashboard dybnamic) - In progress
@@ -51,6 +51,13 @@ Manager : ManagerID (PK), ManagerName
 16. Integration with non relational databases (MongoDB)
 17. Azure/AWS storage account integration (PowerBI dashboard)
 18. Other modules (Finance, Tax, Management)
+19. Forgot the password/ security question
+20. Host the site in IIS
+21. Add User option in template for admin
+22. Admin can make user Active or InActive
+23. Identifier for user like a user is leaving
+24. Within a grid we can have nested grid (under manager after employee)
+
 
 
 Role in User table
@@ -60,5 +67,5 @@ First admin user we can create in the Database itself.
 
 issues: 
 1. Dynamic filtering based on Department and designation
-2. MAnagerID not becoming null if we change the designation
+2. ManagerID not becoming null if we change the designation
 3. ProjectID is coming in the table despite of filling the ProjectName
