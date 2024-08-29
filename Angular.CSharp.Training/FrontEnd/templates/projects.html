@@ -1,5 +1,5 @@
 ﻿<div ng-controller="ProjectController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color:beige; width: 100%;">Project Management</h1>
+    <h1 class="mb-4" style="background-color: rgba(78, 162, 173, 0.48); width: 100%; ">Project Management</h1>
 
     <!-- Buttons to open modals -->
     <button class="btn btn-primary mb-4" ng-click="openAddEditModal()">Add Project</button>
@@ -7,7 +7,7 @@
     <!-- Project Table -->
     <table class="table table-bordered table-striped" style="width: 100%;">
         <thead>
-            <tr style="background-color:beige">
+            <tr style="background-color: rgba(78, 162, 173, 0.48)">
                 <th>ID</th>
                 <th>Project Name</th>
                 <th>Project Status</th>
@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="project in projects">
+            <tr  style="background-color: rgba(205, 219, 221, 0.48); " ng-repeat="project in projects">
                 <td>{{project.Id}}</td>
                 <td>{{project.ProjectName}}</td>
                 <td>{{project.ProjectStatus}}</td>
@@ -38,8 +38,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form ng-submit="saveProject()">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Project' : 'Add Project' }}</h5>
+                    <div class="modal-header" style="background-color: rgba(78, 162, 173, 0.48);">
+                        <h5 class="modal-title" " id="addEditModalLabel">{{ editing ? 'Edit Project' : 'Add Project' }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
