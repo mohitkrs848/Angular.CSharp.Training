@@ -1,0 +1,60 @@
+﻿<!-- dashboard.html -->
+<div ng-controller="DashboardController" class="container-fluid mt-5" style="width: 100%;">
+    <h1 class="mb-4" style="background-color:beige">Employee Dashboard</h1>
+
+    <!-- Filter Section -->
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <select ng-model="filters.department" class="form-control" placeholder="Department">
+                <option value="">Select Department</option>
+                <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <select ng-model="filters.designation" class="form-control" placeholder="Designation">
+                <option value="">Select Designation</option>
+                <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div>
+        <h4 style="background-color:beige">Total Employees: {{employeeCount}}</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr style="background-color:beige">
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees">
+                    <td>{{ employee.Id }}</td>
+                    <td>{{ employee.EmpFirstName }}</td>
+                    <td>{{ employee.EmpLastName }}</td>
+                    <td>{{ employee.EmpEmail }}</td>
+                    <td>{{ employee.EmpDesignation }}</td>
+                    <td>{{ employee.EmpDeptName }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="form-row mt-4">
+        <div class="col-md-6">
+            <h5>Employees by Department</h5>
+            <canvas id="departmentChart" style="max-height: 250px;"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5>Employees by Designation</h5>
+            <canvas id="designationChart" style="max-height: 250px;"></canvas>
+        </div>
+    </div>
+</div>

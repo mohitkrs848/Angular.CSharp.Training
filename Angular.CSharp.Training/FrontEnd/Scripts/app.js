@@ -57,9 +57,9 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when("/dashboard/filters", {
-            templateUrl: "FrontEnd/templates/dashboard-filters.html",
-            controller: "FiltersController",
+        .when("/dashboard", {
+            templateUrl: "FrontEnd/templates/dashboard.html",
+            controller: "DashboardController",
             resolve: {
                 auth: function (AuthService, $location) {
                     if (!AuthService.isAuthenticated()) {
@@ -68,17 +68,28 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when("/dashboard/charts", {
-            templateUrl: "FrontEnd/templates/dashboard-charts.html",
-            controller: "ChartsController",
-            resolve: {
-                auth: function (AuthService, $location) {
-                    if (!AuthService.isAuthenticated()) {
-                        $location.path('/'); // Redirect to login if not authenticated
-                    }
-                }
-            }
-        })
+        //.when("/dashboard/filters", {
+        //    templateUrl: "FrontEnd/templates/dashboard-filters.html",
+        //    controller: "FiltersController",
+        //    resolve: {
+        //        auth: function (AuthService, $location) {
+        //            if (!AuthService.isAuthenticated()) {
+        //                $location.path('/'); // Redirect to login if not authenticated
+        //            }
+        //        }
+        //    }
+        //})
+        //.when("/dashboard/charts", {
+        //    templateUrl: "FrontEnd/templates/dashboard-charts.html",
+        //    controller: "ChartsController",
+        //    resolve: {
+        //        auth: function (AuthService, $location) {
+        //            if (!AuthService.isAuthenticated()) {
+        //                $location.path('/'); // Redirect to login if not authenticated
+        //            }
+        //        }
+        //    }
+        //})
         .when("/about", {
             templateUrl: "FrontEnd/templates/about.html",
             resolve: {
