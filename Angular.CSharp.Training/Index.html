@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
@@ -33,6 +34,7 @@
     <script src="FrontEnd/Scripts/Controllers/projectController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/userController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/dashboardController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/mydashboardController.js"></script>
 
     <style>
         .active-status {
@@ -68,11 +70,11 @@
                     <a class="nav-link" href="#!/users">Manage Users</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
-                    <a class="nav-link" href="#!/dashboard">Dashboard Filters</a>
+                    <a class="nav-link" href="#!/dashboard">Dashboard</a>
                 </li>
-                <!--<li class="nav-item" ng-if="isAuthenticated()">
-                    <a class="nav-link" href="#!/dashboard/charts">Dashboard Charts</a>
-                </li>-->
+                <li class="nav-item" ng-if="isAuthenticated()">
+                    <a class="nav-link" href="#!/mydashboard">My Dashboard</a>
+                </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/about">About Us</a>
                 </li>

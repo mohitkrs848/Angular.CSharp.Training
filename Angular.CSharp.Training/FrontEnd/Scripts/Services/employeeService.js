@@ -23,6 +23,7 @@ app.service('EmployeeService', ['$http', function ($http) {
 
     this.getEmployees = function (filters) {
         var query = '?';
+
         if (filters.department) {
             query += 'department=' + encodeURIComponent(filters.department);
         }
@@ -30,12 +31,41 @@ app.service('EmployeeService', ['$http', function ($http) {
             if (query !== '?') query += '&';
             query += 'designation=' + encodeURIComponent(filters.designation);
         }
+        if (filters.age) {
+            if (query !== '?') query += '&';
+            query += 'age=' + encodeURIComponent(filters.age);
+        }
+        if (filters.salaryMin) {
+            if (query !== '?') query += '&';
+            query += 'salaryMin=' + encodeURIComponent(filters.salaryMin);
+        }
+        if (filters.salaryMax) {
+            if (query !== '?') query += '&';
+            query += 'salaryMax=' + encodeURIComponent(filters.salaryMax);
+        }
+        if (filters.location) {
+            if (query !== '?') query += '&';
+            query += 'location=' + encodeURIComponent(filters.location);
+        }
+        if (filters.status) {
+            if (query !== '?') query += '&';
+            query += 'status=' + encodeURIComponent(filters.status);
+        }
+        if (filters.projectId) {
+            if (query !== '?') query += '&';
+            query += 'projectId=' + encodeURIComponent(filters.projectId);
+        }
 
         // Remove trailing '&' or '?' if no filters are applied
         if (query === '?') query = '';
 
         return $http.get(baseUrl + query);
     };
+
+    this.getDistinctValues = function (field) {
+        return $http.get(baseUrl + '/distinct-values');
+    };
+
 
     // Search employees based on criteria
     this.searchEmployees = function (email, id, name) {

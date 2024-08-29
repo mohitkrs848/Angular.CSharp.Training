@@ -68,17 +68,17 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        //.when("/dashboard/filters", {
-        //    templateUrl: "FrontEnd/templates/dashboard-filters.html",
-        //    controller: "FiltersController",
-        //    resolve: {
-        //        auth: function (AuthService, $location) {
-        //            if (!AuthService.isAuthenticated()) {
-        //                $location.path('/'); // Redirect to login if not authenticated
-        //            }
-        //        }
-        //    }
-        //})
+        .when("/mydashboard", {
+            templateUrl: "FrontEnd/templates/mydashboard.html",
+            controller: "myDashboardController",
+            resolve: {
+                auth: function (AuthService, $location) {
+                    if (!AuthService.isAuthenticated()) {
+                        $location.path('/'); // Redirect to login if not authenticated
+                    }
+                }
+            }
+        })
         //.when("/dashboard/charts", {
         //    templateUrl: "FrontEnd/templates/dashboard-charts.html",
         //    controller: "ChartsController",

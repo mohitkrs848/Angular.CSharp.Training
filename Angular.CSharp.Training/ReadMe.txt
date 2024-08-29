@@ -57,6 +57,13 @@ Manager : ManagerID (PK), ManagerName
 22. Admin can make user Active or InActive
 23. Identifier for user like a user is leaving
 24. Within a grid we can have nested grid (under manager after employee)
+25. guest user/ other user (4-5 user roles) and then authrising the parts based on that
+26. Redis cache for performin loging/storing session/ maintain the user data (store the data untill token expires)
+27. Uploading the media (let's it for user data)/ Bulk upload
+28. Data processing (flat files to read/write the data)
+29. logs store in databases
+30. fetch the data from sql server and convert it into json and store it into the mongoDB  (write a service for the functionality)
+31. to work with email, try to work with templates (create a template in database and then send the email)
 
 
 
@@ -69,3 +76,16 @@ issues:
 1. Dynamic filtering based on Department and designation
 2. ManagerID not becoming null if we change the designation
 3. ProjectID is coming in the table despite of filling the ProjectName
+
+
+Azure- using solera.com ( deploy in app service in azure/ adn database in azure))
+sandboz account fo message / or email api (smtp port/rest api) - try to use rest api from 3rd party (Microsoft smtp service try someone else)
+sql express deployed in aws ec2/azure vm with minimal configuration and connect with local point
+
+
+either to use auth (3rd party identity provider) or Auth0 (provide account)/ OpenId
+for gmail or facebook (need one developer account for client id)
+Azure AD, b2c (can enable MFA)
+we can utilise b2c (better approach) - for social identity provider
+
+seq for database logging (for audit trail) but requires hosting on server

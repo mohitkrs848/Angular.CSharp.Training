@@ -84,10 +84,17 @@ namespace Angular.CSharp.Training.Controllers
             var employees = employeeAgent.SearchEmployees(email, id, name);
             return Ok(employees);
         }
-        
+
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetEmployees(string department = null, string designation = null)
+        public IHttpActionResult GetEmployees(string department = null,
+            string designation = null,
+            int? age = null,
+            decimal? salaryMin = null,
+            decimal? salaryMax = null,
+            string location = null,
+            string status = null,
+            int? projectId = null)
         {
             try
             {
@@ -103,6 +110,36 @@ namespace Angular.CSharp.Training.Controllers
                     employees = employees.Where(e => e.EmpDesignation == designation).ToList();
                 }
 
+                if (age.HasValue)
+                {
+                    employees = employees.Where(e => e.EmpAge == age.Value).ToList();
+                }
+
+                if (salaryMin.HasValue)
+                {
+                    employees = employees.Where(e => e.EmpSalary >= salaryMin.Value).ToList();
+                }
+
+                if (salaryMax.HasValue)
+                {
+                    employees = employees.Where(e => e.EmpSalary <= salaryMax.Value).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(location))
+                {
+                    employees = employees.Where(e => e.EmpLocation == location).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(status))
+                {
+                    employees = employees.Where(e => e.EmpStatus == status).ToList();
+                }
+
+                if (projectId.HasValue)
+                {
+                    employees = employees.Where(e => e.ProjectId == projectId.Value).ToList();
+                }
+
                 return Ok(employees);
             }
             catch (Exception ex)
@@ -110,6 +147,38 @@ namespace Angular.CSharp.Training.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpGet]
+        [Route("distinct-values")]
+        public IHttpActionResult GetDistinctValues()
+        {
+            try
+            {
+                var departments = employeeAgent.GetAllEmployees().Select(e => e.EmpDeptName).Distinct().ToList();
+                var designations = employeeAgent.GetAllEmployees().Select(e => e.EmpDesignation).Distinct().ToList();
+                var locations = employeeAgent.GetAllEmployees().Select(e => e.EmpLocation).Distinct().ToList();
+                var projects = employeeAgent.GetAllEmployees()
+                                .Where(e => e.Project != null)
+                                .Select(e => new { e.Project.Id, e.Project.ProjectName })
+                                .Distinct()
+                                .ToList();
+
+                var result = new
+                {
+                    Departments = departments,
+                    Designations = designations,
+                    Locations = locations,
+                    Projects = projects
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
 
         [HttpGet]
         [Route("checkemail")]
