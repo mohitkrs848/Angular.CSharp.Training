@@ -1,5 +1,5 @@
 ﻿<div ng-controller="EmployeeController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
+    <h1 class="mb-4" style="background-color: lightskyblue">Employee Management</h1>
 
     <!-- Buttons to open modals -->
     <button class="btn btn-primary mb-4" ng-click="openAddEditModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(0, 123, 255, 0.7), rgba(0, 170, 255, 0.9));">Add Employee</button>
@@ -12,7 +12,7 @@
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">
         <thead>
-            <tr style="background-color: beige; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            <tr style="background-color: lightskyblue; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
                 <!-- Add ng-click directives to headers for sorting -->
                 <th style="padding: 12px 15px;" ng-click="sortBy('Id')">ID <i class="fas" ng-class="{'fa-chevron-up': sortColumn === 'Id' && !reverseSort, 'fa-chevron-down': sortColumn === 'Id' && reverseSort, 'fa-sort': sortColumn !== 'Id'}"></i></th>
                 <th style="padding: 12px 15px;" ng-click="sortBy('EmpFirstName')">First Name <i class="fas" ng-class="{'fa-chevron-up': sortColumn === 'EmpFirstName' && !reverseSort, 'fa-chevron-down': sortColumn === 'EmpFirstName' && reverseSort, 'fa-sort': sortColumn !== 'EmpFirstName'}"></i></th>

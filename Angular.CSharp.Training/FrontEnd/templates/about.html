@@ -1,13 +1,61 @@
-﻿<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">About Us</h1>
-        <p class="card-text">We provide an efficient way to manage employees through our comprehensive management system. Our application helps in maintaining and organizing employee data seamlessly.</p>
-        <h2>Features</h2>
-        <ul>
-            <li>Easy to add and update employee information.</li>
-            <li>Simple user interface.</li>
-            <li>Quick access to employee details.</li>
-            <li>Secure and reliable data handling.</li>
-        </ul>
+﻿<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-5">
+            <h1 class="card-title text-center text-primary mb-4">About Us</h1>
+            <p class="card-text text-center lead">
+                We provide an efficient way to manage employees through our comprehensive management system. Our application helps in maintaining and organizing employee data seamlessly.
+            </p>
+            <h2 class="text-center text-secondary mt-4">Features</h2>
+            <ul class="list-unstyled mt-4">
+                <li class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i> Easy to add and update employee information.
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i> Simple user interface.
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i> Quick access to employee details.
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i> Secure and reliable data handling.
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
+
+<style>
+    .card-body {
+        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+        .card-body:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+    .card-title {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card-text {
+        font-size: 1.2rem;
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .text-secondary {
+        color: #6c757d !important;
+    }
+
+    .list-unstyled li {
+        font-size: 1.1rem;
+    }
+
+        .list-unstyled li i {
+            font-size: 1.2rem;
+        }
+</style>

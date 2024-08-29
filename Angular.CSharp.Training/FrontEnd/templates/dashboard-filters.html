@@ -1,15 +1,15 @@
 <!-- dashboard.html -->
 <div ng-controller="FiltersController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color:beige">Filter Data</h1>
+    <h1 class="mb-4 col-md-2" style="background-color:lightskyblue">Filter Data</h1>
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-3">
             <select ng-model="filters.department" class="form-control" placeholder="Department">
                 <option value="">Select Department</option>
                 <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
             </select>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-3">
             <select ng-model="filters.designation" class="form-control" placeholder="Designation">
                 <option value="">Select Designation</option>
                 <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
@@ -19,13 +19,13 @@
 
     <!-- Employee Count -->
     <div>
-        <h4 style="background-color:beige">Total Employees: {{employeeCount}}</h4>
+        <h4 style="background-color: lightskyblue" class="col-md-2">Total Employees: {{employeeCount}}</h4>
     </div>
 
     <!-- Employees Table -->
     <table class="table table-bordered table-striped">
         <thead>
-            <tr  style="background-color:beige">
+            <tr  style="background-color: lightskyblue; table-layout:auto">
                 <th>Employee ID</th>
                 <th>FirstName</th>
                 <th>LastName</th>

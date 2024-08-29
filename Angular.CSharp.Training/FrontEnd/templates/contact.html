@@ -1,11 +1,58 @@
-﻿<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Contact Us</h1>
-        <p class="card-text">For any inquiries or support, feel free to reach out to us at:</p>
-        <ul>
-            <li>Email: support@employeemanagement.com</li>
-            <li>Phone: +123-456-7890</li>
-            <li>Address: 123 Main Street, Anytown, USA</li>
-        </ul>
+﻿<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-5">
+            <h1 class="card-title text-center text-primary mb-4">Contact Us</h1>
+            <p class="card-text text-center lead">For any inquiries or support, feel free to reach out to us at:</p>
+            <ul class="list-unstyled mt-4 text-center">
+                <li class="mb-3">
+                    <i class="bi bi-envelope-fill text-secondary me-2"></i>
+                    <a href="mailto:support@employeemanagement.com" class="text-dark text-decoration-none">support@employeemanagement.com</a>
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-telephone-fill text-secondary me-2"></i>
+                    <a href="tel:+1234567890" class="text-dark text-decoration-none">+123-456-7890</a>
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-geo-alt-fill text-secondary me-2"></i>
+                    123 Main Street, Anytown, USA
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
+
+<style>
+    .card-body {
+        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+        .card-body:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+    .card-title {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card-text {
+        font-size: 1.2rem;
+    }
+
+    .list-unstyled li {
+        font-size: 1.1rem;
+    }
+
+        .list-unstyled li i {
+            font-size: 1.2rem;
+        }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    a.text-dark:hover {
+        color: #007bff;
+    }
+</style>
