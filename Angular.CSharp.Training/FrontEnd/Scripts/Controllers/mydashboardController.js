@@ -5,9 +5,10 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     $scope.locations = [];
     $scope.projects = [];
 
-    $scope.filtersVisible = false; // Initialize filters visibility
-    $scope.chartsGraphsVisible = false; // Initialize charts/graphs visibility
+    $scope.filtersVisible = false;
+    $scope.chartsGraphsVisible = false;
 
+    // Filters for the table
     $scope.filters = {
         department: '',
         designation: '',
@@ -19,7 +20,19 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         projectId: null
     };
 
-    $scope.employeeCount = 0; // Initialize employeeCount
+    // Filters for the charts section
+    $scope.chartFilters = {
+        department: '',
+        designation: ''
+    };
+
+    $scope.selectedChart = 'employeeCount';
+
+    $scope.employeeCount = 0;
+
+    // Store references to chart instances
+    var employeeCountChartInstance = null;
+    var employeeSalaryChartInstance = null;
 
     // Toggle the visibility of the filters section
     $scope.toggleFilters = function () {
@@ -54,28 +67,38 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     $scope.loadEmployees = function () {
         EmployeeService.getEmployees($scope.filters).then(function (response) {
             $scope.employees = response.data;
-            $scope.employeeCount = $scope.employees.length; // Update employeeCount
+            $scope.employeeCount = $scope.employees.length;
         }, function (error) {
             console.error('Error loading employees:', error);
         });
     };
 
     $scope.loadCharts = function () {
-        // Logic to load and render charts when the Charts & Graphs section is opened
-        $scope.renderEmployeeCountChart();
-        $scope.renderEmployeeSalaryChart();
+        EmployeeService.getEmployees($scope.chartFilters).then(function (response) {
+            $scope.employeesForCharts = response.data;
+            if ($scope.selectedChart === 'employeeCount') {
+                $scope.renderEmployeeCountChart();
+            } else if ($scope.selectedChart === 'employeeSalary') {
+                $scope.renderEmployeeSalaryChart();
+            }
+        }, function (error) {
+            console.error('Error loading chart data:', error);
+        });
     };
 
     $scope.renderEmployeeCountChart = function () {
         var ctx = document.getElementById('employeeCountChart').getContext('2d');
-        var chart = new Chart(ctx, {
+        if (employeeCountChartInstance) {
+            employeeCountChartInstance.destroy();
+        }
+        employeeCountChartInstance = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: $scope.departments, // Assuming this is an array of department names
+                labels: $scope.departments,
                 datasets: [{
                     label: 'Employee Count',
                     data: $scope.departments.map(function (dept) {
-                        return $scope.employees.filter(function (emp) {
+                        return $scope.employeesForCharts.filter(function (emp) {
                             return emp.EmpDeptName === dept;
                         }).length;
                     }),
@@ -89,21 +112,24 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
 
     $scope.renderEmployeeSalaryChart = function () {
         var ctx = document.getElementById('employeeSalaryChart').getContext('2d');
-        var chart = new Chart(ctx, {
+        if (employeeSalaryChartInstance) {
+            employeeSalaryChartInstance.destroy();
+        }
+        employeeSalaryChartInstance = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: $scope.employees.map(function (emp) {
+                labels: $scope.employeesForCharts.map(function (emp) {
                     return emp.EmpFirstName + ' ' + emp.EmpLastName;
                 }),
                 datasets: [{
                     label: 'Salary',
-                    data: $scope.employees.map(function (emp) {
+                    data: $scope.employeesForCharts.map(function (emp) {
                         return emp.EmpSalary;
                     }),
-                    backgroundColor: $scope.employees.map(function () {
+                    backgroundColor: $scope.employeesForCharts.map(function () {
                         return 'rgba(255, 99, 132, 0.2)';
                     }),
-                    borderColor: $scope.employees.map(function () {
+                    borderColor: $scope.employeesForCharts.map(function () {
                         return 'rgba(255, 99, 132, 1)';
                     }),
                     borderWidth: 1
@@ -112,6 +138,12 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         });
     };
 
+    $scope.selectChart = function (chartType) {
+        $scope.selectedChart = chartType;
+        $scope.loadCharts();
+    };
+
+    // Watchers for table filters
     $scope.$watchGroup([
         'filters.department',
         'filters.designation',
@@ -125,7 +157,13 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         $scope.loadEmployees();
     });
 
-    // Initialize loading of distinct values and employees
+    // Watchers for chart filters
+    $scope.$watchGroup(['chartFilters.department', 'chartFilters.designation'], function () {
+        if ($scope.chartsGraphsVisible) {
+            $scope.loadCharts();
+        }
+    });
+
     $scope.loadDistinctValues();
     $scope.loadEmployees();
 }]);
