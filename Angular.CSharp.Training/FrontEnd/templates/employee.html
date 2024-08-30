@@ -1,5 +1,5 @@
 ﻿<div ng-controller="EmployeeController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color:beige">Employee Management</h1>
+    <h1 class="mb-2 col-md-6" style="background-color: rgba(168, 239, 237, 0.48) ">Employee Management</h1>
 
     <!-- Buttons to open modals -->
     <button class="btn btn-primary mb-4" ng-click="openAddEditModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(0, 123, 255, 0.7), rgba(0, 170, 255, 0.9));">Add Employee</button>
@@ -12,7 +12,7 @@
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">
         <thead>
-            <tr style="background-color: beige; text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            <tr style="background-color: rgba(78, 162, 173, 0.48); text-align: left; padding: 12px 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); ">
                 <!-- Add ng-click directives to headers for sorting -->
                 <th style="padding: 12px 15px;" ng-click="sortBy('Id')">ID <i class="fas" ng-class="{'fa-chevron-up': sortColumn === 'Id' && !reverseSort, 'fa-chevron-down': sortColumn === 'Id' && reverseSort, 'fa-sort': sortColumn !== 'Id'}"></i></th>
                 <th style="padding: 12px 15px;" ng-click="sortBy('EmpFirstName')">First Name <i class="fas" ng-class="{'fa-chevron-up': sortColumn === 'EmpFirstName' && !reverseSort, 'fa-chevron-down': sortColumn === 'EmpFirstName' && reverseSort, 'fa-sort': sortColumn !== 'EmpFirstName'}"></i></th>
@@ -30,7 +30,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody">
             <tr ng-repeat="employee in filteredEmployees | orderBy:sortColumn:reverseSort"
                 ng-class="{
                         'active-status': employee.EmpStatus === 'Active' || employee.EmpStatus === 'active',
@@ -77,7 +77,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form ng-submit="saveEmployee()">
-                    <div class="modal-header" style="background-color: beige;">
+                    <div class="modal-header" style="background-color: rgba(78, 162, 173, 0.48); ">
                         <h5 class="modal-title" id="addEditModalLabel">{{ editing ? 'Edit Employee' : 'Add Employee' }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -176,7 +176,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form ng-submit="searchEmployees()">
-                    <div class="modal-header" style="background-color: beige;">
+                    <div class="modal-header" style="background-color: rgba(78, 162, 173, 0.48);">
                         <h5 class="modal-title" id="searchModalLabel">Search Employee</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -208,7 +208,7 @@
     <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: beige;">
+                <div class="modal-header" style="background-color: rgba(78, 162, 173, 0.48); ">
                     <h5 class="modal-title" id="exportModalLabel">Export Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -246,7 +246,7 @@
 
     <!-- Toast Container -->
     <div aria-live="polite" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 1050;">
-        <div class="toast" ng-repeat="toast in toasts" ng-class="{'show': toast.show}" style="background-color: burlywood; color: aliceblue; border-radius: 10px; box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); transition: opacity 0.5s ease-in-out; ">
+        <div class="toast" ng-repeat="toast in toasts" ng-class="{'show': toast.show}" style="background-color: rgba(78, 162, 173, 0.48); color: aliceblue; border-radius: 10px; box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); transition: opacity 0.5s ease-in-out; ">
             <div class="toast-header">
                 <strong class="mr-auto">{{toast.title}}</strong>
                 <small class="text-muted">{{toast.time}}</small>
