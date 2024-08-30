@@ -17,7 +17,7 @@ namespace Angular.CSharp.Training
             // Register your types here
             container.RegisterType<DemoDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<IEmployeeRepository, EmployeeRepository>();
-            container.RegisterType<EmployeeAgent>();
+            container.RegisterType<IEmployeeService, EmployeeService>();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

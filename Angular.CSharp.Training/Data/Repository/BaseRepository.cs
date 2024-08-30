@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Angular.CSharp.Training.Data.Repository
@@ -16,34 +17,35 @@ namespace Angular.CSharp.Training.Data.Repository
             context = demoDbContext ?? throw new ArgumentNullException(nameof(demoDbContext));
             dbSet = context.Set<T>();
         }
-        public void Insert(T entity)
+
+        public async Task InsertAsync(T entity)
         {
             dbSet.Add(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            T entity = dbSet.Find(id);
+            T entity = await dbSet.FindAsync(id);
             dbSet.Remove(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             dbSet.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
     }
 }

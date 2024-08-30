@@ -92,7 +92,7 @@ seq for database logging (for audit trail) but requires hosting on server
 
 Business layer will be hided to logic layer - need to implement concrete class (Automapper)
 
-Task for weekend: Shivansh
+Task: Shivansh
 - Logout after apopup and delete employee/project after popup
 - Employees table (project Id) is coming inplace of that we need project name
 - right up corner there should be the User name and also a small point for showing if user is admin or not
@@ -104,3 +104,4 @@ Mohit:
 - synronized methods
 - Dashboard updation with dynamic x,y parameters
 - logs store in databases
+- search functionality (combine all the fields in single search input)
