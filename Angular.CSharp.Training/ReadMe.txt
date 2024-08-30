@@ -89,3 +89,18 @@ Azure AD, b2c (can enable MFA)
 we can utilise b2c (better approach) - for social identity provider
 
 seq for database logging (for audit trail) but requires hosting on server
+
+Business layer will be hided to logic layer - need to implement concrete class (Automapper)
+
+Task for weekend: Shivansh
+- Logout after apopup and delete employee/project after popup
+- Employees table (project Id) is coming inplace of that we need project name
+- right up corner there should be the User name and also a small point for showing if user is admin or not
+- my dashboard should show trends by default
+- Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)
+
+Mohit: 
+- Backend microservice structure
+- synronized methods
+- Dashboard updation with dynamic x,y parameters
+- logs store in databases

@@ -2,14 +2,15 @@
     <h1 class="mb-4" style="background-color:beige">My Dashboard</h1>
 
     <div class="row">
-        <!-- Left Side Panel -->
+        <!-- Left Side Panel (2/10 width) -->
         <div class="col-md-2">
             <!-- Filters Section Toggle -->
-            <div ng-click="toggleFilters()" style="cursor:pointer; background-color:lightgray; margin-bottom: 10px;">
-                <h5>Filters</h5>
+            <div style="cursor:pointer; background-color:lightgray; margin-bottom: 10px;">
+                <h5 ng-click="toggleFilters()">Filters</h5>
             </div>
-            <div ng-if="filtersVisible">
-                <!-- Filter fields for the table -->
+
+            <!-- Filter fields for the table -->
+            <div ng-if="filtersVisible && !chartsGraphsVisible" style="background-color:white; z-index: 1; border: 1px solid #ddd;">
                 <div class="form-group">
                     <label for="departmentFilter">Department:</label>
                     <select id="departmentFilter" class="form-control" ng-model="filters.department">
@@ -24,7 +25,6 @@
                         <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
                     </select>
                 </div>
-                <!-- Additional filters (e.g., location, status, project) -->
                 <div class="form-group">
                     <label for="locationFilter">Location:</label>
                     <select id="locationFilter" class="form-control" ng-model="filters.location">
@@ -50,11 +50,12 @@
             </div>
 
             <!-- Charts & Graphs Section Toggle -->
-            <div ng-click="toggleChartsGraphs()" style="cursor:pointer; background-color:lightgray;">
-                <h5>Charts & Graphs</h5>
+            <div style="cursor:pointer; background-color:lightgray; margin-top: 10px;">
+                <h5 ng-click="toggleChartsGraphs()">Charts & Graphs</h5>
             </div>
-            <div ng-if="chartsGraphsVisible">
-                <!-- Filters for charts -->
+
+            <!-- Filters for charts -->
+            <div ng-if="chartsGraphsVisible && !filtersVisible" style="background-color:white; z-index: 1; border: 1px solid #ddd; margin-top: 10px;">
                 <div class="form-group">
                     <label for="chartDepartmentFilter">Department:</label>
                     <select id="chartDepartmentFilter" class="form-control" ng-model="chartFilters.department">
@@ -72,10 +73,10 @@
             </div>
         </div>
 
-        <!-- Right Side Panel -->
+        <!-- Right Side Panel (8/10 width) -->
         <div class="col-md-10">
             <!-- Chart Selection Dropdown -->
-            <div class="form-group mt-3" ng-if="chartsGraphsVisible">
+            <div class="form-group mt-3" ng-if="chartsGraphsVisible && !filtersVisible">
                 <label for="chartSelect">Select Chart:</label>
                 <select id="chartSelect" class="form-control" ng-model="selectedChart" ng-change="selectChart(selectedChart)">
                     <option value="employeeCount">Employee Count by Department</option>
@@ -84,15 +85,15 @@
             </div>
 
             <!-- Chart Display Area -->
-            <div ng-if="selectedChart === 'employeeCount'">
+            <div ng-if="selectedChart === 'employeeCount' && chartsGraphsVisible && !filtersVisible">
                 <canvas id="employeeCountChart"></canvas>
             </div>
-            <div ng-if="selectedChart === 'employeeSalary'">
+            <div ng-if="selectedChart === 'employeeSalary' && chartsGraphsVisible && !filtersVisible">
                 <canvas id="employeeSalaryChart"></canvas>
             </div>
 
             <!-- Employee Count and Table -->
-            <div class="mt-5">
+            <div ng-if="filtersVisible && !chartsGraphsVisible" class="mt-5">
                 <h4 style="background-color:beige">Total Employees: {{employeeCount}}</h4>
                 <table class="table table-bordered table-striped">
                     <thead>

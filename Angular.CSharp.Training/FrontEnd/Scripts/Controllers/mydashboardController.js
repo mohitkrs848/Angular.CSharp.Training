@@ -34,6 +34,8 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     var employeeCountChartInstance = null;
     var employeeSalaryChartInstance = null;
 
+    let debounceTimeout;
+
     // Toggle the visibility of the filters section
     $scope.toggleFilters = function () {
         $scope.filtersVisible = !$scope.filtersVisible;
@@ -87,6 +89,10 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     };
 
     $scope.renderEmployeeCountChart = function () {
+        if ($scope.departments.length === 0 || $scope.employeesForCharts.length === 0) {
+            console.log('No data to display in Employee Count chart');
+            return;
+        }
         var ctx = document.getElementById('employeeCountChart').getContext('2d');
         if (employeeCountChartInstance) {
             employeeCountChartInstance.destroy();
@@ -160,7 +166,10 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     // Watchers for chart filters
     $scope.$watchGroup(['chartFilters.department', 'chartFilters.designation'], function () {
         if ($scope.chartsGraphsVisible) {
-            $scope.loadCharts();
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(function () {
+                $scope.loadCharts();
+            }, 300); // 300ms debounce delay
         }
     });
 
