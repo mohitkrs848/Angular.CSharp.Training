@@ -6,6 +6,9 @@ using Unity;
 using Unity.Lifetime;
 using Unity.WebApi;
 using Angular.CSharp.Training.Services;
+using Angular.CSharp.Training.Controllers;
+using System.Reflection;
+using Serilog;
 
 namespace Angular.CSharp.Training
 {
@@ -24,6 +27,11 @@ namespace Angular.CSharp.Training
             container.RegisterType<IEmployeeService, EmployeeService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IProjectService, ProjectService>();
+            container.RegisterType<IAuthService, AuthService>();
+
+            container.RegisterType<AuthController>();
+            container.RegisterInstance<ILogger>(Log.Logger);
+
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
