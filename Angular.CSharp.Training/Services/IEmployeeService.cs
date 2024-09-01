@@ -19,5 +19,7 @@ namespace Angular.CSharp.Training.Agents
         Task<int> GenerateEmployeeId();
         Task<IEnumerable<Employee>> SearchEmployees(string email, int? id, string name);
         Task<IEnumerable<Employee>> GetAllEmployees(string department, string designation, int? age, decimal? salaryMin, decimal? salaryMax, string location, string status, int? projectId);
+        Task<object> GetDistinctValues();
+        Task<bool> CheckEmailExistence(string email, int? id);
     }
 }

@@ -36,9 +36,9 @@ namespace Angular.CSharp.Training.Agents
         public async Task<IEnumerable<Employee>> GetAllEmployees(string department, string designation, int? age, decimal? salaryMin, decimal? salaryMax, string location, string status, int? projectId)
             => await _employeeRepository.GetAllEmployees(department, designation, age, salaryMin, salaryMax, location, status, projectId);
 
-        internal async Task<object> GetDistinctValues() => await _employeeRepository.GetDistinctValues();
+        public async Task<object> GetDistinctValues() => await _employeeRepository.GetDistinctValues();
 
-        internal async Task<bool> CheckEmailExistence(string email, int? id) => await _employeeRepository.CheckEmailExistence(email, id);
+        public async Task<bool> CheckEmailExistence(string email, int? id) => await _employeeRepository.CheckEmailExistence(email, id);
     }
 
 }

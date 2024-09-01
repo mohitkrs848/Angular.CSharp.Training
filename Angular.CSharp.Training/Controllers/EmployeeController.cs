@@ -11,14 +11,11 @@ namespace Angular.CSharp.Training.Controllers
     [RoutePrefix("api/employee")]
     public class EmployeeController : ApiController
     {
-        private EmployeeService employeeService;
+        private readonly IEmployeeService employeeService;
 
-        protected readonly DemoDbContext context;
-
-        public EmployeeController(EmployeeService employeeAgent)
+        public EmployeeController(EmployeeService employeeService)
         {
-            context = new DemoDbContext();
-            this.employeeService = employeeAgent;
+            this.employeeService = employeeService;
         }
 
         [HttpPost]

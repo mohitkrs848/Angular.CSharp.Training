@@ -157,6 +157,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Repository\IProjectRepository.cs" />
+    <Compile Include="Data\Repository\IUserRepository.cs" />
+    <Compile Include="Data\Repository\ProjectRepository.cs" />
+    <Compile Include="Data\Repository\UserRepository.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\IEmployeeService.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
@@ -164,6 +168,10 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Content Include="Data\DBqueries.txt" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\Repository\BaseRepository.cs" />
