@@ -116,11 +116,11 @@ namespace Angular.CSharp.Training.Agents
             }
         }
 
-        public async Task<IEnumerable<Employee>> SearchEmployees(string email, int? id, string name)
+        public async Task<IEnumerable<Employee>> SearchEmployees(string query)
         {
             try
             {
-                var employees = await _employeeRepository.SearchEmployees(email, id, name);
+                var employees = await _employeeRepository.SearchEmployees(query);
                 logger.Information($"Employees searched successfully");
                 return employees;
             }

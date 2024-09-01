@@ -105,11 +105,11 @@ namespace Angular.CSharp.Training.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<IHttpActionResult> SearchEmployees(string email = null, int? id = null, string name = null)
+        public async Task<IHttpActionResult> SearchEmployees(string query)
         {
             try
             {
-                var employees = await employeeService.SearchEmployees(email, id, name);
+                var employees = await employeeService.SearchEmployees(query);
                 return Ok(employees);
             }
             catch (Exception ex)

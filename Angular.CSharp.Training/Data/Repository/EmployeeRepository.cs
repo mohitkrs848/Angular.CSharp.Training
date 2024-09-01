@@ -83,23 +83,21 @@ namespace Angular.CSharp.Training.Data.Repository
             return newId;
         }
 
-        public async Task<IEnumerable<Employee>> SearchEmployees(string email, int? id, string name)
+        public async Task<IEnumerable<Employee>> SearchEmployees(string query)
         {
             var employees = await GetAllEmployees();
 
-            if (!string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(query))
             {
-                employees = employees.Where(e => e.EmpEmail.Contains(email)).ToList();
-            }
+                int id;
+                bool isNumeric = int.TryParse(query, out id);
 
-            if (id.HasValue)
-            {
-                employees = employees.Where(e => e.Id == id.Value).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                employees = employees.Where(e => e.EmpFirstName.Contains(name) || e.EmpLastName.Contains(name)).ToList();
+                employees = employees.Where(e =>
+                    (isNumeric && e.Id == id) ||
+                    e.EmpEmail.Contains(query) ||
+                    e.EmpFirstName.Contains(query) ||
+                    e.EmpLastName.Contains(query)
+                ).ToList();
             }
 
             return employees;
