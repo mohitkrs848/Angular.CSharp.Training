@@ -67,17 +67,12 @@ app.service('EmployeeService', ['$http', function ($http) {
     };
 
 
-    // Search employees based on criteria
-    this.searchEmployees = function (email, id, name) {
+    // Search employees based on a single query (email, id, or name)
+    this.searchEmployees = function (query) {
         var url = baseUrl + '/search';
-        var params = [];
 
-        if (email) params.push('email=' + encodeURIComponent(email));
-        if (id) params.push('id=' + id);
-        if (name) params.push('name=' + encodeURIComponent(name));
-
-        if (params.length > 0) {
-            url += '?' + params.join('&');
+        if (query) {
+            url += '?query=' + encodeURIComponent(query);
         }
 
         return $http.get(url);

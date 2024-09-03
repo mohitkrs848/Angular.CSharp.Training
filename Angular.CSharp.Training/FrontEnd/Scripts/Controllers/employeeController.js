@@ -85,9 +85,8 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         });
     };
 
-    // Search employees
     $scope.searchEmployees = function () {
-        EmployeeService.searchEmployees($scope.searchCriteria.email, $scope.searchCriteria.id, $scope.searchCriteria.name)
+        EmployeeService.searchEmployees($scope.searchCriteria.query)
             .then(function (response) {
                 $scope.employees = response.data;
                 $scope.totalItems = $scope.employees.length;

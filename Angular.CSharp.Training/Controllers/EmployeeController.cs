@@ -3,6 +3,7 @@ using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Angular.CSharp.Training.Controllers
@@ -10,84 +11,116 @@ namespace Angular.CSharp.Training.Controllers
     [RoutePrefix("api/employee")]
     public class EmployeeController : ApiController
     {
-        private EmployeeAgent employeeAgent;
+        private readonly IEmployeeService employeeService;
 
-        protected readonly DemoDbContext context;
-
-        public EmployeeController(EmployeeAgent employeeAgent)
+        public EmployeeController(EmployeeService employeeService)
         {
-            context = new DemoDbContext();
-            this.employeeAgent = employeeAgent;
+            this.employeeService = employeeService;
         }
 
         [HttpPost]
         [Route("")]
-        public IHttpActionResult CreateEmployee([FromBody] Employee employee)
+        public async Task<IHttpActionResult> CreateEmployee([FromBody] Employee employee)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                employee.Id = await employeeService.GenerateEmployeeId();
+
+                await employeeService.CreateEmployee(employee);
+                return Ok(employee);
             }
-
-            employee.Id = employeeAgent.GenerateEmployeeId();
-
-            employeeAgent.CreateEmployee(employee);
-            return Ok(employee);
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IHttpActionResult GetEmployeeById(int id)
+        public async Task<IHttpActionResult> GetEmployeeById(int id)
         {
-            var employee = employeeAgent.GetEmployeeById(id);
-            if (employee == null)
+            try
             {
-                return NotFound();
+                var employee = await employeeService.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                return Ok(employee);
             }
-            return Ok(employee);
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee employee)
+        public async Task<IHttpActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            if (id != employee.Id)
-            {
-                return BadRequest();
+                if (id != employee.Id)
+                {
+                    return BadRequest();
+                }
+                await employeeService.UpdateEmployee(employee);
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
             }
-            employeeAgent.UpdateEmployee(employee);
-            return StatusCode(System.Net.HttpStatusCode.NoContent);
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IHttpActionResult DeleteEmployee(int id)
+        public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
-            var employee = employeeAgent.GetEmployeeById(id);
-            if (employee == null)
+            try
             {
-                return NotFound();
+                var employee = await employeeService.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                await employeeService.DeleteEmployee(id);
+                return Ok();
             }
-            employeeAgent.DeleteEmployee(id);
-            return Ok();
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
         [Route("search")]
-        public IHttpActionResult SearchEmployees(string email = null, int? id = null, string name = null)
+        public async Task<IHttpActionResult> SearchEmployees(string query)
         {
-            var employees = employeeAgent.SearchEmployees(email, id, name);
-            return Ok(employees);
+            try
+            {
+                var employees = await employeeService.SearchEmployees(query);
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetEmployees(string department = null,
+        public async Task<IHttpActionResult> GetEmployees(string department = null,
             string designation = null,
             int? age = null,
             decimal? salaryMin = null,
@@ -98,47 +131,7 @@ namespace Angular.CSharp.Training.Controllers
         {
             try
             {
-                var employees = employeeAgent.GetAllEmployees();
-
-                if (!string.IsNullOrEmpty(department))
-                {
-                    employees = employees.Where(e => e.EmpDeptName == department).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(designation))
-                {
-                    employees = employees.Where(e => e.EmpDesignation == designation).ToList();
-                }
-
-                if (age.HasValue)
-                {
-                    employees = employees.Where(e => e.EmpAge == age.Value).ToList();
-                }
-
-                if (salaryMin.HasValue)
-                {
-                    employees = employees.Where(e => e.EmpSalary >= salaryMin.Value).ToList();
-                }
-
-                if (salaryMax.HasValue)
-                {
-                    employees = employees.Where(e => e.EmpSalary <= salaryMax.Value).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(location))
-                {
-                    employees = employees.Where(e => e.EmpLocation == location).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(status))
-                {
-                    employees = employees.Where(e => e.EmpStatus == status).ToList();
-                }
-
-                if (projectId.HasValue)
-                {
-                    employees = employees.Where(e => e.ProjectId == projectId.Value).ToList();
-                }
+                var employees = await employeeService.GetAllEmployees(department, designation, age, salaryMin, salaryMax, location, status, projectId);
 
                 return Ok(employees);
             }
@@ -150,26 +143,11 @@ namespace Angular.CSharp.Training.Controllers
 
         [HttpGet]
         [Route("distinct-values")]
-        public IHttpActionResult GetDistinctValues()
+        public async Task<IHttpActionResult> GetDistinctValues()
         {
             try
             {
-                var departments = employeeAgent.GetAllEmployees().Select(e => e.EmpDeptName).Distinct().ToList();
-                var designations = employeeAgent.GetAllEmployees().Select(e => e.EmpDesignation).Distinct().ToList();
-                var locations = employeeAgent.GetAllEmployees().Select(e => e.EmpLocation).Distinct().ToList();
-                var projects = employeeAgent.GetAllEmployees()
-                                .Where(e => e.Project != null)
-                                .Select(e => new { e.Project.Id, e.Project.ProjectName })
-                                .Distinct()
-                                .ToList();
-
-                var result = new
-                {
-                    Departments = departments,
-                    Designations = designations,
-                    Locations = locations,
-                    Projects = projects
-                };
+                var result = await employeeService.GetDistinctValues();
 
                 return Ok(result);
             }
@@ -182,12 +160,11 @@ namespace Angular.CSharp.Training.Controllers
 
         [HttpGet]
         [Route("checkemail")]
-        public IHttpActionResult CheckEmail(string email, int? id = null)
+        public async Task<IHttpActionResult> CheckEmail(string email, int? id = null)
         {
             try
             {
-                var normalizedEmail = email.ToLowerInvariant(); // Normalize email
-                var emailExists = context.Employees.Any(e => e.EmpEmail.ToLower() == normalizedEmail && (!id.HasValue || e.Id != id.Value));
+                var emailExists = await employeeService.CheckEmailExistence(email, id);
 
                 return Ok(new { isUnique = !emailExists });
             }

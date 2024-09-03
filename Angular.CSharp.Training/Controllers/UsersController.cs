@@ -3,65 +3,88 @@ using System.Web.Http;
 using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using System;
+using Angular.CSharp.Training.Services;
 
 namespace Angular.CSharp.Training.Controllers
 {
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
-        private DemoDbContext _context = new DemoDbContext();
+        private readonly IUserService userService;
+
+        public UserController(UserService userService)
+        {
+            this.userService = userService;
+        }
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetUsers()
+        public async Task<IHttpActionResult> GetUsers()
         {
-            var users = _context.Users.ToList();
-            return Ok(users);
+            try
+            {
+                var users = await userService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IHttpActionResult UpdateUser(int id, [FromBody] User user)
+        public async Task<IHttpActionResult> UpdateUser(int id, [FromBody] User user)
         {
-            var existingUser = _context.Users.Find(id);
-            if (existingUser == null) return NotFound();
+            try
+            {
+                await userService.UpdateUsers(user);
 
-            existingUser.Email = user.Email;
-            existingUser.Role = user.Role;
-            _context.SaveChanges();
-
-            return Ok(existingUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPost]
         [Route("")]
-        public IHttpActionResult AddUser([FromBody] User user)
+        public async Task<IHttpActionResult> AddUser([FromBody] User user)
         {
-            if (_context.Users.Any(u => u.Email == user.Email))
+            try
             {
-                return BadRequest("Email already exists.");
+                if (await userService.GetUserByEmail(user.Email))
+                {
+                    return BadRequest("Email already exists.");
+                    
+                }
+                await userService.CreateUser(user);
+
+                return Ok(user);
             }
-
-            // Hash the provided password
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return Ok(user);
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IHttpActionResult DeleteUser(int id)
+        public async Task<IHttpActionResult> DeleteUser(int id)
         {
-            var user = _context.Users.Find(id);
-            if (user == null) return NotFound();
+            try
+            {
+                await userService.DeleteUser(id);
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
     }

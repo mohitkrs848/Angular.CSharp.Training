@@ -1,6 +1,8 @@
 ﻿using Angular.CSharp.Training.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -9,10 +11,16 @@ namespace Angular.CSharp.Training.Data
 {
     public class DemoDbContext : DbContext
     {
-        public DemoDbContext() : base("Server=(localdb)\\MyDemoDB;Database=AngularCSharpDB;Trusted_Connection=True;")
+        public DemoDbContext() : base(GetConnectionString())
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DemoDbContext>());
         }
+
+        private static string GetConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["AngularCSharpDBConnection"].ConnectionString;
+        }
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<User> Users { get; set; }

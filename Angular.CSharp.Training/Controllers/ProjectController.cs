@@ -1,44 +1,62 @@
 ﻿using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
+using Angular.CSharp.Training.Services;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 [RoutePrefix("api/project")]
 public class ProjectController : ApiController
 {
-    private readonly DemoDbContext context;
+    private readonly IProjectService projectService;
 
-    public ProjectController()
+    public ProjectController(ProjectService projectService)
     {
-        context = new DemoDbContext();
+        this.projectService = projectService;
     }
 
     // GET: api/project
     [HttpGet]
     [Route("")]
-    public IHttpActionResult GetAllProjects()
+    public async Task<IHttpActionResult> GetAllProjects()
     {
-        var projects = context.Projects.ToList();
-        return Ok(projects);
+        try
+        {
+            var projects = await projectService.GetAllProjects();
+            return Ok(projects);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return InternalServerError(ex);
+        }
     }
 
     // GET: api/project/{id}
     [HttpGet]
     [Route("{id}")]
-    public IHttpActionResult GetProject(int id)
+    public async Task<IHttpActionResult> GetProjectById(int id)
     {
-        var project = context.Projects.Find(id);
-        if (project == null)
+        try
         {
-            return NotFound();
+            var project = await projectService.GetProjectById(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return Ok(project);
         }
-        return Ok(project);
+        catch (Exception ex)
+        {
+            return InternalServerError(ex);
+        }
     }
 
     // POST: api/project
     [HttpPost]
     [Route("")]
-    public IHttpActionResult CreateProject([FromBody] Project project)
+    public async Task<IHttpActionResult> CreateProject([FromBody] Project project)
     {
         try
         {
@@ -47,11 +65,10 @@ public class ProjectController : ApiController
                 return BadRequest(ModelState);
             }
 
-            context.Projects.Add(project);
-            context.SaveChanges();
+            await projectService.CreateProject(project);
             return Ok(project);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             return InternalServerError(ex);
         }
@@ -60,40 +77,38 @@ public class ProjectController : ApiController
     // PUT: api/project/{id}
     [HttpPut]
     [Route("{id}")]
-    public IHttpActionResult UpdateProject(int id, [FromBody] Project project)
+    public async Task<IHttpActionResult> UpdateProject(int id, [FromBody] Project project)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return BadRequest(ModelState);
-        }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        var existingProject = context.Projects.Find(id);
-        if (existingProject == null)
+            await projectService.UpdateProject(id, project);
+
+            return StatusCode(System.Net.HttpStatusCode.NoContent);
+        }
+        catch (Exception ex)
         {
-            return NotFound();
+            return InternalServerError(ex);
         }
-
-        existingProject.ProjectName = project.ProjectName;
-        existingProject.ProjectStatus = project.ProjectStatus;
-        existingProject.ProjectLocation = project.ProjectLocation;
-
-        context.SaveChanges();
-        return StatusCode(System.Net.HttpStatusCode.NoContent);
     }
 
     // DELETE: api/project/{id}
     [HttpDelete]
     [Route("{id}")]
-    public IHttpActionResult DeleteProject(int id)
+    public async Task<IHttpActionResult> DeleteProject(int id)
     {
-        var project = context.Projects.Find(id);
-        if (project == null)
+        try
         {
-            return NotFound();
+            await projectService.DeleteProject(id);
+            return Ok();
         }
-
-        context.Projects.Remove(project);
-        context.SaveChanges();
-        return Ok(project);
+        catch (Exception ex)
+        {
+            return InternalServerError(ex);
+        }
     }
 }
