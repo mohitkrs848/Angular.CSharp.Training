@@ -2,12 +2,11 @@
     <h1 class="mb-2 col-md-6" style="background-color: rgba(168, 239, 237, 0.48) ">Employee Management</h1>
 
     <!-- Buttons to open modals -->
-    <button class="btn btn-primary mb-4" ng-click="openAddEditModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(0, 123, 255, 0.7), rgba(0, 170, 255, 0.9));">Add Employee</button>
-    <button class="btn btn-secondary mb-4" ng-click="openSearchModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(108, 117, 125, 0.7), rgba(136, 136, 136, 0.9));">Search Employee</button>
-    <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(23, 162, 184, 0.7), rgba(51, 193, 222, 0.9));">Show All Employees</button>
+    <button class="btn btn-primary mb-4" ng-click="openAddEditModal()" style="border-radius: 15px;background: linear-gradient(90deg, rgba(0, 123, 255, 0.7), rgb(87 112 135 / 90%));">Add Employee</button>
+    <button class="btn btn-secondary mb-4" ng-click="openSearchModal()" style="border-radius: 15px; background: linear-gradient(90deg, rgb(134 182 227 / 70%), rgb(65 102 101 / 90%));">Search Employee</button>
+    <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(90deg, rgb(93 166 231 / 70%), rgb(94 108 110 / 90%)); ">Show All Employees</button>
     <!-- Export to Excel Button -->
-    <!--<button class="btn btn-success mb-4" ng-click="exportToExcel()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export to Excel</button>-->
-    <button class="btn btn-primary mb-4" ng-click="openExportModal()" style="border-radius: 15px; background: linear-gradient(45deg, rgba(40, 167, 69, 0.7), rgba(91, 201, 128, 0.9));">Export</button>
+    <button class="btn btn-primary mb-4" ng-click="openExportModal()" style="border-radius: 15px; background: linear-gradient(90deg, rgb(119 187 181 / 70%), rgb(86 110 110 / 90%)); ">Export</button>
 
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">
@@ -58,18 +57,18 @@
                     </button>
                 </td>
             </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="13">
-                    <div class="pagination-controls">
-                        <button class="btn btn-primary" style="border-radius: 15px" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
-                        <span>Page {{currentPage}} of {{totalPages()}}</span>
-                        <button class="btn btn-primary" style="border-radius: 15px" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="13">
+                        <div class="pagination-controls">
+                            <button class="btn btn-primary" style="border-radius: 15px" ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
+                            <span>Page {{currentPage}} of {{totalPages()}}</span>
+                            <button class="btn btn-primary" style="border-radius: 15px" ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
     </table>
 
     <!-- Add/Edit Employee Modal -->
@@ -167,6 +166,27 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius:15px">Close</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmationModalLabel">Confirm Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="confirmLogout()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
             </div>
         </div>
     </div>

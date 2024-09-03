@@ -19,4 +19,12 @@
             alert('Registration failed: ' + error.statusText);
         });
     };
+    $scope.showLogoutConfirmation = function () {
+        $('#logoutConfirmationModal').modal('show');
+    };
+
+    $scope.confirmLogout = function () {
+        $('#logoutConfirmationModal').modal('hide');
+        $scope.logout();
+    };
 }]);
