@@ -170,6 +170,16 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     };
 
     // Delete employee
+
+    $scope.showDeleteConfirmation = function (id) {
+        $('#deleteConfirmationModal').modal('show');
+    };
+
+    $scope.confirmDelete = function (id) {
+        $('#deleteConfirmationModal').modal('hide');
+        $scope.deleteEmployee(id);
+    };
+
     $scope.deleteEmployee = function (id) {
         if (AuthService.getUserRole() === 'Admin') {
             EmployeeService.deleteEmployee(id).then(function () {
