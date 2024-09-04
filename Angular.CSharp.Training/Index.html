@@ -46,7 +46,16 @@
         }
 
         .dormant-status {
-            background-color: rgba(223, 228, 177, 0.62);
+            background-color: rgba(243, 231, 240, 0.26);
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffcc00; /* Highlight color */
+            background-color: #343a40; /* Keeps the dark background consistent on hover */
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.7); /* Glowing effect */
+            transform: scale(1.1); /* Slightly enlarge the text */
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
         }
     </style>
 </head>
@@ -82,12 +91,14 @@
                     <a class="nav-link" href="#!/contact">Contact Us</a>
                 </li>
             </ul>
-            <button class="btn btn-danger ml-auto" ng-click="logout()" ng-if="isAuthenticated()"
-                    style="border-radius: 15px; background: linear-gradient(45deg, rgba(220, 53, 69, 0.7), rgba(255, 99, 71, 0.7));">
+            <button class="btn btn-danger ml-auto" ng-click="showLogoutConfirmation()"
+                    ng-if="isAuthenticated()"
+                    style="border-radius: 15px; background: linear-gradient(45deg, rgba(220, 53, 69, 0.7), rgb(78 47 47)); ">
                 Logout
             </button>
         </div>
     </nav>
+
 
     <!-- Main Content -->
     <div class="container-fluid" style="width: 100%;">

@@ -1,11 +1,11 @@
 ﻿<div ng-controller="myDashboardController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color:beige">My Dashboard</h1>
+    <h1 class="mb-4" style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">My Dashboard</h1>
 
     <div class="row">
         <!-- Left Side Panel (2/10 width) -->
         <div class="col-md-2">
             <!-- Filters Section Toggle -->
-            <div style="cursor:pointer; background-color:lightgray; margin-bottom: 10px;">
+            <div style="cursor: pointer; box-shadow: 2px 3px 9px 0px; background-color: #b5e9e499; border-radius: 15px; margin-bottom: 10px; margin-left: 5px; border-color: black ">
                 <h5 ng-click="toggleFilters()">Filters</h5>
             </div>
 
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Charts & Graphs Section Toggle -->
-            <div style="cursor:pointer; background-color:lightgray; margin-top: 10px;">
+            <div style="cursor: pointer; box-shadow: 2px 3px 9px 0px; background-color: #b5e9e499; border-radius: 15px; margin-top: 10px; margin-left: 5px ">
                 <h5 ng-click="toggleChartsGraphs()">Charts & Graphs</h5>
             </div>
 
@@ -119,10 +119,10 @@
 
             <!-- Employee Count and Table -->
             <div ng-if="filtersVisible && !chartsGraphsVisible" class="mt-5">
-                <h4 style="background-color:beige">Total Employees: {{employeeCount}}</h4>
+                <h4 style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">Total Employees: {{employeeCount}}</h4>
                 <table class="table table-bordered table-striped">
                     <thead>
-                        <tr style="background-color:beige">
+                        <tr style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">
                             <th>Employee ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
