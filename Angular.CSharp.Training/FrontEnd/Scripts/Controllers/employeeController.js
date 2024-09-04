@@ -44,14 +44,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
             $scope.dismissToast($scope.toasts[0]);
         }, duration);
     };
-    $scope.showLogoutConfirmation = function () {
-        $('#logoutConfirmationModal').modal('show');
-    };
-
-    $scope.confirmLogout = function () {
-        $('#logoutConfirmationModal').modal('hide');
-        $scope.logout();
-    };
 
     // Function to dismiss a toast notification
     $scope.dismissToast = function (toast) {

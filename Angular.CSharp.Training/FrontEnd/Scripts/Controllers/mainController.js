@@ -17,6 +17,15 @@ app.controller('MainController', ['$scope', '$location', 'AuthService', function
     //    return roles.includes(AuthService.getRole());
     //};
 
+    $scope.showLogoutConfirmation = function () {
+        $('#logoutConfirmationModal').modal('show');
+    };
+
+    $scope.confirmLogout = function () {
+        $('#logoutConfirmationModal').modal('hide');
+        $scope.logout();
+    };
+
     $scope.logout = function () {
         AuthService.logout();
         $location.path("/");

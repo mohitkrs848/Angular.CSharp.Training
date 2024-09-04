@@ -79,17 +79,6 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        //.when("/dashboard/charts", {
-        //    templateUrl: "FrontEnd/templates/dashboard-charts.html",
-        //    controller: "ChartsController",
-        //    resolve: {
-        //        auth: function (AuthService, $location) {
-        //            if (!AuthService.isAuthenticated()) {
-        //                $location.path('/'); // Redirect to login if not authenticated
-        //            }
-        //        }
-        //    }
-        //})
         .when("/about", {
             templateUrl: "FrontEnd/templates/about.html",
             resolve: {
