@@ -22,8 +22,6 @@ Code-First vs Database-First approach to develop
 
 
 
-
-
 Employee : EmpId (primary key), EmpName, EmpEmail, EmpAge, EmpDesignation, EmpSalary, EmpLocation, EmpStatus, EmpManagerID (Foreign Key - can be null), EmpDepartmentID (Foreign Key)
 
 Project : ProjectID (PK), ProjectName, ProjectManagerID (FK), ProjectStatus
@@ -64,7 +62,6 @@ Manager : ManagerID (PK), ManagerName
 29. logs store in databases
 30. fetch the data from sql server and convert it into json and store it into the mongoDB  (write a service for the functionality)
 31. to work with email, try to work with templates (create a template in database and then send the email)
-
 
 
 Role in User table
