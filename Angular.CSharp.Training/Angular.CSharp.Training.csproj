@@ -255,18 +255,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FrontEnd\Scripts\Controllers\chartsController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\dashboardController.js" />
-    <Content Include="FrontEnd\Scripts\Controllers\filtersController.js" />
-    <Content Include="FrontEnd\Scripts\Controllers\mydashboardController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\projectController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\userController.js" />
     <Content Include="FrontEnd\Scripts\Services\projectService.js" />
     <Content Include="FrontEnd\Scripts\Services\userService.js" />
     <Content Include="FrontEnd\src\login.jpg" />
-    <Content Include="FrontEnd\templates\dashboard-charts.html" />
     <Content Include="FrontEnd\templates\dashboard.html" />
-    <Content Include="FrontEnd\templates\mydashboard.html" />
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
     <Content Include="FrontEnd\templates\register.html" />
@@ -325,7 +320,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FrontEnd\templates\dashboard-filters.html" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

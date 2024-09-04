@@ -7,16 +7,6 @@ app.controller('MainController', ['$scope', '$location', 'AuthService', function
         $scope.userRole = AuthService.getUserRole();
     });
 
-    //$scope.getUserRole = function () {
-    //    var role = AuthService.getUserRole();
-    //    console.log('User Role in Controller1:', role);
-    //    return role;
-    //};
-
-    //$scope.isAuthorized = function (roles) {
-    //    return roles.includes(AuthService.getRole());
-    //};
-
     $scope.showLogoutConfirmation = function () {
         $('#logoutConfirmationModal').modal('show');
     };

@@ -29,12 +29,9 @@
     <script src="FrontEnd/Scripts/Controllers/loginController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/employeeController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/mainController.js"></script>
-    <script src="FrontEnd/Scripts/Controllers/filtersController.js"></script>
-    <script src="FrontEnd/Scripts/Controllers/chartsController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/projectController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/userController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/dashboardController.js"></script>
-    <script src="FrontEnd/Scripts/Controllers/mydashboardController.js"></script>
 
     <style>
         .active-status {
@@ -80,9 +77,6 @@
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/dashboard">Dashboard</a>
-                </li>
-                <li class="nav-item" ng-if="isAuthenticated()">
-                    <a class="nav-link" href="#!/mydashboard">My Dashboard</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/about">About Us</a>
