@@ -100,7 +100,7 @@ Task: Shivansh
 - Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)
 
 Mohit: 
-- Backend microservice structure
+- Backend layers structure
 - synronized methods
 - Dashboard updation with dynamic x,y parameters
 - logs store in databases

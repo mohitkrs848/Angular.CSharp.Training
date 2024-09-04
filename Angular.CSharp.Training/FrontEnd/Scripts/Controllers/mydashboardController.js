@@ -4,11 +4,11 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
     $scope.designations = [];
     $scope.locations = [];
     $scope.projects = [];
+    $scope.dateRange = { start: null, end: null };
 
     $scope.filtersVisible = false;
     $scope.chartsGraphsVisible = false;
 
-    // Filters for the table
     $scope.filters = {
         department: '',
         designation: '',
@@ -17,26 +17,26 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         salaryMax: null,
         location: '',
         status: '',
-        projectId: null
+        projectId: null,
+        dateRange: $scope.dateRange
     };
 
-    // Filters for the charts section
     $scope.chartFilters = {
         department: '',
         designation: ''
     };
 
     $scope.selectedChart = 'employeeCount';
-
+    $scope.selectedChartType = 'bar'; // New property for chart type
     $scope.employeeCount = 0;
 
-    // Store references to chart instances
     var employeeCountChartInstance = null;
     var employeeSalaryChartInstance = null;
+    var employeeAgeChartInstance = null;
+    var employeeLocationChartInstance = null;
 
     let debounceTimeout;
 
-    // Toggle the visibility of the filters section
     $scope.toggleFilters = function () {
         $scope.filtersVisible = !$scope.filtersVisible;
         if ($scope.chartsGraphsVisible) {
@@ -44,7 +44,6 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         }
     };
 
-    // Toggle the visibility of the charts/graphs section
     $scope.toggleChartsGraphs = function () {
         $scope.chartsGraphsVisible = !$scope.chartsGraphsVisible;
         if ($scope.chartsGraphsVisible) {
@@ -82,6 +81,10 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
                 $scope.renderEmployeeCountChart();
             } else if ($scope.selectedChart === 'employeeSalary') {
                 $scope.renderEmployeeSalaryChart();
+            } else if ($scope.selectedChart === 'employeeAge') {
+                $scope.renderEmployeeAgeChart();
+            } else if ($scope.selectedChart === 'employeeLocation') {
+                $scope.renderEmployeeLocationChart();
             }
         }, function (error) {
             console.error('Error loading chart data:', error);
@@ -98,7 +101,7 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
             employeeCountChartInstance.destroy();
         }
         employeeCountChartInstance = new Chart(ctx, {
-            type: 'bar',
+            type: $scope.selectedChartType,
             data: {
                 labels: $scope.departments,
                 datasets: [{
@@ -112,6 +115,21 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
             }
         });
     };
@@ -122,7 +140,7 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
             employeeSalaryChartInstance.destroy();
         }
         employeeSalaryChartInstance = new Chart(ctx, {
-            type: 'pie',
+            type: $scope.selectedChartType,
             data: {
                 labels: $scope.employeesForCharts.map(function (emp) {
                     return emp.EmpFirstName + ' ' + emp.EmpLastName;
@@ -132,14 +150,103 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
                     data: $scope.employeesForCharts.map(function (emp) {
                         return emp.EmpSalary;
                     }),
-                    backgroundColor: $scope.employeesForCharts.map(function () {
-                        return 'rgba(255, 99, 132, 0.2)';
-                    }),
-                    borderColor: $scope.employeesForCharts.map(function () {
-                        return 'rgba(255, 99, 132, 1)';
-                    }),
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': $' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.renderEmployeeAgeChart = function () {
+        var ctx = document.getElementById('employeeAgeChart').getContext('2d');
+        if (employeeAgeChartInstance) {
+            employeeAgeChartInstance.destroy();
+        }
+        employeeAgeChartInstance = new Chart(ctx, {
+            type: $scope.selectedChartType,
+            data: {
+                labels: $scope.employeesForCharts.map(function (emp) {
+                    return emp.EmpFirstName + ' ' + emp.EmpLastName;
+                }),
+                datasets: [{
+                    label: 'Age',
+                    data: $scope.employeesForCharts.map(function (emp) {
+                        return emp.EmpAge;
+                    }),
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' years';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.renderEmployeeLocationChart = function () {
+        var ctx = document.getElementById('employeeLocationChart').getContext('2d');
+        if (employeeLocationChartInstance) {
+            employeeLocationChartInstance.destroy();
+        }
+        employeeLocationChartInstance = new Chart(ctx, {
+            type: $scope.selectedChartType,
+            data: {
+                labels: $scope.locations,
+                datasets: [{
+                    label: 'Employee Distribution by Location',
+                    data: $scope.locations.map(function (loc) {
+                        return $scope.employeesForCharts.filter(function (emp) {
+                            return emp.EmpLocation === loc;
+                        }).length;
+                    }),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
             }
         });
     };
@@ -149,7 +256,11 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         $scope.loadCharts();
     };
 
-    // Watchers for table filters
+    $scope.selectChartType = function (chartType) {
+        $scope.selectedChartType = chartType;
+        $scope.loadCharts();
+    };
+
     $scope.$watchGroup([
         'filters.department',
         'filters.designation',
@@ -158,18 +269,19 @@ app.controller('myDashboardController', ['$scope', 'EmployeeService', function (
         'filters.salaryMax',
         'filters.location',
         'filters.status',
-        'filters.projectId'
+        'filters.projectId',
+        'dateRange.start',
+        'dateRange.end'
     ], function () {
         $scope.loadEmployees();
     });
 
-    // Watchers for chart filters
     $scope.$watchGroup(['chartFilters.department', 'chartFilters.designation'], function () {
         if ($scope.chartsGraphsVisible) {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(function () {
                 $scope.loadCharts();
-            }, 300); // 300ms debounce delay
+            }, 300);
         }
     });
 

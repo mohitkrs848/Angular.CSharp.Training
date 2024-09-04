@@ -47,6 +47,11 @@
                         <option ng-repeat="project in projects" value="{{project.ProjectId}}">{{project.ProjectName}}</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="dateRangeFilter">Date Range:</label>
+                    <input type="date" id="startDate" class="form-control" ng-model="filters.dateRange.start">
+                    <input type="date" id="endDate" class="form-control" ng-model="filters.dateRange.end">
+                </div>
             </div>
 
             <!-- Charts & Graphs Section Toggle -->
@@ -71,6 +76,16 @@
                     </select>
                 </div>
             </div>
+
+            <!-- Chart Type Selector -->
+            <div ng-if="chartsGraphsVisible" style="background-color:lightgray; margin-top: 10px;">
+                <h5>Chart Type</h5>
+                <select ng-model="selectedChartType" ng-change="selectChartType(selectedChartType)" class="form-control">
+                    <option value="bar">Bar</option>
+                    <option value="line">Line</option>
+                    <option value="pie">Pie</option>
+                </select>
+            </div>
         </div>
 
         <!-- Right Side Panel (8/10 width) -->
@@ -81,15 +96,25 @@
                 <select id="chartSelect" class="form-control" ng-model="selectedChart" ng-change="selectChart(selectedChart)">
                     <option value="employeeCount">Employee Count by Department</option>
                     <option value="employeeSalary">Employee Salary Distribution</option>
+                    <option value="employeeAge">Employee Age Distribution</option>
+                    <option value="employeeLocation">Employee Location Distribution</option>
                 </select>
             </div>
 
             <!-- Chart Display Area -->
-            <div ng-if="selectedChart === 'employeeCount' && chartsGraphsVisible && !filtersVisible">
-                <canvas id="employeeCountChart"></canvas>
-            </div>
-            <div ng-if="selectedChart === 'employeeSalary' && chartsGraphsVisible && !filtersVisible">
-                <canvas id="employeeSalaryChart"></canvas>
+            <div ng-if="chartsGraphsVisible">
+                <div ng-if="selectedChart === 'employeeCount'">
+                    <canvas id="employeeCountChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeSalary'">
+                    <canvas id="employeeSalaryChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeAge'">
+                    <canvas id="employeeAgeChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeLocation'">
+                    <canvas id="employeeLocationChart"></canvas>
+                </div>
             </div>
 
             <!-- Employee Count and Table -->
