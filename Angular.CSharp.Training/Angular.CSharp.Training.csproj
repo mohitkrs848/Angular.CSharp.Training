@@ -256,12 +256,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FrontEnd\Scripts\Controllers\dashboardController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\financeController.js" />
+    <Content Include="FrontEnd\Scripts\Controllers\hrContoller.js" />
     <Content Include="FrontEnd\Scripts\Controllers\projectController.js" />
     <Content Include="FrontEnd\Scripts\Controllers\userController.js" />
+    <Content Include="FrontEnd\Scripts\Services\financeService.js" />
+    <Content Include="FrontEnd\Scripts\Services\hrService.js" />
     <Content Include="FrontEnd\Scripts\Services\projectService.js" />
     <Content Include="FrontEnd\Scripts\Services\userService.js" />
     <Content Include="FrontEnd\src\login.jpg" />
     <Content Include="FrontEnd\templates\dashboard.html" />
+    <Content Include="FrontEnd\templates\finance.html" />
+    <Content Include="FrontEnd\templates\humanResource.html" />
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
     <Content Include="FrontEnd\templates\register.html" />

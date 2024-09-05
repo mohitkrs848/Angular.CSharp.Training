@@ -25,6 +25,8 @@
     <script src="FrontEnd/Scripts/Services/projectService.js"></script>
     <script src="FrontEnd/Scripts/Services/authResolver.js"></script>
     <script src="FrontEnd/Scripts/Services/userService.js"></script>
+    <script src="FrontEnd/Scripts/Services/hrService.js"></script>
+    <script src="FrontEnd/Scripts/Services/financeService.js"></script>
 
     <script src="FrontEnd/Scripts/Controllers/loginController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/employeeController.js"></script>
@@ -32,6 +34,8 @@
     <script src="FrontEnd/Scripts/Controllers/projectController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/userController.js"></script>
     <script src="FrontEnd/Scripts/Controllers/dashboardController.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/hrContoller.js"></script>
+    <script src="FrontEnd/Scripts/Controllers/financeController.js"></script>
 
     <style>
         .active-status {
@@ -74,6 +78,12 @@
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated() && userRole === 'Admin'">
                     <a class="nav-link" href="#!/users">Manage Users</a>
+                </li>
+                <li class="nav-item" ng-if="isAuthenticated() && (userRole === 'HR' || userRole === 'Admin')">
+                    <a class="nav-link" href="#!/hr">HR</a>
+                </li>
+                <li class="nav-item" ng-if="isAuthenticated() && (userRole === 'Finance' || userRole === 'Admin')">
+                    <a class="nav-link" href="#!/finance">Finance</a>
                 </li>
                 <li class="nav-item" ng-if="isAuthenticated()">
                     <a class="nav-link" href="#!/dashboard">Dashboard</a>
