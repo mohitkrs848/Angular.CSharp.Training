@@ -105,24 +105,6 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="EmpDesignation">Designation</label>
-                                <select ng-model="employee.EmpDesignation" class="form-control" required style="border-radius:15px">
-                                    <option value="" selected>Select Designation</option>
-                                    <option value="Associate">Associate</option>
-                                    <option value="Software Engineer">Software Engineer</option>
-                                    <option value="Senior Engineer">Senior Engineer</option>
-                                    <option value="Lead Engineer">Lead Engineer</option>
-                                    <option value="Manager">Manager</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="Manager">Manager</label>
-                                <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required
-                                       ng-disabled="employee.EmpDesignation === 'Manager'" style="border-radius:15px">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
                                 <label for="EmpDeptName">Department</label>
                                 <select ng-model="employee.EmpDeptName" class="form-control" required style="border-radius:15px">
                                     <option value="" selected>Select Department</option>
@@ -130,6 +112,18 @@
                                     <option value="Sales">Sales</option>
                                     <option value="Engineering">Engineering</option>
                                 </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="EmpDesignation">Designation</label>
+                                <select ng-model="employee.EmpDesignation" class="form-control" required style="border-radius:15px"
+                                        ng-options="designation for designation in filteredDesignations">
+                                    <option value="" selected>Select Designation</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Manager">Manager</label>
+                                <input type="number" ng-model="employee.EmpManagerID" class="form-control" placeholder="Manager ID" required
+                                       ng-disabled="employee.EmpDesignation === 'Manager'" style="border-radius:15px">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="EmpStatus">Status</label>
@@ -174,7 +168,7 @@
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style=" background-color: bisque;">
                     <h5 class="modal-title" id="deleteConfirmationModal">Confirm Delete</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
