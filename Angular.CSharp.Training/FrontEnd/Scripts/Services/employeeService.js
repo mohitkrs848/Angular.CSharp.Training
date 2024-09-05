@@ -84,4 +84,19 @@ app.service('EmployeeService', ['$http', function ($http) {
         });
     };
 
+    // Method to download the template
+    this.downloadTemplate = function () {
+        return $http.get(baseUrl + '/download-template', { responseType: 'arraybuffer' });
+    };
+
+    // Method to upload the file
+    this.uploadFile = function (file) {
+        var formData = new FormData();
+        formData.append('file', file);
+
+        return $http.post(baseUrl + '/upload', formData, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        });
+    };
 }]);

@@ -1,5 +1,6 @@
 ﻿using Angular.CSharp.Training.App_Start;
 using Angular.CSharp.Training.Data;
+using OfficeOpenXml;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace Angular.CSharp.Training
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            // Set the license context
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug() // Set the minimum log level
             .WriteTo.MSSqlServer(

@@ -7,6 +7,14 @@
     <button class="btn btn-info mb-4" ng-click="clearSearch()" style="border-radius: 15px; background: linear-gradient(90deg, rgb(93 166 231 / 70%), rgb(94 108 110 / 90%)); ">Show All Employees</button>
     <!-- Export to Excel Button -->
     <button class="btn btn-primary mb-4" ng-click="openExportModal()" style="border-radius: 15px; background: linear-gradient(90deg, rgb(119 187 181 / 70%), rgb(86 110 110 / 90%)); ">Export</button>
+    <!-- Upload Button in the UI -->
+    <div>
+        <button ng-click="downloadTemplate()">Download Template</button>
+
+        <!-- File upload input -->
+        <input type="file" file-model="uploadedFile" id="fileInput" />
+        <button ng-click="uploadFile()">Upload File</button>
+    </div>
 
     <!-- Employee Table -->
     <table class="table table-bordered" style="width: 100%;">

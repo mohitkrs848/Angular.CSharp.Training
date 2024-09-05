@@ -313,6 +313,41 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         XLSX.utils.book_append_sheet(wb, ws, "Employees");
         XLSX.writeFile(wb, "employees.xlsx");
     }
+    // Method to download the template
+    $scope.downloadTemplate = function () {
+        EmployeeService.downloadTemplate().then(function (response) {
+            let blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'EmployeeTemplate.xlsx';
+            link.click();
+        }, function (error) {
+            $scope.showToast('Error', 'Error downloading template: ' + error.data, 5000);
+        });
+    };
+
+    $scope.uploadFile = function () {
+        let file = $scope.uploadedFile;  // Make sure this captures the file correctly
+
+        // Check if the file is captured
+        console.log('Selected file:', file);  // Log the selected file
+
+        if (!file) {
+            $scope.showToast('Error', 'Please select a file to upload.', 5000);  // This will show when no file is selected
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('file', file);  // Make sure the file is being appended to FormData
+
+        EmployeeService.uploadFile(formData).then(function (response) {
+            $scope.showToast('Success', 'File uploaded and data saved successfully.', 5000);
+            $scope.loadEmployees(); // Refresh the employee list
+        }, function (error) {
+            console.log(error);
+            $scope.showToast('Error', 'Error uploading file: ' + error.data, 5000);
+        });
+    };
 
     // Initialize data
     $scope.loadEmployees();
