@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -186,9 +187,9 @@ namespace Angular.CSharp.Training.Controllers
         [Route("download-template")]
         public IHttpActionResult DownloadTemplate()
         {
-            using (ExcelPackage package = new ExcelPackage())
+            using (var package = new ExcelPackage())
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Employee Template");
+                var worksheet = package.Workbook.Worksheets.Add("Employee Template");
 
                 worksheet.Cells[1, 1].Value = "EmpFirstName";
                 worksheet.Cells[1, 2].Value = "EmpLastName";
@@ -202,22 +203,23 @@ namespace Angular.CSharp.Training.Controllers
                 worksheet.Cells[1, 10].Value = "EmpLocation";
                 worksheet.Cells[1, 11].Value = "ProjectId";
 
-                var stream = new MemoryStream();
-                package.SaveAs(stream);
-                byte[] byteArray = stream.ToArray();
-
-                // Return the file to the user
-                var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                using (var stream = new MemoryStream())
                 {
-                    Content = new ByteArrayContent(byteArray)
-                };
-                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = "EmployeeTemplate.xlsx"
-                };
-                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                    package.SaveAs(stream);
+                    byte[] byteArray = stream.ToArray();
 
-                return ResponseMessage(result);
+                    var result = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                    {
+                        Content = new ByteArrayContent(byteArray)
+                    };
+                    result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = "EmployeeTemplate.xlsx"
+                    };
+                    result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+                    return ResponseMessage(result);
+                }
             }
         }
 
@@ -233,6 +235,8 @@ namespace Angular.CSharp.Training.Controllers
             var provider = new MultipartMemoryStreamProvider();
             await Request.Content.ReadAsMultipartAsync(provider);
 
+            List<Employee> employees = new List<Employee>();
+
             foreach (var file in provider.Contents)
             {
                 if (file.Headers.ContentDisposition != null && file.Headers.ContentDisposition.FileName != null)
@@ -240,34 +244,76 @@ namespace Angular.CSharp.Training.Controllers
                     var filename = file.Headers.ContentDisposition.FileName.Trim('"');
                     var buffer = await file.ReadAsByteArrayAsync();
 
-                    // Check the file extension (CSV or Excel)
                     if (filename.EndsWith(".csv"))
                     {
-                        // Process CSV file
-                        var employees = ParseCsv(buffer);
-                        foreach (var employee in employees)
-                        {
-                            employee.Id = await employeeService.GenerateEmployeeId();
-                            await employeeService.CreateEmployee(employee);
-                        }
+                        employees = ParseCsv(buffer);
                     }
                     else if (filename.EndsWith(".xlsx"))
                     {
-                        // Process Excel file
-                        var employees = ParseExcel(buffer);
-                        foreach (var employee in employees)
-                        {
-                            employee.Id = await employeeService.GenerateEmployeeId();
-                            await employeeService.CreateEmployee(employee);
-                        }
+                        employees = ParseExcel(buffer);
                     }
                     else
                     {
                         return BadRequest("Unsupported file format.");
                     }
+
+                    // Log employee data for inspection
+                    foreach (var employee in employees)
+                    {
+                        //string errorMessage;
+                        //if (!ValidateEmployeeData(employee, out errorMessage))
+                        //{
+                        //    return BadRequest($"Error in employee data: {errorMessage}");
+                        //}
+
+                        // Log the data
+                        Console.WriteLine($"Employee Data: {employee.EmpFirstName}, {employee.EmpLastName}, {employee.EmpEmail}, {employee.EmpSalary}");
+
+                        // Generate EmployeeId and save to the database
+                        employee.Id = await employeeService.GenerateEmployeeId();
+                        await employeeService.CreateEmployee(employee);
+                    }
+                }
+                else
+                {
+                    return BadRequest("File content disposition is missing or invalid.");
                 }
             }
+
             return Ok("File uploaded and processed successfully.");
+        }
+
+
+        private bool ValidateEmployeeData(Employee employee, out string errorMessage)
+        {
+            //// Example of validation logic
+            //if (string.IsNullOrEmpty(employee.EmpFirstName))
+            //{
+            //    errorMessage = "First Name is required.";
+            //    return false;
+            //}
+
+            //if (string.IsNullOrEmpty(employee.EmpEmail) || !IsValidEmail(employee.EmpEmail))
+            //{
+            //    errorMessage = "A valid email is required.";
+            //    return false;
+            //}
+
+            //if (employee.EmpAge <= 0)
+            //{
+            //    errorMessage = "Age must be greater than 0.";
+            //    return false;
+            //}
+
+            //if (employee.EmpSalary <= 0)
+            //{
+            //    errorMessage = "Salary must be greater than 0.";
+            //    return false;
+            //}
+
+            //// Additional validation based on your business rules
+            errorMessage = null;
+            return true;
         }
 
         private List<Employee> ParseCsv(byte[] fileContent)
@@ -323,22 +369,44 @@ namespace Angular.CSharp.Training.Controllers
 
                 for (int row = 2; row <= rowCount; row++) // Start at row 2 to skip the header
                 {
-                    var employee = new Employee
-                    {
-                        EmpFirstName = worksheet.Cells[row, 1].Text,
-                        EmpLastName = worksheet.Cells[row, 2].Text,
-                        EmpAge = int.Parse(worksheet.Cells[row, 3].Text),
-                        EmpEmail = worksheet.Cells[row, 4].Text,
-                        EmpDesignation = worksheet.Cells[row, 5].Text,
-                        EmpManagerID = int.Parse(worksheet.Cells[row, 6].Text),
-                        EmpDeptName = worksheet.Cells[row, 7].Text,
-                        EmpStatus = worksheet.Cells[row, 8].Text,
-                        EmpSalary = decimal.Parse(worksheet.Cells[row, 9].Text),
-                        EmpLocation = worksheet.Cells[row, 10].Text,
-                        ProjectId = int.Parse(worksheet.Cells[row, 11].Text)
-                    };
+                    var firstName = worksheet.Cells[row, 1].Text;
+                    var lastName = worksheet.Cells[row, 2].Text;
+                    var ageText = worksheet.Cells[row, 3].Text;
+                    var email = worksheet.Cells[row, 4].Text;
+                    var designation = worksheet.Cells[row, 5].Text;
+                    var managerIdText = worksheet.Cells[row, 6].Text;
+                    var deptName = worksheet.Cells[row, 7].Text;
+                    var status = worksheet.Cells[row, 8].Text;
+                    var salaryText = worksheet.Cells[row, 9].Text;
+                    var location = worksheet.Cells[row, 10].Text;
+                    var projectIdText = worksheet.Cells[row, 11].Text;
 
-                    employees.Add(employee);
+                    Console.WriteLine($"Row {row}: {firstName}, {lastName}, {ageText}, {email}, {designation}, {managerIdText}, {deptName}, {status}, {salaryText}, {location}, {projectIdText}");
+
+                    try
+                    {
+                        var employee = new Employee
+                        {
+                            EmpFirstName = firstName,
+                            EmpLastName = lastName,
+                            EmpAge = int.Parse(ageText),
+                            EmpEmail = email,
+                            EmpDesignation = designation,
+                            EmpManagerID = int.Parse(managerIdText),
+                            EmpDeptName = deptName,
+                            EmpStatus = status,
+                            EmpSalary = decimal.Parse(salaryText),
+                            EmpLocation = location,
+                            ProjectId = int.Parse(projectIdText)
+                        };
+
+                        employees.Add(employee);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine($"Format exception at row {row}: {ex.Message}");
+                        throw; // Re-throw the exception for further handling
+                    }
                 }
             }
             return employees;

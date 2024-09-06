@@ -287,6 +287,7 @@
     <Content Include="FrontEnd\templates\privacyPolicy.html" />
     <Content Include="FrontEnd\templates\projects.html" />
     <Content Include="FrontEnd\templates\register.html" />
+    <Content Include="FrontEnd\Scripts\uploadDirective.js" />
     <Content Include="FrontEnd\templates\users.html" />
     <Content Include="icons8-app-50.png" />
     <Content Include="Index.html" />

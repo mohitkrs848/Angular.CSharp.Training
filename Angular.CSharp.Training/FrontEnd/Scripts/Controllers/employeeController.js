@@ -342,24 +342,27 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     };
 
     $scope.uploadFile = function () {
-        let file = $scope.uploadedFile;  // Make sure this captures the file correctly
-
-        // Check if the file is captured
-        console.log('Selected file:', file);  // Log the selected file
+        let file = $scope.uploadedFile;  // Get the file from the input
+        console.log("Selected file:", file);  // Log the selected file to inspect it
 
         if (!file) {
-            $scope.showToast('Error', 'Please select a file to upload.', 5000);  // This will show when no file is selected
+            $scope.showToast('Error', 'Please select a file to upload.', 5000);
             return;
         }
 
         let formData = new FormData();
-        formData.append('file', file);  // Make sure the file is being appended to FormData
+        formData.append('file', file);
+
+        // Log the FormData content
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
 
         EmployeeService.uploadFile(formData).then(function (response) {
             $scope.showToast('Success', 'File uploaded and data saved successfully.', 5000);
             $scope.loadEmployees(); // Refresh the employee list
         }, function (error) {
-            console.log(error);
+            console.log("Error in file upload:", error);
             $scope.showToast('Error', 'Error uploading file: ' + error.data, 5000);
         });
     };
