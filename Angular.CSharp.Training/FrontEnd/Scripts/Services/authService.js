@@ -3,6 +3,11 @@ app.service('AuthService', ['$http', function ($http) {
     var baseUrl = 'https://localhost:44381/api/auth';
     var authToken = localStorage.getItem('authToken') || null;
     var userRole = localStorage.getItem('userRole') || null;
+    var loggedUser = localStorage.getItem('loggedUser') || null;
+
+    this.getLoggedUser = function () {
+        return loggedUser || localStorage.getItem('loggedUser');
+    };
 
     this.getAuthToken = function () {
         return authToken;
@@ -14,9 +19,11 @@ app.service('AuthService', ['$http', function ($http) {
                 isAuthenticated = true;
                 authToken = response.data.Token;
                 userRole = response.data.Role;
+                loggedUser = response.data.LoggedUser;
 
                 localStorage.setItem('authToken', authToken);
                 localStorage.setItem('userRole', userRole);
+                localStorage.setItem('loggedUser', loggedUser);
                 return true;
             } else {
                 return false;
@@ -38,6 +45,7 @@ app.service('AuthService', ['$http', function ($http) {
         userRole = null;
         localStorage.removeItem('authToken');
         localStorage.removeItem('userRole');
+        localStorage.removeItem('loggedUser');
     };
 
     this.register = function (registerModel) {

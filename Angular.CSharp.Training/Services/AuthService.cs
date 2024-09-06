@@ -68,7 +68,7 @@ namespace Angular.CSharp.Training.Services
 
                 // Generate a token and return it along with the user's role
                 var token = GenerateToken(user);
-                List<string> result = new List<string>() { token, user.Role };
+                List<string> result = new List<string>() { token, user.Role, user.Email.ToString().Split('@').First() };
                 logger.Information($"User {user.Email} logged in successfully.");
                 return result;
             }

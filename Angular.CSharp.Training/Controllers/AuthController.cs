@@ -57,7 +57,7 @@ namespace Angular.CSharp.Training.Controllers
 
                 List<string> result = await authService.Login(model);
 
-                return Ok(new { Token = result[0], Role = result[1] });
+                return Ok(new { Token = result[0], Role = result[1], LoggedUser = result[2] });
             }
             catch (Exception ex)
             {
