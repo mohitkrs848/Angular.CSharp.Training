@@ -21,5 +21,9 @@ app.controller('MainController', ['$scope', '$location', 'AuthService', function
         $location.path("/");
     };
 
+    $scope.openWebInfoModal = function () {
+        $('#websiteInfoModal').modal('show');
+    };
+
     console.log('User Role in Controller:', $scope.userRole);
 }]);
