@@ -30,6 +30,21 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
 
     $scope.toasts = [];
 
+    $scope.designations = {
+        HR: ['HR Assistant', 'HR Manager'],
+        Sales: ['Sales Associate', 'Area Sales Associate', 'Sales Manager',],
+        Engineering: ['Associate', 'Software Engineer', 'Senior Engineer', 'Lead Engineer', 'Manager']
+    };
+
+    // Watch the department selection and update designations accordingly
+    $scope.$watch('employee.EmpDeptName', function (newDept) {
+        if (newDept) {
+            $scope.filteredDesignations = $scope.designations[newDept];
+        } else {
+            $scope.filteredDesignations = [];
+        }
+    });
+
     // Function to show a toast notification
     $scope.showToast = function (title, message, duration) {
         $scope.toasts.push({

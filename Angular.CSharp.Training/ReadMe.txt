@@ -90,15 +90,15 @@ seq for database logging (for audit trail) but requires hosting on server
 Business layer will be hided to logic layer - need to implement concrete class (Automapper)
 
 Task: Shivansh
-- Logout after apopup and delete employee/project after popup
+- Logout after apopup and delete employee/project after popup-done
 - Employees table (project Id) is coming inplace of that we need project name
-- right up corner there should be the User name and also a small point for showing if user is admin or not
+- right up corner there should be the User name and also a small point for showing if user is admin or not-Partially done
 - my dashboard should show trends by default
-- Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)
+- Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)-done
 
 Mohit: 
 - Backend layers structure
-- synronized methods
+- synronized methods-done
 - Dashboard updation with dynamic x,y parameters
 - logs store in databases
 - search functionality (combine all the fields in single search input)
