@@ -79,7 +79,7 @@ namespace Angular.CSharp.Training.Services
             }
         }
 
-        private string GenerateToken(User user)
+        public static string GenerateToken(User user)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Angular.CSharp.Training.Services
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error occurred while generating token.");
+                //logger.Error(ex, "Error occurred while generating token.");
                 throw;
             }
         }

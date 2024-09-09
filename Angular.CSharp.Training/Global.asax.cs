@@ -21,12 +21,12 @@ namespace Angular.CSharp.Training
         {
             // Set the license context
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug() // Set the minimum log level
-            .WriteTo.MSSqlServer(
-                connectionString: ConfigurationManager.ConnectionStrings["AngularCSharpDBConnection"].ConnectionString,
-                sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true }) // Log to SQL Server
-            .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //.MinimumLevel.Debug() // Set the minimum log level
+            //.WriteTo.MSSqlServer(
+            //    connectionString: ConfigurationManager.ConnectionStrings["AngularCSharpDBConnection"].ConnectionString,
+            //    sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true }) // Log to SQL Server
+            //.CreateLogger();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             UnityConfig.RegisterComponents();

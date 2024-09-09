@@ -1,6 +1,7 @@
 ﻿using Angular.CSharp.Training.Data;
 using Angular.CSharp.Training.Models;
 using Angular.CSharp.Training.Services;
+using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,10 +18,12 @@ namespace Angular.CSharp.Training.Controllers
     public class AuthController : ApiController
     {
         private readonly IAuthService authService;
+        private readonly DemoDbContext demoDbContext;
 
-        public AuthController(AuthService authService)
+        public AuthController(AuthService authService, DemoDbContext demoDbContext)
         {
             this.authService = authService;
+            this.demoDbContext = demoDbContext;
         }
 
         [HttpPost]
@@ -98,7 +101,7 @@ namespace Angular.CSharp.Training.Controllers
                     user = newUser;
                 }
 
-                var token = GenerateToken(user);
+                var token = AuthService.GenerateToken(user);
                 return Ok(new { Token = token, Role = user.Role, LoggedUser = user.Email.Split('@').First() });
             }
             catch (Exception ex)
