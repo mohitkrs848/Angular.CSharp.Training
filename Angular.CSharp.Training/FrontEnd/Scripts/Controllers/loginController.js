@@ -10,6 +10,15 @@
             alert('Login failed: ' + error.statusText);
         });
     };
+    $scope.loginWithGoogle = function (googleToken) {
+        AuthService.googleLogin(googleToken).then(function (response) {
+            $location.path("/employees");
+            console.log('Google login successful:', response.data);
+        }, function (error) {
+            console.log('Google login error: ', error);
+            alert('Google login failed: ' + error.statusText);
+        });
+    };
 
     $scope.register = function () {
         AuthService.register($scope.user).then(function () {
@@ -20,3 +29,12 @@
         });
     };
 }]);
+
+// Google callback function
+function onGoogleSignIn(response) {
+    var googleToken = response.credential;
+    var $scope = angular.element(document.getElementById('g_id_signin')).scope();
+    $scope.$apply(function () {
+        $scope.loginWithGoogle(googleToken);
+    });
+}

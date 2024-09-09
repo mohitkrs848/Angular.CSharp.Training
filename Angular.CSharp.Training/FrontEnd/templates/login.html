@@ -19,9 +19,14 @@
             <div class="text-center mt-3">
                 <hr />
                 <p class="text-muted">or login with</p>
-                <button class="btn btn-danger w-100" ng-click="loginWithGoogle()">
+                <div id="g_id_onload"
+                     data-client_id="383255703712-vf7bo1tl52mebi3jeppu0bftqbj7lcho.apps.googleusercontent.com"
+                     data-callback="onGoogleSignIn"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin btn btn-danger w-100" data-type="standard" data-shape="rectangular" data-theme="filled_blue" data-text="signin_with" data-size="large" data-logo_alignment="left">
                     <i class="fab fa-google"></i> Login with Google
-                </button>
+                </div>
             </div>
         </div>
     </div>

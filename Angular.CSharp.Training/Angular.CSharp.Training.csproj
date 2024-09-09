@@ -310,6 +310,7 @@
     <Compile Include="Data\Repository\IUserRepository.cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
     <Compile Include="Data\Repository\UserRepository.cs" />
+    <Compile Include="Models\GoogleLoginModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegistrationModel.cs" />
     <Compile Include="Services\AuthService.cs" />
