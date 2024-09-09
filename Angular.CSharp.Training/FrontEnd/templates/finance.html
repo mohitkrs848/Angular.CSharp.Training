@@ -1,4 +1,48 @@
-﻿<div ng-controller="FinanceController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-2 col-md-6" style="background-color: rgba(168, 239, 237, 0.48) ">Finance Management</h1>
-    <p>{{ message }}</p>
+﻿<div ng-controller="FinanceController" class="container-fluid mt-5">
+    <h1 class="mb-2 col-md-6" style="background-color: rgba(168, 239, 237, 0.48)">Finance Management</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr style="background-color: rgba(78, 162, 173, 0.48);">
+                <th ng-click="sortBy('Id')">ID</th>
+                <th ng-click="sortBy('EmpFirstName')">First Name</th>
+                <th ng-click="sortBy('EmpLastName')">Last Name</th>
+                <th ng-click="sortBy('EmpAge')">Age</th>
+                <th ng-click="sortBy('EmpEmail')">Email</th>
+                <th ng-click="sortBy('EmpDesignation')">Designation</th>
+                <th ng-click="sortBy('EmpManagerID')">ManagerID</th>
+                <th ng-click="sortBy('EmpDeptName')">Department</th>
+                <th ng-click="sortBy('EmpStatus')">Status</th>
+                <th ng-click="sortBy('EmpSalary')">Salary</th>
+                <th ng-click="sortBy('EmpLocation')">Location</th>
+                <th ng-click="sortBy('ProjectId')">ProjectID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="employee in filteredEmployees">
+                <td>{{employee.Id}}</td>
+                <td>{{employee.EmpFirstName}}</td>
+                <td>{{employee.EmpLastName}}</td>
+                <td>{{employee.EmpAge}}</td>
+                <td>{{employee.EmpEmail}}</td>
+                <td>{{employee.EmpDesignation}}</td>
+                <td>{{employee.EmpManagerID}}</td>
+                <td>{{employee.EmpDeptName}}</td>
+                <td>{{employee.EmpStatus}}</td>
+                <td>{{employee.EmpSalary | currency}}</td>
+                <td>{{employee.EmpLocation}}</td>
+                <td>{{employee.ProjectId}}</td>
+                <td>
+                    <button ng-click="openAddEditModal(employee)" class="btn btn-info btn-sm">Edit</button>
+                    <button ng-click="confirmDelete(employee.Id)" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination-controls">
+        <button ng-click="prevPage()" ng-disabled="currentPage === 1">Prev</button>
+        <span>Page {{currentPage}} of {{totalPages()}}</span>
+        <button ng-click="nextPage()" ng-disabled="currentPage === totalPages()">Next</button>
+    </div>
 </div>
