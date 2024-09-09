@@ -71,5 +71,41 @@ namespace Angular.CSharp.Training.Controllers
         {
             return Ok();
         }
+
+        [HttpPost]
+        [Route("google-login")]
+        public async Task<IHttpActionResult> GoogleLogin([FromBody] GoogleLoginModel model)
+        {
+            try
+            {
+                // Verify Google token here (use Google's libraries or your logic)
+                var payload = await GoogleJsonWebSignature.ValidateAsync(model.Token);
+                var userEmail = payload.Email;
+
+                // Check if user exists in the database
+                var user = demoDbContext.Users.SingleOrDefault(u => u.Email == userEmail);
+                if (user == null)
+                {
+                    // Optionally, register the user automatically
+                    var newUser = new User
+                    {
+                        Email = userEmail,
+                        Role = "User",
+                        PasswordHash = null // As they are using Google, no password is required
+                    };
+                    demoDbContext.Users.Add(newUser);
+                    await demoDbContext.SaveChangesAsync();
+                    user = newUser;
+                }
+
+                var token = GenerateToken(user);
+                return Ok(new { Token = token, Role = user.Role, LoggedUser = user.Email.Split('@').First() });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }

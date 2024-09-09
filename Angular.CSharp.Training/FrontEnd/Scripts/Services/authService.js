@@ -53,4 +53,21 @@ app.service('AuthService', ['$http', function ($http) {
             return response.data.success;
         });
     };
+    this.googleLogin = function (googleToken) {
+        return $http.post(baseUrl + '/google-login', { token: googleToken }).then(function (response) {
+            if (response.data.Token && response.data.Role) {
+                isAuthenticated = true;
+                authToken = response.data.Token;
+                userRole = response.data.Role;
+                loggedUser = response.data.LoggedUser;
+
+                localStorage.setItem('authToken', authToken);
+                localStorage.setItem('userRole', userRole);
+                localStorage.setItem('loggedUser', loggedUser);
+                return true;
+            } else {
+                return false;
+            }
+        });
+    };
 }]);
