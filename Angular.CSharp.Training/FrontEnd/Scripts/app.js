@@ -57,6 +57,28 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
+        .when("/hr", {
+            templateUrl: 'FrontEnd/templates/humanResource.html',
+            controller: 'HRController',
+            resolve: {
+                auth: function (AuthService, $location) {
+                    if (!AuthService.isAuthenticated() || (AuthService.getUserRole() !== 'Admin' && AuthService.getUserRole() !== 'HR')) {
+                        $location.path('/'); // Redirect to login if not authenticated or not admin
+                    }
+                }
+            }
+        })
+        .when("/finance", {
+            templateUrl: 'FrontEnd/templates/finance.html',
+            controller: 'FinanceController',
+            resolve: {
+                auth: function (AuthService, $location) {
+                    if (!AuthService.isAuthenticated() || (AuthService.getUserRole() !== 'Admin' && AuthService.getUserRole() !== 'Finance')) {
+                        $location.path('/'); // Redirect to login if not authenticated or not admin
+                    }
+                }
+            }
+        })
         .when("/dashboard", {
             templateUrl: "FrontEnd/templates/dashboard.html",
             controller: "DashboardController",
@@ -68,28 +90,6 @@ app.config(function ($routeProvider, $locationProvider) {
                 }
             }
         })
-        .when("/mydashboard", {
-            templateUrl: "FrontEnd/templates/mydashboard.html",
-            controller: "myDashboardController",
-            resolve: {
-                auth: function (AuthService, $location) {
-                    if (!AuthService.isAuthenticated()) {
-                        $location.path('/'); // Redirect to login if not authenticated
-                    }
-                }
-            }
-        })
-        //.when("/dashboard/charts", {
-        //    templateUrl: "FrontEnd/templates/dashboard-charts.html",
-        //    controller: "ChartsController",
-        //    resolve: {
-        //        auth: function (AuthService, $location) {
-        //            if (!AuthService.isAuthenticated()) {
-        //                $location.path('/'); // Redirect to login if not authenticated
-        //            }
-        //        }
-        //    }
-        //})
         .when("/about", {
             templateUrl: "FrontEnd/templates/about.html",
             resolve: {

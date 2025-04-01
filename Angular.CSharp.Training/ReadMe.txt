@@ -22,8 +22,6 @@ Code-First vs Database-First approach to develop
 
 
 
-
-
 Employee : EmpId (primary key), EmpName, EmpEmail, EmpAge, EmpDesignation, EmpSalary, EmpLocation, EmpStatus, EmpManagerID (Foreign Key - can be null), EmpDepartmentID (Foreign Key)
 
 Project : ProjectID (PK), ProjectName, ProjectManagerID (FK), ProjectStatus
@@ -66,7 +64,6 @@ Manager : ManagerID (PK), ManagerName
 31. to work with email, try to work with templates (create a template in database and then send the email)
 
 
-
 Role in User table
 Take input in Register page for role or any other page which only one admin user can access and then he can make other users as admin from the user table.
 First admin user we can create in the Database itself.
@@ -93,15 +90,15 @@ seq for database logging (for audit trail) but requires hosting on server
 Business layer will be hided to logic layer - need to implement concrete class (Automapper)
 
 Task: Shivansh
-- Logout after apopup and delete employee/project after popup
+- Logout after apopup and delete employee/project after popup-done
 - Employees table (project Id) is coming inplace of that we need project name
-- right up corner there should be the User name and also a small point for showing if user is admin or not
+- right up corner there should be the User name and also a small point for showing if user is admin or not-Partially done
 - my dashboard should show trends by default
-- Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)
+- Dynamic filtering on Add employees ( like a Software engineer should be from Enginerring department only)-done
 
 Mohit: 
-- Backend microservice structure
-- synronized methods
+- Backend layers structure
+- synronized methods-done
 - Dashboard updation with dynamic x,y parameters
 - logs store in databases
 - search functionality (combine all the fields in single search input)

@@ -30,6 +30,21 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
 
     $scope.toasts = [];
 
+    $scope.designations = {
+        HR: ['HR Assistant', 'HR Manager'],
+        Sales: ['Sales Associate', 'Area Sales Associate', 'Sales Manager',],
+        Engineering: ['Associate', 'Software Engineer', 'Senior Engineer', 'Lead Engineer', 'Manager']
+    };
+
+    // Watch the department selection and update designations accordingly
+    $scope.$watch('employee.EmpDeptName', function (newDept) {
+        if (newDept) {
+            $scope.filteredDesignations = $scope.designations[newDept];
+        } else {
+            $scope.filteredDesignations = [];
+        }
+    });
+
     // Function to show a toast notification
     $scope.showToast = function (title, message, duration) {
         $scope.toasts.push({
@@ -43,14 +58,6 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         setTimeout(function () {
             $scope.dismissToast($scope.toasts[0]);
         }, duration);
-    };
-    $scope.showLogoutConfirmation = function () {
-        $('#logoutConfirmationModal').modal('show');
-    };
-
-    $scope.confirmLogout = function () {
-        $('#logoutConfirmationModal').modal('hide');
-        $scope.logout();
     };
 
     // Function to dismiss a toast notification
@@ -178,6 +185,16 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
     };
 
     // Delete employee
+
+    $scope.showDeleteConfirmation = function (id) {
+        $('#deleteConfirmationModal').modal('show');
+    };
+
+    $scope.confirmDelete = function (id) {
+        $('#deleteConfirmationModal').modal('hide');
+        $scope.deleteEmployee(id);
+    };
+
     $scope.deleteEmployee = function (id) {
         if (AuthService.getUserRole() === 'Admin') {
             EmployeeService.deleteEmployee(id).then(function () {
@@ -311,6 +328,44 @@ app.controller('EmployeeController', ['$scope', 'EmployeeService', 'ProjectServi
         XLSX.utils.book_append_sheet(wb, ws, "Employees");
         XLSX.writeFile(wb, "employees.xlsx");
     }
+    // Method to download the template
+    $scope.downloadTemplate = function () {
+        EmployeeService.downloadTemplate().then(function (response) {
+            let blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'EmployeeTemplate.xlsx';
+            link.click();
+        }, function (error) {
+            $scope.showToast('Error', 'Error downloading template: ' + error.data, 5000);
+        });
+    };
+
+    $scope.uploadFile = function () {
+        let file = $scope.uploadedFile;  // Get the file from the input
+        console.log("Selected file:", file);  // Log the selected file to inspect it
+
+        if (!file) {
+            $scope.showToast('Error', 'Please select a file to upload.', 5000);
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('file', file);
+
+        // Log the FormData content
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+
+        EmployeeService.uploadFile(formData).then(function (response) {
+            $scope.showToast('Success', 'File uploaded and data saved successfully.', 5000);
+            $scope.loadEmployees(); // Refresh the employee list
+        }, function (error) {
+            console.log("Error in file upload:", error);
+            $scope.showToast('Error', 'Error uploading file: ' + error.data, 5000);
+        });
+    };
 
     // Initialize data
     $scope.loadEmployees();

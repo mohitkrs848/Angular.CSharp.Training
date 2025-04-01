@@ -68,7 +68,7 @@ namespace Angular.CSharp.Training.Services
 
                 // Generate a token and return it along with the user's role
                 var token = GenerateToken(user);
-                List<string> result = new List<string>() { token, user.Role };
+                List<string> result = new List<string>() { token, user.Role, user.Email.ToString().Split('@').First() };
                 logger.Information($"User {user.Email} logged in successfully.");
                 return result;
             }
@@ -79,7 +79,7 @@ namespace Angular.CSharp.Training.Services
             }
         }
 
-        private string GenerateToken(User user)
+        public static string GenerateToken(User user)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Angular.CSharp.Training.Services
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error occurred while generating token.");
+                //logger.Error(ex, "Error occurred while generating token.");
                 throw;
             }
         }

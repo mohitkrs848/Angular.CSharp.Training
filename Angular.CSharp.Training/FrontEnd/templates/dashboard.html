@@ -1,60 +1,143 @@
-﻿<!-- dashboard.html -->
-<div ng-controller="DashboardController" class="container-fluid mt-5" style="width: 100%;">
-    <h1 class="mb-4" style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">Employee Dashboard</h1>
+﻿<div ng-controller="DashboardController" class="container-fluid mt-5" style="width: 100%;">
+    <h1 class="mb-4" style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">My Dashboard</h1>
 
-    <!-- Filter Section -->
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <select ng-model="filters.department" class="form-control" placeholder="Department">
-                <option value="">Select Department</option>
-                <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
-            </select>
+    <div class="row">
+        <!-- Left Side Panel (2/10 width) -->
+        <div class="col-md-2">
+            <!-- Filters Section Toggle -->
+            <div style="cursor: pointer; box-shadow: 2px 3px 9px 0px; background-color: #b5e9e499; border-radius: 15px; margin-bottom: 10px; margin-left: 5px; border-color: black ">
+                <h5 ng-click="toggleFilters()">Filters</h5>
+            </div>
+
+            <!-- Filter fields for the table -->
+            <div ng-if="filtersVisible && !chartsGraphsVisible" style="background-color:white; z-index: 1; border: 1px solid #ddd;">
+                <div class="form-group">
+                    <label for="departmentFilter">Department:</label>
+                    <select id="departmentFilter" class="form-control" ng-model="filters.department">
+                        <option value="">All Departments</option>
+                        <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="designationFilter">Designation:</label>
+                    <select id="designationFilter" class="form-control" ng-model="filters.designation">
+                        <option value="">All Designations</option>
+                        <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="locationFilter">Location:</label>
+                    <select id="locationFilter" class="form-control" ng-model="filters.location">
+                        <option value="">All Locations</option>
+                        <option ng-repeat="loc in locations" value="{{loc}}">{{loc}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusFilter">Status:</label>
+                    <select id="statusFilter" class="form-control" ng-model="filters.status">
+                        <option value="">All Statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectFilter">Project:</label>
+                    <select id="projectFilter" class="form-control" ng-model="filters.projectId">
+                        <option value="">All Projects</option>
+                        <option ng-repeat="project in projects" value="{{project.ProjectId}}">{{project.ProjectName}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Charts & Graphs Section Toggle -->
+            <div style="cursor: pointer; box-shadow: 2px 3px 9px 0px; background-color: #b5e9e499; border-radius: 15px; margin-top: 10px; margin-left: 5px ">
+                <h5 ng-click="toggleChartsGraphs()">Charts & Graphs</h5>
+            </div>
+
+            <!-- Filters for charts -->
+            <div ng-if="chartsGraphsVisible && !filtersVisible" style="background-color:white; z-index: 1; border: 1px solid #ddd; margin-top: 10px;">
+                <div class="form-group">
+                    <label for="chartDepartmentFilter">Department:</label>
+                    <select id="chartDepartmentFilter" class="form-control" ng-model="chartFilters.department">
+                        <option value="">All Departments</option>
+                        <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="chartDesignationFilter">Designation:</label>
+                    <select id="chartDesignationFilter" class="form-control" ng-model="chartFilters.designation">
+                        <option value="">All Designations</option>
+                        <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Chart Type Selector -->
+            <div ng-if="chartsGraphsVisible" style="background-color:lightgray; margin-top: 10px;">
+                <h5>Chart Type</h5>
+                <select ng-model="selectedChartType" ng-change="selectChartType(selectedChartType)" class="form-control">
+                    <option value="bar">Bar</option>
+                    <option value="line">Line</option>
+                    <option value="pie">Pie</option>
+                </select>
+            </div>
         </div>
 
-        <div class="form-group col-md-3">
-            <select ng-model="filters.designation" class="form-control" placeholder="Designation">
-                <option value="">Select Designation</option>
-                <option ng-repeat="desig in designations" value="{{desig}}">{{desig}}</option>
-            </select>
-        </div>
-    </div>
+        <!-- Right Side Panel (8/10 width) -->
+        <div class="col-md-10">
+            <!-- Chart Selection Dropdown -->
+            <div class="form-group mt-3" ng-if="chartsGraphsVisible && !filtersVisible">
+                <label for="chartSelect">Select Chart:</label>
+                <select id="chartSelect" class="form-control" ng-model="selectedChart" ng-change="selectChart(selectedChart)">
+                    <option value="employeeCount">Employee Count by Department</option>
+                    <option value="employeeSalary">Employee Salary Distribution</option>
+                    <option value="employeeAge">Employee Age Distribution</option>
+                    <option value="employeeLocation">Employee Location Distribution</option>
+                </select>
+            </div>
 
-    <!-- Table Section -->
-    <div>
-        <h4 style="background-color: rgba(78, 162, 173, 0.48); width: 100%; ">Total Employees: {{employeeCount}}</h4>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">
-                    <th>Employee ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Designation</th>
-                    <th>Department</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="employee in employees">
-                    <td>{{ employee.Id }}</td>
-                    <td>{{ employee.EmpFirstName }}</td>
-                    <td>{{ employee.EmpLastName }}</td>
-                    <td>{{ employee.EmpEmail }}</td>
-                    <td>{{ employee.EmpDesignation }}</td>
-                    <td>{{ employee.EmpDeptName }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <!-- Chart Display Area -->
+            <div ng-if="chartsGraphsVisible">
+                <div ng-if="selectedChart === 'employeeCount'">
+                    <canvas id="employeeCountChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeSalary'">
+                    <canvas id="employeeSalaryChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeAge'">
+                    <canvas id="employeeAgeChart"></canvas>
+                </div>
+                <div ng-if="selectedChart === 'employeeLocation'">
+                    <canvas id="employeeLocationChart"></canvas>
+                </div>
+            </div>
 
-    <!-- Charts Section -->
-    <div class="form-row mt-4">
-        <div class="col-md-6">
-            <h5>Employees by Department</h5>
-            <canvas id="departmentChart" style="max-height: 250px;"></canvas>
-        </div>
-        <div class="col-md-6">
-            <h5>Employees by Designation</h5>
-            <canvas id="designationChart" style="max-height: 250px;"></canvas>
+            <!-- Employee Count and Table -->
+            <div ng-if="filtersVisible && !chartsGraphsVisible" class="mt-5">
+                <h4 style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">Total Employees: {{employeeCount}}</h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr style="background-color: rgba(78, 162, 173, 0.48); width: 100%;">
+                            <th>Employee ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Designation</th>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="employee in employees">
+                            <td>{{ employee.Id }}</td>
+                            <td>{{ employee.EmpFirstName }}</td>
+                            <td>{{ employee.EmpLastName }}</td>
+                            <td>{{ employee.EmpEmail }}</td>
+                            <td>{{ employee.EmpDesignation }}</td>
+                            <td>{{ employee.EmpDeptName }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
